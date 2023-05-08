@@ -5,9 +5,10 @@ import { LoginComponent } from './public/login/login.component';
 import { ContactoComponent } from './public/contacto/contacto.component';
 import { CursosComponent } from './public/cursos/cursos.component';
 
+
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     pathMatch: 'full',
   },
@@ -23,10 +24,13 @@ const routes: Routes = [
     path: 'contacto',
     component: ContactoComponent,
   },
- 
+   {
+     path: 'tutor', loadChildren:()=>import('./private/tutor/tutor.module').then((m)=>m.TutorModule)
+     
+   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: ''
   }
 ];
 

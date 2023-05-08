@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -42,6 +44,22 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $direccion = null;
+
+    #[ORM\OneToMany(mappedBy: 'tutor', targetEntity: Alumno::class)]
+    private Collection $alumnos;
+
+    #[ORM\OneToMany(mappedBy: 'atendidaPor', targetEntity: Matricula::class)]
+    private Collection $matriculasAtendidas;
+
+    #[ORM\OneToMany(mappedBy: 'monitor', targetEntity: Sesion::class)]
+    private Collection $sesiones;
+
+    public function __construct()
+    {
+        $this->alumnos = new ArrayCollection();
+        $this->matriculasAtendidas = new ArrayCollection();
+        $this->sesiones = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -188,6 +206,96 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alumno>
+     */
+    public function getAlumnos(): Collection
+    {
+        return $this->alumnos;
+    }
+
+    public function addAlumno(Alumno $alumno): self
+    {
+        if (!$this->alumnos->contains($alumno)) {
+            $this->alumnos->add($alumno);
+            $alumno->setTutor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlumno(Alumno $alumno): self
+    {
+        if ($this->alumnos->removeElement($alumno)) {
+            // set the owning side to null (unless already changed)
+            if ($alumno->getTutor() === $this) {
+                $alumno->setTutor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matricula>
+     */
+    public function getMatriculasAtendidas(): Collection
+    {
+        return $this->matriculasAtendidas;
+    }
+
+    public function addMatriculasAtendida(Matricula $matriculasAtendida): self
+    {
+        if (!$this->matriculasAtendidas->contains($matriculasAtendida)) {
+            $this->matriculasAtendidas->add($matriculasAtendida);
+            $matriculasAtendida->setAtendidaPor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatriculasAtendida(Matricula $matriculasAtendida): self
+    {
+        if ($this->matriculasAtendidas->removeElement($matriculasAtendida)) {
+            // set the owning side to null (unless already changed)
+            if ($matriculasAtendida->getAtendidaPor() === $this) {
+                $matriculasAtendida->setAtendidaPor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sesion>
+     */
+    public function getSesiones(): Collection
+    {
+        return $this->sesiones;
+    }
+
+    public function addSesione(Sesion $sesione): self
+    {
+        if (!$this->sesiones->contains($sesione)) {
+            $this->sesiones->add($sesione);
+            $sesione->setMonitor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSesione(Sesion $sesione): self
+    {
+        if ($this->sesiones->removeElement($sesione)) {
+            // set the owning side to null (unless already changed)
+            if ($sesione->getMonitor() === $this) {
+                $sesione->setMonitor(null);
+            }
+        }
 
         return $this;
     }

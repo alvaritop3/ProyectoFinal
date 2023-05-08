@@ -12,8 +12,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 
-class LoginController extends AbstractController
+class RegistroController extends AbstractController
 {
+
     #[Route('/registro', name: 'app_registro', methods: ["POST"])]
     public function registrar(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine, Request $request): Response
     {
@@ -43,7 +44,7 @@ class LoginController extends AbstractController
             $fecha_incorp->setTimestamp($timestamp);
 
             $usuario->setFechaIncorp($fecha_incorp);
-        }else{
+        } else {
             $usuario->setFechaIncorp(null);
         }
 
@@ -65,7 +66,7 @@ class LoginController extends AbstractController
         $entityManager->persist($usuario);
         $entityManager->flush();
 
-        
+
 
         return $this->json('Usuario ' . $usuario->getNombre() . ' creado con id ' . $usuario->getId());
     }

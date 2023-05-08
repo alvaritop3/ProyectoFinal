@@ -41,6 +41,14 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/tutor, roles: ROLE_TUTOR }
+        # - { path: ^/tutor/addAlumno, roles: ROLE_TUTOR }
+        - { path: ^/cursos, roles: ROLE_TUTOR }
+        - { path: ^/curso, roles: ROLE_TUTOR }
+        - { path: ^/monitor, roles: ROLE_MONITOR }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, roles: ROLE_ADMIN }
+        # - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/profile, roles: ROLE_USER }

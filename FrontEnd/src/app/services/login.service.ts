@@ -1,30 +1,55 @@
 import { Injectable } from '@angular/core';
-import { environment } from "src/environments/environment"
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { CredencialesInterface } from '../interfaces/credencialesInterface';
+import { JwtDecodeService } from './jwt-decode.service';
+import { JsonInterface } from '../interfaces/json-interface';
+import { DatosUsuario } from '../interfaces/datos-usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  baseUrl = "";
+  baseUrl = "https://127.0.0.1:8000";
 
-
-  constructor(private http: HttpClient) { 
-    this.baseUrl =environment.baseUrl;
+  constructor(private http: HttpClient, private jwtService: JwtDecodeService) { 
+    
   }
 	
-  //Servicio para crear un usuario nuevo (tutor)
-  registro(usuario: any): Observable<any>{
-    
-    return this.http.post(`https://127.0.0.1:8000/registro`, usuario, {responseType:'text'});
+ 
+  //Servicio para comprobar el login
+  login (credenciales: CredencialesInterface): Observable<JsonInterface>{
+
+    return this.http.post(`${this.baseUrl}/login_check`, credenciales, {
+      observe: 'response'
+    }).pipe(map((response: HttpResponse<any>)=>{
+      
+      const body = response.body;
+      //console.log(body['token']);
+      const token = body['token'];
+
+      localStorage.setItem('token', token);
+
+      //Decodificacion del token
+      const tokenDecoded : JsonInterface = this.jwtService.DecodeToken(token);
+
+      //console.log("token decodificado: "+ tokenDecoded.roles);
+
+      return tokenDecoded;
+      }));
+
+      
   }
 
-  //Servicio para comprobar el login
-  login (credenciales: any): Observable<any>{
+  getToken(){
+    return localStorage.getItem('token');
+  }
 
-    return this.http.post('https://127.0.0.1:8000/login_check', credenciales);
+  //Para obtener la información del usuario y almacenarla en el localStorage
+  getDatosByEmail(email: string):any{
+    return this.http.get(`${this.baseUrl}/tutor/${email}`);
   }
 
 }

@@ -1,0 +1,93 @@
+<div class="col">
+  <form (ngSubmit)="registrarAlumno()" [formGroup]="alumnoForm">
+    <div class="card bg-dark text-white" style="border-radius: 1rem">
+      <div class="card-body p-5 text-center">
+        <div class="mb-md-5 mt-md-4 pb-5">
+          <h2 class="fw-bold mb-2 text-uppercase">Añadir Alumno</h2>
+          <p class="text-white-50 mb-5">Introduzca los datos del alumno</p>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  required
+                  formControlName="nombre"
+                />
+                <div
+                  *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El nombre no puede estar vacío
+                </div>
+                <div
+                  *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['minlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un nombre válido (más de tres caracteres)
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="apellidos">Apellidos</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  name="apellidos"
+                  required
+                  formControlName="apellidos"
+                />
+                <div
+                  *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El apellido no puede estar vacío
+                </div>
+                <div
+                  *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['minlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un apellido de más de tres caracteres
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="fecha_nac">Fecha de Nacimiento</label>
+                <input
+                style="color:black"
+                  type="date"
+                  id="fecha_nac"
+                  name="fecha_nac"
+                  required
+                  formControlName="fecha_nac"
+                />
+                <div
+                  *ngIf="alumnoForm.get('fecha_nac')?.touched && alumnoForm.get('fecha_nac')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  Debe seleccionar una fecha
+                </div>
+
+                <button
+                  class="nav-link active button fit primary"
+                  type="submit"
+                  [disabled]="alumnoForm.invalid"
+                >
+                  Registrar Alumno
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

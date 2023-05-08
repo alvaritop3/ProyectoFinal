@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha Inicio</th>
+        <th scope="col">Fecha Fin</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Estado</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of arrayCursos">
+        <td>{{curso.nombre}}</td>
+        <td>{{curso.fecha_inicio}}</td>
+        <td>{{curso.fecha_fin}}</td>
+        <td>{{curso.precio}}</td>
+        <td>{{curso.estado}}</td>
+      </tr>
+    </tbody>
+  </table>

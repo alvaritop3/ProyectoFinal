@@ -1,0 +1,42 @@
+
+<div *ngIf="arrayAlumnos.length == 0">
+    <h2 style="color: black">Aún no ha dado de alta a ningún alumno</h2>
+</div>
+
+<div *ngIf="arrayAlumnos.length > 0">
+    <h2 style="color: black">Selecciona un alumno</h2>
+</div>
+
+<div class="card-group">
+  <div class="card" *ngFor="let alumno of arrayAlumnos">
+    <!-- <a [routerLink]="['/tutor/cursos', alumno.id]"> -->
+    <a routerLink="/tutor/cursos">
+      <div class="card">
+        <img
+          class="card-img-top"
+          src="../../../../assets/images/alumno_1.jpg"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title" style="color: black">
+            {{ alumno.nombre }} {{ alumno.apellidos }}
+          </h5>
+          <p class="card-text">
+            {{ alumno.fecha_nac }}
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<br>
+  <div>
+     <a [routerLink]="['/tutor/crearAlumno',1]"> <!--CAMBIAR POR EL ID DEL TUTOR -->
+      <button class="nav-link active button fit primary">
+      Dar de alta a alumno
+    </button>
+  </a>
+
+  </div>
+

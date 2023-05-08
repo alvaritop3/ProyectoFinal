@@ -56,6 +56,7 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->save($user, true);
     }
 
+
 //    /**
 //     * @return Usuario[] Returns an array of Usuario objects
 //     */
@@ -71,13 +72,13 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Usuario
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    // public function findByEmail($email): ?Usuario
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.email = :val')
+    //         ->setParameter('val', $email)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
 }

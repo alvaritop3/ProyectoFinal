@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CredencialesInterface } from 'src/app/interfaces/credencialesInterface';
+import { DatosUsuario } from 'src/app/interfaces/datos-usuario';
 import { LoginService } from 'src/app/services/login.service';
+import { RegistroService } from 'src/app/services/registro.service';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +12,22 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
   loginForm!: FormGroup;
   registroForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {}
+  credenciales: CredencialesInterface ={
+    username: '',
+    password: ''
+  }
+
+  constructor(
+    private fb: FormBuilder, 
+    private loginService: LoginService, 
+    private registroService: RegistroService,
+    private router: Router,
+    
+    ) {}
 
   ngOnInit(): void {
     this.registroForm = this.initFormRegistro();
@@ -25,21 +41,50 @@ export class LoginComponent implements OnInit {
 
     const usuario = this.registroForm.value;
 
-    this.loginService.registro(usuario).subscribe((resp) => {
+    this.registroService.registro(usuario).subscribe((resp) => {
       console.log(resp);
     });
   }
 
   //LLamamos al Servicio para comprobar el login (devuelve un token)
   login(): void {
-    const credenciales = this.loginForm.value;
 
-    this.loginService.login(credenciales).subscribe((resp) => {
-      //Para obtener el token
-      //console.log(resp.token);
-      //console.log(resp);
+    this.credenciales = this.loginForm.value;
+
+    //LLamo al servicio para obtener el token decodificado
+    this.loginService.login(this.credenciales).subscribe((token) => {
+      
+      //Obtengo en email
+      const email = token.username;
+
+      //Llamo al servicio que me devuelve los datos del usuario que acaba de iniciar sesión según el email y lo almacena en el localStorage
+      this.loginService.getDatosByEmail(email).subscribe((usuario:any)=>{
+    
+        localStorage.setItem("id", usuario.id);
+        localStorage.setItem("nombre", usuario.name);
+        
+      })
+
+
+
+      //Dependiendo del rol que tenga le hago un navigate diferente
+      if (token.roles.includes("ROLE_TUTOR")){
+        this.router.navigate(['/tutor']);
+      }else if(token.roles.includes("ROLE_MONITOR")){
+        this.router.navigate(['/monitor']);
+      }else if(token.roles.includes("ROLE_ADMIN")){
+        this.router.navigate(['/admin']);
+      }
+      
+
+      
     });
   }
+
+  logout(): void{
+    localStorage.clear();
+  }
+
 
   //Validadores de los formularios
   initFormRegistro(): FormGroup {

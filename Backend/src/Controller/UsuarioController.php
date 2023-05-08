@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 
 class UsuarioController extends AbstractController
-{
+{   
+
     #[Route("/usuarios", name: "usuarios_lista", methods: ["GET"])]
     public function listUsuarios(ManagerRegistry $doctrine): JsonResponse {
         
@@ -107,6 +108,7 @@ class UsuarioController extends AbstractController
         return $this->json($data);
     }
     
+
     #[Route("/usuario/{id}", name: "usuario_edit", methods: ["PUT"])]
 
     public function edit(ManagerRegistry $doctrine, Request $request, int $id): Response

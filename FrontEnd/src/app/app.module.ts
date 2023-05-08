@@ -6,7 +6,10 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { PublicModule } from './public/public.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from "@angular/common/http"
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http"
+import { AuthInterceptor } from './helpers/auth.interceptor';
+import { JwtDecodeService } from './services/jwt-decode.service';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +24,12 @@ import {HttpClientModule} from "@angular/common/http"
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    JwtDecodeService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
