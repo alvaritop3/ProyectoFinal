@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CredencialesInterface } from 'src/app/interfaces/credencialesInterface';
 import { DatosUsuario } from 'src/app/interfaces/datos-usuario';
+import { DatosTutorService } from 'src/app/services/datos-tutor.service';
 import { LoginService } from 'src/app/services/login.service';
 import { RegistroService } from 'src/app/services/registro.service';
 
@@ -13,9 +14,18 @@ import { RegistroService } from 'src/app/services/registro.service';
 })
 export class LoginComponent implements OnInit {
 
+  //Contenido del botón
+  botonName="Login";
+
+  //Formularios
   loginForm!: FormGroup;
   registroForm!: FormGroup;
 
+  //Para controlar el error de autentificarse
+  loginIncorrecto:boolean=false;
+
+
+  //Donde se guardan las credenciales
   credenciales: CredencialesInterface ={
     username: '',
     password: ''
@@ -25,7 +35,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder, 
     private loginService: LoginService, 
     private registroService: RegistroService,
-    private router: Router,
+    private router: Router
     
     ) {}
 
@@ -34,6 +44,14 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.initFormLogin();
   }
 
+  cambiar(){
+    if(this.botonName=="Login"){
+      this.botonName = "Registro";
+    }else{
+      this.botonName = "Login";
+    }
+    
+  }
   //LLamamos al Servicio para crear un usuario nuevo (tutor)
   registro(): void {
     //Para obtener un valor determinado del formulario:
@@ -52,20 +70,19 @@ export class LoginComponent implements OnInit {
     this.credenciales = this.loginForm.value;
 
     //LLamo al servicio para obtener el token decodificado
-    this.loginService.login(this.credenciales).subscribe((token) => {
+    this.loginService.login(this.credenciales).subscribe({
+      next:(token) => {
       
       //Obtengo en email
       const email = token.username;
 
-      //Llamo al servicio que me devuelve los datos del usuario que acaba de iniciar sesión según el email y lo almacena en el localStorage
+      //Llamo al servicio que me devuelve los datos del usuario que acaba de iniciar sesión según el email y lo almacena en el servicio DatosTutor
       this.loginService.getDatosByEmail(email).subscribe((usuario:any)=>{
-    
-        localStorage.setItem("id", usuario.id);
-        localStorage.setItem("nombre", usuario.name);
+        
+         localStorage.setItem("id", usuario.id);
+         localStorage.setItem("nombre", usuario.name);
         
       })
-
-
 
       //Dependiendo del rol que tenga le hago un navigate diferente
       if (token.roles.includes("ROLE_TUTOR")){
@@ -74,11 +91,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/monitor']);
       }else if(token.roles.includes("ROLE_ADMIN")){
         this.router.navigate(['/admin']);
-      }
+      }     
       
-
-      
-    });
+    },
+    error:(err)=>{
+      this.loginIncorrecto=true;
+      console.log("Ha habido un error");
+    }
+  });
   }
 
   logout(): void{

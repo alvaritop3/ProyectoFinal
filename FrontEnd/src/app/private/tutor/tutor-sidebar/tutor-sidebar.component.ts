@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./tutor-sidebar.component.scss']
 })
 export class TutorSidebarComponent {
-
+  id_alumno = 0;
+  
 }

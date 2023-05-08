@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatosTutorService } from 'src/app/services/datos-tutor.service';
 import { TutorService } from 'src/app/services/tutor.service';
 
 @Component({
@@ -9,17 +10,19 @@ import { TutorService } from 'src/app/services/tutor.service';
 export class MostrarAlumnosComponent implements OnInit {
   arrayAlumnos: Array<any> = [];
 
-  constructor(private tutorService: TutorService) {}
+  constructor(private tutorService: TutorService, private datosTutor: DatosTutorService) {}
 
   ngOnInit(): void {
-    //Cambiar id por el del tutor que se ha registrado
-    this.tutorService.listaDeAlumnos(1).subscribe({
-      next: (resp) => {
-        this.arrayAlumnos = resp;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+    
+      //Cambiar id por el del tutor que se ha registrado
+      this.tutorService.listaDeAlumnos(1).subscribe({
+        next: (resp) => {
+          this.arrayAlumnos = resp;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+  
 }

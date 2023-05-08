@@ -15,9 +15,7 @@ export class LoginService {
   baseUrl = "https://127.0.0.1:8000";
 
   constructor(private http: HttpClient, private jwtService: JwtDecodeService) { 
-    
   }
-	
  
   //Servicio para comprobar el login
   login (credenciales: CredencialesInterface): Observable<JsonInterface>{
@@ -34,7 +32,7 @@ export class LoginService {
 
       //Decodificacion del token
       const tokenDecoded : JsonInterface = this.jwtService.DecodeToken(token);
-
+      
       //console.log("token decodificado: "+ tokenDecoded.roles);
 
       return tokenDecoded;

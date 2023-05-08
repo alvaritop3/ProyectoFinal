@@ -27,7 +27,7 @@ export class CrearAlumnoComponent implements OnInit {
       nombre: this.alumnoForm.value.nombre,
       apellidos: this.alumnoForm.value.apellidos,
       fecha_nac: this.alumnoForm.value.fecha_nac,
-      tutor: 1, //Cambiar por el id del tutor
+      tutor: 1, //Cambiar por el id del tutor*******************************
     };
 
     this.tutorService.registrarAlumno(JSON.stringify(datos)).subscribe({
