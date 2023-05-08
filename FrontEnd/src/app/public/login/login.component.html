@@ -1,9 +1,10 @@
+<div class="login">
 <div class="container">
   <button (click)="cambiar()" class="nav-link active button fit primary">{{botonName}}</button>
-</div>
+
 
   <!-- Login-->
-  <div class="container" *ngIf="botonName =='Login'">
+  <div *ngIf="botonName =='Login'">
     
     <form (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="card bg-dark text-white" style="border-radius: 1rem">
@@ -72,7 +73,7 @@
   </div>
 
   <!--Registro-->
-  <div class="container" *ngIf="botonName !=='Login'">
+  <div *ngIf="botonName !=='Login'">
     <form (ngSubmit)="registro()" [formGroup]="registroForm">
       <div class="card bg-dark text-white" style="border-radius: 1rem">
         <div class="card-body p-5 text-center">
@@ -233,5 +234,6 @@
       </div>
     </form>
   </div>
+</div>
 
-
+</div>
