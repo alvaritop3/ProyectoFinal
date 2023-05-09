@@ -28,6 +28,10 @@ const routes: Routes = [
      path: 'tutor', loadChildren:()=>import('./private/tutor/tutor.module').then((m)=>m.TutorModule)
      
    },
+   {
+    path: 'admin', loadChildren:()=>import('./private/admin/admin.module').then((m)=>m.AdminModule)
+    
+  },
   {
     path: '**',
     redirectTo: ''

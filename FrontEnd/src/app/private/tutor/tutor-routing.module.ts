@@ -12,7 +12,7 @@ const routes: Routes = [
     component: TutorComponent,
     children:[
       {path: "", component: MostrarAlumnosComponent},
-      {path: "cursos", component: MostrarCursosComponent},
+      {path: "cursos/:idAlumno", component: MostrarCursosComponent},
       {path: "historialCursos", component: HistorialCursosComponent},
       {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent}
     ]

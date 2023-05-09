@@ -10,7 +10,7 @@
 <div class="card-group">
   <div class="card" *ngFor="let alumno of arrayAlumnos">
     <!-- <a [routerLink]="['/tutor/cursos', alumno.id]"> -->
-    <a routerLink="/tutor/cursos">
+    <a [routerLink]="['/tutor/cursos', alumno.id]">
       <div class="card">
         <img
           class="card-img-top"

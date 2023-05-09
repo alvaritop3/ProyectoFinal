@@ -6,20 +6,21 @@
         <th scope="col">Fecha Fin</th>
         <th scope="col">Precio</th>
         <th scope="col">Estado</th>
-        <th scope="col">Matrícula</th>
+        <th scope="col">Editar</th>
 
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let curso of arrayCursos">
+      <tr *ngFor="let curso of arrayCursosActivos">
         <td>{{curso.nombre}}</td>
         <td>{{curso.fecha_inicio}}</td>
         <td>{{curso.fecha_fin}}</td>
         <td>{{curso.precio}}</td>
         <td>{{curso.estado}}</td>
-        <td>
-            <button class=" button fit primary" (click)='solicitarMatricula(curso.id)'>Solcitar</button>
-        </td>
+        <button class=" button fit primary" (click)="editarCurso(curso.id)">Editar</button>
+        
       </tr>
     </tbody>
   </table>
+
+  <button class=" button fit primary" (click)='crearCurso()'>Añadir un curso</button>

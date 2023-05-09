@@ -6,6 +6,7 @@ import { CredencialesInterface } from '../interfaces/credencialesInterface';
 import { JwtDecodeService } from './jwt-decode.service';
 import { JsonInterface } from '../interfaces/json-interface';
 import { DatosUsuario } from '../interfaces/datos-usuario';
+import { DatosTutorService } from './datos-tutor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ import { DatosUsuario } from '../interfaces/datos-usuario';
 export class LoginService {
 
   baseUrl = "https://127.0.0.1:8000";
+  user_email = "";
 
-  constructor(private http: HttpClient, private jwtService: JwtDecodeService) { 
+  constructor(private http: HttpClient, private jwtService: JwtDecodeService, private datosTutor:DatosTutorService) { 
   }
  
   //Servicio para comprobar el login
@@ -32,10 +34,12 @@ export class LoginService {
 
       //Decodificacion del token
       const tokenDecoded : JsonInterface = this.jwtService.DecodeToken(token);
-      
+
+      this.user_email = tokenDecoded.username;
       //console.log("token decodificado: "+ tokenDecoded.roles);
 
       return tokenDecoded;
+      
       }));
 
       
@@ -47,7 +51,8 @@ export class LoginService {
 
   //Para obtener la información del usuario y almacenarla en el localStorage
   getDatosByEmail(email: string):any{
-    return this.http.get(`${this.baseUrl}/tutor/${email}`);
+    console.log(this.user_email);
+    return this.http.get(`${this.baseUrl}/usuario/${email}`);
   }
 
 }

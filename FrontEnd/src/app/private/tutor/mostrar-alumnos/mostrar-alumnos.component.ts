@@ -9,8 +9,9 @@ import { TutorService } from 'src/app/services/tutor.service';
 })
 export class MostrarAlumnosComponent implements OnInit {
   arrayAlumnos: Array<any> = [];
-
+  id_tutor!: any;
   constructor(private tutorService: TutorService, private datosTutor: DatosTutorService) {}
+  
 
   ngOnInit(): void {
     

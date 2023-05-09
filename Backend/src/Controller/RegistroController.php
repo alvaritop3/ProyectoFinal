@@ -30,7 +30,13 @@ class RegistroController extends AbstractController
         $telefono = $data->telefono;
         $direccion = $data->direccion;
         $password = $data->password;
-        //$roles = $data->roles;
+
+        if (isset($data->roles)){
+            $roles = $data->roles;
+        }else{
+            $roles = ['ROLE_TUTOR'];
+        }
+        
 
         //Creamos usuario
         $usuario = new Usuario();
@@ -61,7 +67,7 @@ class RegistroController extends AbstractController
         $usuario->setDireccion($direccion);
         $usuario->setPassword($hashedPassword);
         //$usuario->setRoles($roles);
-        $usuario->setRoles(['ROLE_TUTOR']);
+        $usuario->setRoles($roles);
 
         $entityManager->persist($usuario);
         $entityManager->flush();
@@ -70,4 +76,29 @@ class RegistroController extends AbstractController
 
         return $this->json('Usuario ' . $usuario->getNombre() . ' creado con id ' . $usuario->getId());
     }
+
+     //Devolvemos los datos del usuario según su email
+     #[Route("/usuario/{email}", name: "usuario_por_email", methods: ["GET"])]
+     public function getTutorByEmail(ManagerRegistry $doctrine, string $email){
+        //Creamos el entityManager
+        $entityManager = $doctrine->getManager();
+ 
+         $userRepository = $entityManager->getRepository(Usuario::class);
+ 
+         // busca el usuario según su correo electrónico
+         $user = $userRepository->findOneBy(['email' => $email]);
+ 
+         // comprueba si se encontró el usuario
+         if (!$user) {
+             return new JsonResponse(['error' => 'Usuario no encontrado'], 404);
+         }
+ 
+         // devuelve los datos del usuario
+         return new JsonResponse([
+             'id' => $user->getId(),
+             'name' => $user->getNombre()
+             //Aquí puedo añadir más datos que quiera devolver
+ 
+         ]);
+     }
 }

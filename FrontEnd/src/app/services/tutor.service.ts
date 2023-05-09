@@ -1,33 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { DatosAlumnoService } from './datos-alumno.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TutorService {
-    
-  baseUrl = "https://127.0.0.1:8000";
+  baseUrl = 'https://127.0.0.1:8000';
 
-  constructor(private http: HttpClient) { 
-    
-  }
+  constructor(private http: HttpClient, private datosAlumno: DatosAlumnoService) {}
 
   //Servicio para obtener la lista de alumnos de un tutor
-  listaDeAlumnos(id: number): Observable<any>{
-    
+  listaDeAlumnos(id: number): Observable<any> { //Observable<alumno[]>
     return this.http.get<any[]>(`${this.baseUrl}/tutor/getAlumnos/${id}`);
   }
 
   //Añadir un alumno al tutor
-  registrarAlumno(datos: any): Observable<any>{
+  registrarAlumno(datos: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/tutor/addAlumno`, datos);
   }
-  
-  //Mostrar los cursos disponibles
-  mostrarCursos(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/cursos`);
+
+  //Modificar a alumno
+  modificarAlumno(datos: any): Observable<any> {
+    //Tengo que pasarle en el path el id del alumno /id
+    const id_alumno = this.datosAlumno.id;
+
+    return this.http.put(`${this.baseUrl}/tutor/editAlumno/${id_alumno}`, datos);
   }
 
+  //Mostrar los cursos disponibles
+  mostrarCursos(): Observable<any> {  //Observable<curso[]>
+    return this.http.get(`${this.baseUrl}/tutor/cursosDisp`);
+  }
+
+  //Solicitar matriculación
+  solicitarMatricula(matricula: any): Observable<any>{    //Observable<matricula>
+    //Tengo que pasarle en el path el id del alumno /id
+    const id_alumno = this.datosAlumno.id;
+    return this.http.post(`${this.baseUrl}/tutor/solicitarMatricula/${id_alumno}`, matricula);
+  }
 }

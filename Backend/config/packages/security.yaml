@@ -41,9 +41,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/registro, roles: PUBLIC_ACCESS }
         - { path: ^/tutor, roles: ROLE_TUTOR }
         # - { path: ^/tutor/addAlumno, roles: ROLE_TUTOR }
-        - { path: ^/cursos, roles: ROLE_TUTOR }
+        - { path: ^/cursos, roles: ROLE_ADMIN }
         - { path: ^/curso, roles: ROLE_TUTOR }
         - { path: ^/monitor, roles: ROLE_MONITOR }
         - { path: ^/admin, roles: ROLE_ADMIN }

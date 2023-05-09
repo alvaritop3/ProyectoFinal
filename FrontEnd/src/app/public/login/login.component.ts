@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
 import { CredencialesInterface } from 'src/app/interfaces/credencialesInterface';
 import { DatosUsuario } from 'src/app/interfaces/datos-usuario';
 import { DatosTutorService } from 'src/app/services/datos-tutor.service';
@@ -79,6 +80,7 @@ export class LoginComponent implements OnInit {
       //Llamo al servicio que me devuelve los datos del usuario que acaba de iniciar sesión según el email y lo almacena en el servicio DatosTutor
       this.loginService.getDatosByEmail(email).subscribe((usuario:any)=>{
         
+        //Almaceno los datos del usuario
          localStorage.setItem("id", usuario.id);
          localStorage.setItem("nombre", usuario.name);
         
