@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { CredencialesInterface } from 'src/app/interfaces/credencialesInterface';
 import { DatosUsuario } from 'src/app/interfaces/datos-usuario';
-import { DatosTutorService } from 'src/app/services/datos-tutor.service';
+import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 import { LoginService } from 'src/app/services/login.service';
 import { RegistroService } from 'src/app/services/registro.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -14,44 +15,44 @@ import { RegistroService } from 'src/app/services/registro.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   //Contenido del botón
-  botonName="Login";
+  botonName: string = 'Login';
 
   //Formularios
   loginForm!: FormGroup;
   registroForm!: FormGroup;
 
   //Para controlar el error de autentificarse
-  loginIncorrecto:boolean=false;
+  loginIncorrecto: boolean = false;
 
+  email: string = '';
+  roles: Array<string> = [];
 
   //Donde se guardan las credenciales
-  credenciales: CredencialesInterface ={
+  credenciales: CredencialesInterface = {
     username: '',
-    password: ''
-  }
+    password: '',
+  };
 
   constructor(
-    private fb: FormBuilder, 
-    private loginService: LoginService, 
+    private fb: FormBuilder,
+    private loginService: LoginService,
     private registroService: RegistroService,
-    private router: Router
-    
-    ) {}
+    private router: Router,
+    private datosUsuario: DatosUsuarioService
+  ) {}
 
   ngOnInit(): void {
     this.registroForm = this.initFormRegistro();
     this.loginForm = this.initFormLogin();
   }
 
-  cambiar(){
-    if(this.botonName=="Login"){
-      this.botonName = "Registro";
-    }else{
-      this.botonName = "Login";
+  cambiar() {
+    if (this.botonName == 'Login') {
+      this.botonName = 'Registro';
+    } else {
+      this.botonName = 'Login';
     }
-    
   }
   //LLamamos al Servicio para crear un usuario nuevo (tutor)
   registro(): void {
@@ -67,46 +68,46 @@ export class LoginComponent implements OnInit {
 
   //LLamamos al Servicio para comprobar el login (devuelve un token)
   login(): void {
-
     this.credenciales = this.loginForm.value;
 
     //LLamo al servicio para obtener el token decodificado
-    this.loginService.login(this.credenciales).subscribe({
-      next:(token) => {
-      
-      //Obtengo en email
-      const email = token.username;
+    this.loginService
+      .login(this.credenciales)
+      .pipe(
+        switchMap((token) => {
+          this.email = token.username;
+          this.roles = token.roles;
 
-      //Llamo al servicio que me devuelve los datos del usuario que acaba de iniciar sesión según el email y lo almacena en el servicio DatosTutor
-      this.loginService.getDatosByEmail(email).subscribe((usuario:any)=>{
+          return this.loginService.getDatosByEmail(this.email);
+        })
+      )
+      .subscribe({
+        next:(datos: any) => {
+        //Almaceno el id del usuario en el servicio
+        this.datosUsuario.id = datos.id;
+        this.datosUsuario.nombre = datos.nombre;
+        this.datosUsuario.apellidos = datos.apellidos;
+        this.datosUsuario.email  =  datos.email;
+        this.datosUsuario.telefono = datos.telefono;
+        //Almaceno el id en el localStorage
+        localStorage.setItem("id", datos.id);
         
-        //Almaceno los datos del usuario
-         localStorage.setItem("id", usuario.id);
-         localStorage.setItem("nombre", usuario.name);
-        
-      })
+        //Dependiendo del rol que tenga le hago un navigate diferente
+        if (this.roles.includes('ROLE_TUTOR')) {
+          this.router.navigate(['/tutor']);
+        } else if (this.roles.includes('ROLE_MONITOR')) {
+          this.router.navigate(['/monitor']);
+        } else if (this.roles.includes('ROLE_ADMIN')) {
+          this.router.navigate(['/admin']);
+        }
+      },
+      error: (err)=>{
+        this.loginIncorrecto = true;
+       console.log('Ha habido un error');
+      }
+      });
 
-      //Dependiendo del rol que tenga le hago un navigate diferente
-      if (token.roles.includes("ROLE_TUTOR")){
-        this.router.navigate(['/tutor']);
-      }else if(token.roles.includes("ROLE_MONITOR")){
-        this.router.navigate(['/monitor']);
-      }else if(token.roles.includes("ROLE_ADMIN")){
-        this.router.navigate(['/admin']);
-      }     
-      
-    },
-    error:(err)=>{
-      this.loginIncorrecto=true;
-      console.log("Ha habido un error");
-    }
-  });
   }
-
-  logout(): void{
-    localStorage.clear();
-  }
-
 
   //Validadores de los formularios
   initFormRegistro(): FormGroup {

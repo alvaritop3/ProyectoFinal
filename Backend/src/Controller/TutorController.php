@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Usuario;
 use App\Entity\Alumno;
 use App\Entity\Curso;
+use App\Entity\Matricula;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,26 +42,26 @@ class TutorController extends AbstractController
 
     //Dar de alta a un alumno
     #[Route("/tutor/addAlumno", name: "alumno_new", methods: ["POST"])]
-    public function new(ManagerRegistry $doctrine, Request $request): Response
+    public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
     {
         //Recogemos los datos que vienen en la Request
         $jsonData = $request->getContent();
         $data = json_decode($jsonData);
         $nombre = $data->nombre;
         $apellidos = $data->apellidos;
-        
+
         //Transformamos la fecha de nacimiento
         $fechaString = $data->fecha_nac;
         $timestamp = strtotime($fechaString);
         $fecha_nac = new DateTime();
         $fecha_nac->setTimestamp($timestamp);
-        
+
         //Recuperamos el id del tutor y lo convertimos en un objeto Usuario
         $tutor = $doctrine->getRepository(Usuario::class)->find($data->tutor);
-        
+
         //Creamos el entityManager
         $entityManager = $doctrine->getManager();
-        
+
         //Creamos alumno y guardamos los datos
         $alumno = new Alumno();
         $alumno->setNombre($nombre);
@@ -70,11 +71,11 @@ class TutorController extends AbstractController
 
         //Introducimos el alumno que acabamos de crear en el objeto Usuario (tutor)
         $tutor->addAlumno($alumno);
-        
+
         $entityManager->persist($alumno);
         $entityManager->flush();
-        
-        return $this->json('Alumno '. $alumno->getNombre().' creado con id ' . $alumno->getId());
+
+        return $this->json('Alumno ' . $alumno->getNombre() . ' creado con id ' . $alumno->getId());
     }
 
     //Editar los datos de un alumno
@@ -88,10 +89,11 @@ class TutorController extends AbstractController
         if (!$alumno) {
             return $this->json('Ningún alumno encontrado por el id ' . $id, 404);
         }
-
         //Recogemos los datos que vienen en la Request
         $jsonData = $request->getContent();
         $data = json_decode($jsonData);
+
+
         $nombre = $data->nombre;
         $apellidos = $data->apellidos;
 
@@ -130,21 +132,60 @@ class TutorController extends AbstractController
         $data = [];
 
         foreach ($cursos as $curso) {
-            if($curso->getFechaInicio() > new DateTime()){
+            if ($curso->getFechaInicio() > new DateTime()) {
                 $data[] = [
                     'id' => $curso->getId(),
                     'nombre' => $curso->getNombre(),
                     'fecha_inicio' => $curso->getFechaInicio()->format('d-m-Y'),
                     'fecha_fin' => $curso->getFechaFin()->format('d-m-Y'),
-                    'precio'=> $curso->getPrecio(),
-                    'estado'=> $curso->getEstado()
+                    'precio' => $curso->getPrecio(),
+                    'estado' => $curso->getEstado()
                 ];
             }
         }
-        
+
         return $this->json($data);
-        
     }
 
 
+    //Solicitar matricula de alumno en curso
+    #[Route("/tutor/solicitarMatricula", name: "tutor_solicitar_matricula", methods: ["POST"])]
+    public function solicitarMatricula(ManagerRegistry $doctrine, Request $request): Response
+    {
+        //Creamos entityManager
+        $entityManager = $doctrine->getManager();
+
+        //Recogemos los datos que vienen en la Request
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+        
+        $id_curso = $data->id_curso;
+        $id_alumno = $data->id_alumno;
+
+        //Obtenemos el curso y el alumno a partir del id
+        $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
+        $curso = $entityManager->getRepository(Curso::class)->find($id_curso);
+
+        //Comprobación de que el alumno no esté matriculado en el curso previamente 
+        //**************************
+
+        //Creamos la matrícula
+        $matricula = new Matricula();
+
+        $matricula->setEstado('pendiente');
+        $matricula->setFecha(new DateTime());
+        $matricula->setSolicitadaPor($alumno);
+        $matricula->setCurso($curso);
+
+
+        try {
+            $entityManager->persist($matricula);
+            $entityManager->flush();
+
+            return $this->json("Matricula solicitada correctamente", 200);
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+    }
 }

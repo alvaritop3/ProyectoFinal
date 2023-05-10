@@ -12,14 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 
 class UsuarioController extends AbstractController
-{   
+{
 
     #[Route("/usuarios", name: "usuarios_lista", methods: ["GET"])]
-    public function listUsuarios(ManagerRegistry $doctrine): JsonResponse {
-        
+    public function listUsuarios(ManagerRegistry $doctrine): JsonResponse
+    {
+
         $usuarios = $doctrine
-                ->getRepository(Usuario::class)
-                ->findAll();
+            ->getRepository(Usuario::class)
+            ->findAll();
 
         $data = [];
 
@@ -36,11 +37,11 @@ class UsuarioController extends AbstractController
         }
 
         return $this->json($data);
-         
     }
 
     #[Route("/usuario", name: "usuario_new", methods: ["POST"])]
-    public function new(ManagerRegistry $doctrine, Request $request): Response {
+    public function new(ManagerRegistry $doctrine, Request $request): Response
+    {
         //Creamos el entityManager
         $entityManager = $doctrine->getManager();
         //Creamos usuario
@@ -82,8 +83,36 @@ class UsuarioController extends AbstractController
 
         return $this->json('Usuario ' . $usuario->getNombre() . ' creado con id ' . $usuario->getId());
     }
-    
-    
+
+    //Devolvemos los datos del usuario según su email
+    #[Route("/usuario/{email}", name: "usuario_por_email", methods: ["GET"])]
+    public function getTutorByEmail(ManagerRegistry $doctrine, string $email)
+    {
+        //Creamos el entityManager
+        $entityManager = $doctrine->getManager();
+
+        $userRepository = $entityManager->getRepository(Usuario::class);
+
+        // busca el usuario según su correo electrónico
+        $user = $userRepository->findOneBy(['email' => $email]);
+
+        // comprueba si se encontró el usuario
+        if (!$user) {
+            return new JsonResponse(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        // devuelve los datos del usuario
+        return new JsonResponse([
+            'id' => $user->getId(),
+            'nombre' => $user->getNombre(),
+            'apellidos' => $user->getApellidos(),
+            'email' => $user->getEmail(),
+            'telefono' => $user->getTelefono()
+            //Aquí puedo añadir más datos que quiera devolver
+
+        ]);
+    }
+
     #[Route("/usuario/{id}", name: "usuario_show", methods: ["GET"])]
 
     public function show(ManagerRegistry $doctrine, int $id): Response
@@ -97,17 +126,17 @@ class UsuarioController extends AbstractController
 
         $data =  [
             'id' => $usuario->getTutorDe(),
-                'nombre' => $usuario->getNombre(),
-                'apellidos' => $usuario->getApellidos(),
-                'email' => $usuario->getEmail(),
-                'telefono' => $usuario->getTelefono(),
-//                'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
-                'direccion' => $usuario->getDireccion()
+            'nombre' => $usuario->getNombre(),
+            'apellidos' => $usuario->getApellidos(),
+            'email' => $usuario->getEmail(),
+            'telefono' => $usuario->getTelefono(),
+            //                'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+            'direccion' => $usuario->getDireccion()
         ];
 
         return $this->json($data);
     }
-    
+
 
     #[Route("/usuario/{id}", name: "usuario_edit", methods: ["PUT"])]
 
@@ -123,31 +152,31 @@ class UsuarioController extends AbstractController
         //Recogemos los datos que vienen en la Request
         $jsonData = $request->getContent();
         $data = json_decode($jsonData);
-        
-        if ($data->nombre != null){
+
+        if ($data->nombre != null) {
             $nombre = $data->nombre;
             $usuario->setNombre($nombre);
         }
-        
-        if ($data->apellidos != null){
+
+        if ($data->apellidos != null) {
             $apellidos = $data->apellidos;
             $usuario->setNombre($apellidos);
         }
-        
-        if ($data->telefono != null){
+
+        if ($data->telefono != null) {
             $telefono = $data->telefono;
             $usuario->setNombre($telefono);
         }
-        
-         if ($data->direccion != null){
+
+        if ($data->direccion != null) {
             $direccion = $data->direccion;
             $usuario->setNombre($direccion);
         }
-        
- 
+
+
 
         //Comprobamos que la fecha no venga vacia
-        if (isset($data->fecha_incorp)){
+        if (isset($data->fecha_incorp)) {
             //Transformamos la fecha de nacimiento
             $fechaString = $data->fecha_incorp;
             $timestamp = strtotime($fechaString);
@@ -155,25 +184,25 @@ class UsuarioController extends AbstractController
             $fecha_incorp->setTimestamp($timestamp);
 
             $usuario->setFechaIncorp($fecha_incorp);
-        }  
-        
+        }
+
 
         //Hacemos cambios
         $entityManager->flush();
 
         $respuesta =  [
             'id' => $usuario->getId(),
-                'nombre' => $usuario->getNombre(),
-                'apellidos' => $usuario->getApellidos(),
-                'email' => $usuario->getEmail(),
-                'telefono' => $usuario->getTelefono(),
-                'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
-                'direccion' => $usuario->getDireccion()
+            'nombre' => $usuario->getNombre(),
+            'apellidos' => $usuario->getApellidos(),
+            'email' => $usuario->getEmail(),
+            'telefono' => $usuario->getTelefono(),
+            'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+            'direccion' => $usuario->getDireccion()
         ];
 
         return $this->json($respuesta);
     }
-    
+
     #[Route("/usuario/{id}", name: "usuario_delete", methods: ["DELETE"])]
 
     public function delete(ManagerRegistry $doctrine, int $id): Response
@@ -190,7 +219,4 @@ class UsuarioController extends AbstractController
 
         return $this->json('Usuario eliminado con el id ' . $id);
     }
-
-
-
 }

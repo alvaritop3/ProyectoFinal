@@ -13,6 +13,7 @@ import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-curs
 import { HistorialCursosComponent } from './gestionCursos/historial-cursos/historial-cursos.component';
 import { VerAlumnosComponent } from './gestionAlumos/ver-alumnos/ver-alumnos.component';
 import { EditarAlumnosComponent } from './gestionAlumos/editar-alumnos/editar-alumnos.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -35,7 +36,9 @@ import { EditarAlumnosComponent } from './gestionAlumos/editar-alumnos/editar-al
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

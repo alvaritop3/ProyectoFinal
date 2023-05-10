@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DatosTutorService } from 'src/app/services/datos-tutor.service';
+import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
+
 import { TutorService } from 'src/app/services/tutor.service';
 
 @Component({
@@ -10,20 +11,28 @@ import { TutorService } from 'src/app/services/tutor.service';
 export class MostrarAlumnosComponent implements OnInit {
   arrayAlumnos: Array<any> = [];
   id_tutor!: any;
-  constructor(private tutorService: TutorService, private datosTutor: DatosTutorService) {}
-  
+
+  constructor(
+    private tutorService: TutorService,
+    private datosUsuario: DatosUsuarioService
+  ) {}
 
   ngOnInit(): void {
-    
-      //Cambiar id por el del tutor que se ha registrado
-      this.tutorService.listaDeAlumnos(1).subscribe({
-        next: (resp) => {
-          this.arrayAlumnos = resp;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    //Recupero el id del tutor del servicio
+    this.id_tutor = this.datosUsuario.id;
+
+    //Me aseguro de que tengo el id con el localStorage
+    if (localStorage.getItem('id')) {
+      this.id_tutor = localStorage.getItem('id');
     }
-  
+
+    this.tutorService.listaDeAlumnos(this.id_tutor).subscribe({
+      next: (resp) => {
+        this.arrayAlumnos = resp;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 }

@@ -35,9 +35,8 @@ export class TutorService {
   }
 
   //Solicitar matriculación
-  solicitarMatricula(matricula: any): Observable<any>{    //Observable<matricula>
-    //Tengo que pasarle en el path el id del alumno /id
-    const id_alumno = this.datosAlumno.id;
-    return this.http.post(`${this.baseUrl}/tutor/solicitarMatricula/${id_alumno}`, matricula);
+  solicitarMatricula(datosMatricula: any): Observable<any>{    //Observable<matricula>
+    
+    return this.http.post(`${this.baseUrl}/tutor/solicitarMatricula`, datosMatricula);
   }
 }

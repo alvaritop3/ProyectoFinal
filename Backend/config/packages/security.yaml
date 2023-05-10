@@ -42,7 +42,8 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/registro, roles: PUBLIC_ACCESS }
-        - { path: ^/tutor, roles: ROLE_TUTOR }
+        - { path: ^/usuario, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/tutor, roles: ROLE_TUTOR}
         # - { path: ^/tutor/addAlumno, roles: ROLE_TUTOR }
         - { path: ^/cursos, roles: ROLE_ADMIN }
         - { path: ^/curso, roles: ROLE_TUTOR }
