@@ -31,6 +31,9 @@ class Sesion
     #[ORM\OneToMany(mappedBy: 'sesion', targetEntity: Asistencia::class)]
     private Collection $asistencias;
 
+    #[ORM\ManyToOne(inversedBy: 'sesiones')]
+    private ?Curso $curso = null;
+
     public function __construct()
     {
         // $this->alumnos = new ArrayCollection();
@@ -128,6 +131,18 @@ class Sesion
                 $asistencia->setSesion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurso(): ?Curso
+    {
+        return $this->curso;
+    }
+
+    public function setCurso(?Curso $curso): self
+    {
+        $this->curso = $curso;
 
         return $this;
     }

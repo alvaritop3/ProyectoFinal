@@ -34,9 +34,13 @@ class Curso
     #[ORM\OneToMany(mappedBy: 'curso', targetEntity: Matricula::class)]
     private Collection $matriculas;
 
+    #[ORM\OneToMany(mappedBy: 'curso', targetEntity: Sesion::class)]
+    private Collection $sesiones;
+
     public function __construct()
     {
         $this->matriculas = new ArrayCollection();
+        $this->sesiones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +132,36 @@ class Curso
             // set the owning side to null (unless already changed)
             if ($matricula->getCurso() === $this) {
                 $matricula->setCurso(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sesion>
+     */
+    public function getSesiones(): Collection
+    {
+        return $this->sesiones;
+    }
+
+    public function addSesione(Sesion $sesione): self
+    {
+        if (!$this->sesiones->contains($sesione)) {
+            $this->sesiones->add($sesione);
+            $sesione->setCurso($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSesione(Sesion $sesione): self
+    {
+        if ($this->sesiones->removeElement($sesione)) {
+            // set the owning side to null (unless already changed)
+            if ($sesione->getCurso() === $this) {
+                $sesione->setCurso(null);
             }
         }
 
