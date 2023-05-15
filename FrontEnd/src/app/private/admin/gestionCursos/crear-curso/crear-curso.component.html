@@ -1,0 +1,148 @@
+<!-- FORMULARIO -->
+<form (ngSubmit)="crearCurso()" [formGroup]="cursoNuevoForm">
+  <div class="card bg-dark text-white" style="border-radius: 1rem">
+    <div class="card-body p-5 text-center">
+      <div class="mb-md-5 mt-md-4 pb-5">
+        <h2 class="fw-bold mb-2 text-uppercase">Crear curso</h2>
+        <p class="text-white-50 mb-5">
+          Introduzca los datos del curso que desea crear
+        </p>
+
+        <div class="row">
+          <div class="col-md-12 mb-4">
+            <div class="form-outline">
+              <label for="nombre">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required
+                formControlName="nombre"
+              />
+              <div
+                *ngIf="cursoNuevoForm.get('nombre')?.touched && cursoNuevoForm.get('nombre')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                El nombre no puede estar vacío
+              </div>
+              <div
+                *ngIf="cursoNuevoForm.get('nombre')?.touched && cursoNuevoForm.get('nombre')?.errors?.['minlength']"
+                class="alert alert-danger"
+              >
+                Introduzca un nombre válido (más de tres caracteres)
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label for="fecha_inicio">Fecha de Inicio</label>
+              <input
+                type="date"
+                id="fecha_inicio"
+                name="fecha_inicio"
+                required
+                formControlName="fecha_inicio"
+              />
+              <div
+                *ngIf="cursoNuevoForm.get('fecha_inicio')?.touched && cursoNuevoForm.get('fecha_inicio')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                Introduzca una fecha válida
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label for="fecha_inicio">Fecha de Fin</label>
+              <input
+                type="date"
+                id="fecha_fin"
+                name="fecha_fin"
+                required
+                formControlName="fecha_fin"
+              />
+              <div
+                *ngIf="cursoNuevoForm.get('fecha_fin')?.touched && cursoNuevoForm.get('fecha_fin')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                Introduzca una fecha válida
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label for="hora">Hora Inicio</label>
+              <select
+                class="form-select"
+                name="hora"
+                id="hora"
+                aria-label="Seleccion de hora"
+                formControlName="hora"
+              >
+                <option value="16">16:00h</option>
+                <option value="17">17:00h</option>
+                <option value="18">18:00h</option>
+                <option value="19">19:00h</option>
+                <option value="20">20:00h</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              <label for="tipo">Tipo de curso</label>
+              <select
+                class="form-select"
+                name="tipo"
+                id="tipo"
+                aria-label="Seleccion de tipo de curso"
+                formControlName="tipo"
+              >
+                <option value="1">CM L y X</option>
+                <option value="2">CM M y J</option>
+                <option value="3">CM V y S</option>
+                <option value="4">CM L</option>
+                <option value="5">CM M</option>
+                <option value="6">CM X</option>
+                <option value="7">CM J</option>
+                <option value="8">CM V</option>
+                <option value="9">CM S</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-4">
+            <div class="form-outline">
+              <label for="monitor">Selecciona un monitor</label>
+              <select
+                class="form-select"
+                name="monitor"
+                id="monitor"
+                aria-label="Seleccion de tipo de monitor"
+                formControlName="monitor"
+              >
+                <option *ngFor="let monitor of arrayMonitores" [ngValue]="monitor.id">{{monitor.nombre}} {{monitor.apellidos}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="button primary"
+          type="submit"
+          [disabled]="cursoNuevoForm.invalid"
+        >
+          Crear Curso
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

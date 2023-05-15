@@ -14,6 +14,9 @@ import { HistorialCursosComponent } from './gestionCursos/historial-cursos/histo
 import { VerAlumnosComponent } from './gestionAlumos/ver-alumnos/ver-alumnos.component';
 import { EditarAlumnosComponent } from './gestionAlumos/editar-alumnos/editar-alumnos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.component';
+import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
+import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
 
 
 
@@ -30,7 +33,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EditarCursosComponent,
     HistorialCursosComponent,
     VerAlumnosComponent,
-    EditarAlumnosComponent
+    EditarAlumnosComponent,
+    CrearCursoComponent,
+    CrearMonitorComponent,
+    EditarMonitorComponent
   
  
   ],

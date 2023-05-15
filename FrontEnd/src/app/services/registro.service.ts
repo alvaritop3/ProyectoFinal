@@ -11,14 +11,14 @@ export class RegistroService {
   baseUrl = "https://127.0.0.1:8000";
 
   constructor(private http: HttpClient) { 
-    this.baseUrl =environment.baseUrl;
+    
   }
 
 
- //Servicio para crear un usuario nuevo (tutor)
+ //Servicio para crear un usuario nuevo
  registro(usuario: any): Observable<any>{
     
-  return this.http.post(`${this.baseUrl}/registro`, usuario, {responseType:'text'});
+  return this.http.post(`${this.baseUrl}/registro`, usuario);
 }
 
 }

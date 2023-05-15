@@ -1,1 +1,31 @@
 <p>ver-monitores works!</p>
+
+<table class="table">
+  <thead>
+    <tr class="table-dark">
+      <th scope="col">Nombre</th>
+      <th scope="col">Email</th>
+      <th scope="col">Telefono</th>
+      <!-- <th scope="col">Fecha de Incorporación</th> -->
+      <!-- <th scope="col">Editar</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let monitor of arrayMonitores">
+      <a [routerLink]="['/admin/detalleMonitor', monitor.id]"><td>{{ monitor.nombre }} {{ monitor.apellidos }}</td></a>
+      <td>{{ monitor.email }}</td>
+      <td>{{ monitor.telefono }}</td>
+      <!-- <td>{{ monitor.fecha_incorp | date : "d/M/yy" }}</td> -->
+      <!-- <button
+        class="button fit primary"
+        [routerLink]="['/admin/editarMonitor', monitor.id]"
+      >
+        Editar
+      </button> -->
+    </tr>
+  </tbody>
+</table>
+
+<a routerLink="/admin/crearMonitor">
+  <button class="nav-link active button fit primary">Crear Monitor</button>
+  </a>

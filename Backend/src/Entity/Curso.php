@@ -146,22 +146,22 @@ class Curso
         return $this->sesiones;
     }
 
-    public function addSesione(Sesion $sesione): self
+    public function addSesion(Sesion $sesion): self
     {
-        if (!$this->sesiones->contains($sesione)) {
-            $this->sesiones->add($sesione);
-            $sesione->setCurso($this);
+        if (!$this->sesiones->contains($sesion)) {
+            $this->sesiones->add($sesion);
+            $sesion->setCurso($this);
         }
 
         return $this;
     }
 
-    public function removeSesione(Sesion $sesione): self
+    public function removeSesion(Sesion $sesion): self
     {
-        if ($this->sesiones->removeElement($sesione)) {
+        if ($this->sesiones->removeElement($sesion)) {
             // set the owning side to null (unless already changed)
-            if ($sesione->getCurso() === $this) {
-                $sesione->setCurso(null);
+            if ($sesion->getCurso() === $this) {
+                $sesion->setCurso(null);
             }
         }
 

@@ -20,17 +20,9 @@ export class VerCursosComponent implements OnInit {
   arrayCursosFinalizados: Array<CursoInterface> = [];
   arrayCursosFuturos: Array<CursoInterface> = [];
 
-  //Formularios
-  cursoNuevoForm!: FormGroup;
-
-
   constructor(private adminService: AdminService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    //Inicializamos el formulario reactivo
-    this.cursoNuevoForm = this.initFormCursoNuevo();
-
-
     //Llamamos al servicio para traer todos los cursos de la BBDD que estén activos
     this.adminService.listaCursos().subscribe({
       next: (cursos) => {
@@ -44,41 +36,13 @@ export class VerCursosComponent implements OnInit {
           return (
             this.fechaActual >= fecha_inicio && this.fechaActual <= fecha_fin
           );
-
         });
       },
       error: (err) => {
         console.log(err);
-      },
+      }
     });
   }
 
-  //Función para crear un curso nuevo
-  crearCurso() {
-    
-    let nuevoCurso = {
-      nombre: this.cursoNuevoForm.value.nombre,
-      fecha_inicio: this.cursoNuevoForm.value.fecha_inicio,
-      fecha_fin: this.cursoNuevoForm.value.nombre.fecha_fin,
-      precio: this.cursoNuevoForm.value.nombre.precio,
-      estado: "sin empezar"
-    }
-    //this.adminService.crearCurso(nuevoCurso).subscribe();
-    console.log("Hola");
-  }
-
-  editarCurso(id: number){
-
-  }
-
-
-  //Validadores del formulario
-  initFormCursoNuevo():FormGroup{
-    return this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      fecha_inicio: ['', [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
-      fecha_fin:['', [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
-      precio:['', [Validators.required, Validators.minLength(3)]]
-    })
-  }
+  editarCurso(id: number) {}
 }

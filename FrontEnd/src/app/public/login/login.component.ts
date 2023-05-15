@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     //console.log(this.registroForm.value.apellidos)
 
     const usuario = this.registroForm.value;
+    this.registroForm.value.roles = 'ROLE_TUTOR';
 
     this.registroService.registro(usuario).subscribe((resp) => {
       console.log(resp);
@@ -121,6 +122,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       direccion: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
+      roles:['']
     });
   }
 

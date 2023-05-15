@@ -31,11 +31,12 @@ class RegistroController extends AbstractController
         $direccion = $data->direccion;
         $password = $data->password;
 
-        if (isset($data->roles)){
-            $roles = $data->roles;
-        }else{
-            $roles = ['ROLE_TUTOR'];
-        }
+        // if (isset($data->roles)){
+        //     $roles = [$data->roles];
+        // }else{
+        //     $roles = ['ROLE_TUTOR'];
+        // }
+        $roles = [$data->roles];
         
 
         //Creamos usuario
@@ -66,7 +67,6 @@ class RegistroController extends AbstractController
         $usuario->setTelefono($telefono);
         $usuario->setDireccion($direccion);
         $usuario->setPassword($hashedPassword);
-        //$usuario->setRoles($roles);
         $usuario->setRoles($roles);
 
         $entityManager->persist($usuario);

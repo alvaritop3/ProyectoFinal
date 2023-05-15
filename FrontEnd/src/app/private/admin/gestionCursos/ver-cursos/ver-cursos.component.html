@@ -1,117 +1,30 @@
 <table class="table">
-    <thead>
-      <tr class="table-dark">
-        <th scope="col">Nombre</th>
-        <th scope="col">Fecha Inicio</th>
-        <th scope="col">Fecha Fin</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Editar</th>
+  <thead>
+    <tr class="table-dark">
+      <th scope="col">Nombre</th>
+      <th scope="col">Fecha Inicio</th>
+      <th scope="col">Fecha Fin</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Editar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let curso of arrayCursosActivos">
+      <td>{{ curso.nombre }}</td>
+      <td>{{ curso.fecha_inicio | date : "d/M/yy" }}</td>
+      <td>{{ curso.fecha_fin | date : "d/M/yy" }}</td>
+      <td>{{ curso.precio | number : ".2" }}€</td>
+      <td>{{ curso.estado }}</td>
+      <button class="button fit primary" (click)="editarCurso(curso.id)">
+        Editar
+      </button>
+    </tr>
+  </tbody>
+</table>
+<a routerLink="crearCurso">
+  <button
+  class="button fit primary"
+  Añadir un curso>Crear Nuevo Curso</button>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let curso of arrayCursosActivos">
-        <td>{{curso.nombre}}</td>
-        <td>{{curso.fecha_inicio}}</td>
-        <td>{{curso.fecha_fin}}</td>
-        <td>{{curso.precio}}</td>
-        <td>{{curso.estado}}</td>
-        <button class=" button fit primary" (click)="editarCurso(curso.id)">Editar</button>
-        
-      </tr>
-    </tbody>
-  </table>
-
-  <button class="button fit primary" data-bs-toggle="modal" data-bs-target="#crearCursoModal">Añadir un curso</button>
-
-<!-- Modal -->
-<div class="modal fade" id="crearCursoModal" tabindex="-1" aria-labelledby="crearCursoModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:black">Crear Curso</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-
-        <!-- FORMULARIO -->
-        <form (ngSubmit)="crearCurso()" [formGroup]="cursoNuevoForm">
-          <div class="row">
-            <div class="col-md-6 mb-4">
-              <div class="form-outline">
-                <label for="nombre">Nombre</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  required
-                  formControlName="nombre"
-                />
-                <div
-                  *ngIf="cursoNuevoForm.get('nombre')?.touched && cursoNuevoForm.get('nombre')?.errors?.['required']"
-                  class="alert alert-danger"
-                >
-                  El nombre no puede estar vacío
-                </div>
-                <div
-                  *ngIf="cursoNuevoForm.get('nombre')?.touched && cursoNuevoForm.get('nombre')?.errors?.['minlength']"
-                  class="alert alert-danger"
-                >
-                  Introduzca un nombre válido (más de tres caracteres)
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mb-4">
-              <div class="form-outline">
-                <label for="fecha_inicio">Fecha de Inicio</label>
-                <input
-                  type="date"
-                  id="fecha_inicio"
-                  name="fecha_inicio"
-                  required
-                  formControlName="fecha_inicio"
-                />
-                <div
-                  *ngIf="cursoNuevoForm.get('fecha_inicio')?.touched && cursoNuevoForm.get('fecha_inicio')?.errors?.['required']"
-                  class="alert alert-danger"
-                >
-                  Introduzca una fecha válida
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 mb-4">
-            <div class="form-outline">
-              <label for="fecha_inicio">Fecha de Fin</label>
-              <input
-                type="date"
-                id="fecha_fin"
-                name="fecha_fin"
-                required
-                formControlName="fecha_fin"
-              />
-              <div
-                *ngIf="cursoNuevoForm.get('fecha_fin')?.touched && cursoNuevoForm.get('fecha_fin')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                Introduzca una fecha válida
-              </div>
-            </div>
-          </div>
-        
-
-
-          
-        <button type="button" class="button primary" data-bs-dismiss="modal" (click)='crearCurso()' type="submit"
-        [disabled]="cursoNuevoForm.invalid">Crear</button>
-      </form>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
-      </div>
-     
-    </div>
-  </div>
-</div>
+</a>

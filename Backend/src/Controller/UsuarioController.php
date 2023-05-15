@@ -114,7 +114,6 @@ class UsuarioController extends AbstractController
     }
 
     #[Route("/usuario/{id}", name: "usuario_show", methods: ["GET"])]
-
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $usuario = $doctrine->getRepository(Usuario::class)->find($id);
@@ -139,7 +138,6 @@ class UsuarioController extends AbstractController
 
 
     #[Route("/usuario/{id}", name: "usuario_edit", methods: ["PUT"])]
-
     public function edit(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         $entityManager = $doctrine->getManager();
