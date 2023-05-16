@@ -44,5 +44,4 @@ export class VerCursosComponent implements OnInit {
     });
   }
 
-  editarCurso(id: number) {}
 }

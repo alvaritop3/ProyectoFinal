@@ -1,0 +1,19 @@
+
+@media (max-width: 991px) {
+  #sidebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .list-group {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .list-group-item {
+    flex: 1;
+  }
+
+}

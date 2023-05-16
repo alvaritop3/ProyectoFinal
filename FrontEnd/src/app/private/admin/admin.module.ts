@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.component';
 import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
 import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
+import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
+import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
 
 
 
@@ -36,7 +38,9 @@ import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar
     EditarAlumnosComponent,
     CrearCursoComponent,
     CrearMonitorComponent,
-    EditarMonitorComponent
+    EditarMonitorComponent,
+    DetalleCursoComponent,
+    DetalleMatriculaComponent
   
  
   ],

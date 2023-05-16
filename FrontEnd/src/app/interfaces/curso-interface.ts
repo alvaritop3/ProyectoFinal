@@ -5,5 +5,4 @@ export interface CursoInterface {
     fecha_fin: string
     precio: number
     estado: string
-
 }

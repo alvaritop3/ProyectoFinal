@@ -1,30 +1,31 @@
+<h1>Listado de cursos</h1>
+<hr />
 <table class="table">
   <thead>
     <tr class="table-dark">
       <th scope="col">Nombre</th>
       <th scope="col">Fecha Inicio</th>
       <th scope="col">Fecha Fin</th>
-      <th scope="col">Precio</th>
       <th scope="col">Estado</th>
-      <th scope="col">Editar</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let curso of arrayCursosActivos">
-      <td>{{ curso.nombre }}</td>
+      <a [routerLink]="['/admin/detalleCurso', curso.id]"
+        ><td>{{ curso.nombre }}</td></a
+      >
       <td>{{ curso.fecha_inicio | date : "d/M/yy" }}</td>
       <td>{{ curso.fecha_fin | date : "d/M/yy" }}</td>
-      <td>{{ curso.precio | number : ".2" }}€</td>
       <td>{{ curso.estado }}</td>
-      <button class="button fit primary" (click)="editarCurso(curso.id)">
-        Editar
-      </button>
     </tr>
   </tbody>
 </table>
+<div class="align-center">
 <a routerLink="crearCurso">
-  <button
-  class="button fit primary"
-  Añadir un curso>Crear Nuevo Curso</button>
-
+  <button class="button fit primary" Añadir un curso>Crear Nuevo Curso</button>
 </a>
+</div>
+
+<hr />
+<h1>Historial de cursos</h1>
+<hr />

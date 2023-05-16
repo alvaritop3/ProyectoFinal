@@ -10,6 +10,8 @@ import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.com
 import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
 import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
 import { DetalleMonitorComponent } from './gestionMonitores/detalle-monitor/detalle-monitor.component';
+import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
+import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,8 @@ const routes: Routes = [
     children: [
       { path: '', component: VerCursosComponent },
       { path: 'crearCurso', component: CrearCursoComponent },
+      { path: 'detalleCurso/:idCurso', component: DetalleCursoComponent },
+      { path: 'editarCurso/:idCurso', component: EditarCursosComponent },
       { path: 'matriculas', component: VerMatriculasComponent },
       { path: 'monitores', component: VerMonitoresComponent },
       { path: 'crearMonitor', component: CrearMonitorComponent },

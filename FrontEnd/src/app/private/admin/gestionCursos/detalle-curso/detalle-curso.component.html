@@ -1,0 +1,90 @@
+<div class="card bg-dark">
+  <div class="card-header text-center">
+    <h2>{{ curso.nombre }}</h2>
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">
+      De {{ curso.fecha_inicio | date : "d/M/yy" }} a
+      {{ curso.fecha_fin | date : "d/M/yy" }}
+    </h4>
+    <hr />
+    <h5 class="card-text">Precio: {{ curso.precio | number : ".2" }}€</h5>
+    <h5 class="card-text">Estado: {{ estado }}</h5>
+    <hr />
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="button primary"
+      data-bs-toggle="modal"
+      data-bs-target="#estadoModal"
+    >
+      Cambiar Estado
+    </button>
+  </div>
+
+  <!-- ACORDEÓN DE SESIONES -->
+  <div class="accordion accordion-flush" id="acordeon">
+    <div class="accordion-item" *ngFor="let sesion of sesiones; let i = index">
+      <h2 class="accordion-header">
+        <div
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#flush-collapse' + i"
+          aria-expanded="false"
+          [attr.aria-controls]="'flush-collapse' + i"
+        >
+          {{ sesion.fecha | date : "d/M/yy" }}
+        </div>
+      </h2>
+      <div
+        [id]="'flush-collapse' + i"
+        class="accordion-collapse collapse"
+        data-bs-parent="#acordeon"
+      >
+        <div class="accordion-body">
+          Monitor/a: {{ sesion.monitor }}<br />Hora Inicio:
+          {{ sesion.hora_inicio }}:00h
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="estadoModal"
+  tabindex="-1"
+  aria-labelledby="estadoModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="estadoModalLabel">Cambiar estado</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <select name="estadoSelect" [(ngModel)]="estado">
+          <option>Sin empezar</option>
+          <option>Empezado</option>
+          <option>Finalizado</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarEstado()" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="cambiarEstado()" data-bs-dismiss="modal">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
