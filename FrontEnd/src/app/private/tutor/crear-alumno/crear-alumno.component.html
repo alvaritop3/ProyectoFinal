@@ -1,13 +1,13 @@
-<div class="col">
+<div class="container">
   <form (ngSubmit)="registrarAlumno()" [formGroup]="alumnoForm">
-    <div class="card bg-dark text-white" style="border-radius: 1rem">
+    <div id="card" class="card bg-dark text-white">
       <div class="card-body p-5 text-center">
         <div class="mb-md-5 mt-md-4 pb-5">
           <h2 class="fw-bold mb-2 text-uppercase">Añadir Alumno</h2>
           <p class="text-white-50 mb-5">Introduzca los datos del alumno</p>
 
           <div class="row">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-10 mb-6">
               <div class="form-outline">
                 <label for="nombre">Nombre</label>
                 <input
@@ -31,7 +31,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 mb-4">
+          </div>
+          <div class="row">
+            <div class="col-md-10 mb-6">
               <div class="form-outline">
                 <label for="apellidos">Apellidos</label>
                 <input
@@ -56,13 +58,12 @@
               </div>
             </div>
           </div>
-
           <div class="row">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-10 mb-6">
               <div class="form-outline">
                 <label for="fecha_nac">Fecha de Nacimiento</label>
                 <input
-                style="color:black"
+                  style="color: black"
                   type="date"
                   id="fecha_nac"
                   name="fecha_nac"
@@ -77,10 +78,11 @@
                 </div>
 
                 <button
+                  id="registrar"
                   class="nav-link active button fit primary"
                   type="submit"
                   [disabled]="alumnoForm.invalid"
-                  data-bs-toggle="modal" 
+                  data-bs-toggle="modal"
                   data-bs-target="#creadoModal"
                 >
                   Registrar Alumno
@@ -93,22 +95,28 @@
     </div>
   </form>
 
-
-<!-- Modal -->
-<div class="modal fade" id="creadoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Alumno creado correctamente</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <a routerLink="/tutor/cursos"><button type="button" class="nav-link active button fit primary">Ir a Cursos</button></a>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="creadoModal"
+    tabindex="-1"
+    aria-labelledby="modalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalLabel">
+            Alumno creado correctamente
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-
-

@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let curso of arrayCursosActivos">
+    <tr *ngFor="let curso of arrayCursos">
       <a [routerLink]="['/admin/detalleCurso', curso.id]"
         ><td>{{ curso.nombre }}</td></a
       >

@@ -93,7 +93,6 @@ class TutorController extends AbstractController
         $jsonData = $request->getContent();
         $data = json_decode($jsonData);
 
-
         $nombre = $data->nombre;
         $apellidos = $data->apellidos;
 
@@ -122,22 +121,33 @@ class TutorController extends AbstractController
     }
 
     //Mostrar los cursos en los que puede solicitar matricula
-    #[Route("/tutor/cursosDisp", name: "tutor_lista_cursos_disponibles", methods: ["GET"])]
-    public function mostrarCursosActivos(ManagerRegistry $doctrine): Response
+    #[Route("/tutor/cursosDisp/{id_alumno}", name: "tutor_lista_cursos_disponibles", methods: ["GET"])]
+    public function mostrarCursosActivos(ManagerRegistry $doctrine, int $id_alumno): Response
     {
+        //Obtenemos todos los cursos
         $cursos = $doctrine
             ->getRepository(Curso::class)
             ->findAll();
 
         $data = [];
 
+        //Recorremos el array de cursos para buscar aquellos que no hayan sido solicitados por el alumno
         foreach ($cursos as $curso) {
-            if ($curso->getFechaInicio() > new DateTime()) {
+            $matriculado = false;
+
+            foreach ($curso->getMatriculas() as $matricula) {
+
+                if ($matricula->getSolicitadaPor()->getId() == $id_alumno) {
+                    $matriculado = true;
+                    break;
+                }
+            }
+            if (!$matriculado) {
                 $data[] = [
                     'id' => $curso->getId(),
                     'nombre' => $curso->getNombre(),
-                    'fecha_inicio' => $curso->getFechaInicio()->format('d-m-Y'),
-                    'fecha_fin' => $curso->getFechaFin()->format('d-m-Y'),
+                    'fecha_inicio' => $curso->getFechaInicio()->format('Y-m-d'),
+                    'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
                     'precio' => $curso->getPrecio(),
                     'estado' => $curso->getEstado()
                 ];
@@ -158,34 +168,50 @@ class TutorController extends AbstractController
         //Recogemos los datos que vienen en la Request
         $jsonData = $request->getContent();
         $data = json_decode($jsonData);
-        
+
         $id_curso = $data->id_curso;
         $id_alumno = $data->id_alumno;
 
         //Obtenemos el curso y el alumno a partir del id
         $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
-        $curso = $entityManager->getRepository(Curso::class)->find($id_curso);
+        $cursoSolicitado = $entityManager->getRepository(Curso::class)->find($id_curso);
+
 
         //Comprobación de que el alumno no esté matriculado en el curso previamente 
-        //**************************
+        $matriculado = false;
+        foreach ($cursoSolicitado->getMatriculas() as $matricula) {
+            if ($matricula->getSolicitadaPor()->getId() == $id_alumno) {
+                $matriculado = true;
+                break;
+            }
+        }
 
-        //Creamos la matrícula
-        $matricula = new Matricula();
+        if ($matriculado) {
+            return $this->json("El alumno con id " . $id_alumno . " ya ha solicitado este curso con id " . $id_curso, 404);
+        } else {
+            //Creamos la matrícula
+            $matricula = new Matricula();
 
-        $matricula->setEstado('pendiente');
-        $matricula->setFecha(new DateTime());
-        $matricula->setSolicitadaPor($alumno);
-        $matricula->setCurso($curso);
+            $matricula->setEstado('Pendiente');
+            $matricula->setFecha(new DateTime());
+            $matricula->setSolicitadaPor($alumno);
+            $matricula->setCurso($cursoSolicitado);
 
+            try {
+                $entityManager->persist($matricula);
+                $entityManager->flush();
 
-        try {
-            $entityManager->persist($matricula);
-            $entityManager->flush();
-
-            return $this->json("Matricula solicitada correctamente", 200);
-        } catch (\Exception $e) {
-            $data = 'Ha ocurrido un error: ' . $e->getMessage();
-            return $this->json($data, 404);
+                return $this->json("Matricula solicitada correctamente", 200);
+            } catch (\Exception $e) {
+                $data = 'Ha ocurrido un error: ' . $e->getMessage();
+                return $this->json($data, 404);
+            }
         }
     }
+
+
+
+
+
+
 }

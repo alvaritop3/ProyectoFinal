@@ -1,4 +1,7 @@
-<table class="table">
+<div class="container">
+  <h1>Listado de cursos disponibles</h1>
+  <hr />
+  <table class="table">
     <thead>
       <tr class="table-dark">
         <th scope="col">Nombre</th>
@@ -7,19 +10,27 @@
         <th scope="col">Precio</th>
         <th scope="col">Estado</th>
         <th scope="col">Matrícula</th>
-
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let curso of arrayCursos">
-        <td>{{curso.nombre}}</td>
-        <td>{{curso.fecha_inicio}}</td>
-        <td>{{curso.fecha_fin}}</td>
-        <td>{{curso.precio}}</td>
+        <td>{{ curso.nombre }}</td>
+        <td>{{ curso.fecha_inicio | date:'dd/MM/yyyy'  }}</td>
+        <td>{{ curso.fecha_fin | date:'dd/MM/yyyy' }}</td>
+        <td>{{ curso.precio }}</td>
         <td>{{curso.estado}}</td>
         <td>
-            <button class=" button fit primary" (click)='solicitarMatricula(curso.id)'>Solcitar</button>
+          <button
+            class="button fit primary"
+            (click)="solicitarMatricula(curso.id)"
+          >
+            Solcitar
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <h1>Listado de cursos solicitados</h1>
+  <hr />
+</div>

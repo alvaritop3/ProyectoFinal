@@ -1,7 +1,36 @@
 img {
-    height: 200px;
-    
+    width: 80%;
+    max-height: 200px;
+    margin: 5px auto;
 }
+
 a{
     text-decoration: none;
+}
+
+h1{
+    text-align: center;
+}
+
+.card-text{
+    color: black;
+}
+
+.card-group{
+    width: 90%;
+    margin: 0px auto;
+    justify-content: center;
+}
+
+.card{
+max-height: 400px;
+max-width: 400px;
+}
+
+.card-body{
+    height:100%;
+}
+
+#center{
+    margin: 0px auto;
 }

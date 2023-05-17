@@ -29,9 +29,9 @@ export class TutorService {
     return this.http.put(`${this.baseUrl}/tutor/editAlumno/${id_alumno}`, datos);
   }
 
-  //Mostrar los cursos disponibles
-  mostrarCursos(): Observable<any> {  //Observable<curso[]>
-    return this.http.get(`${this.baseUrl}/tutor/cursosDisp`);
+  //Mostrar los cursos disponibles para un alumno
+  mostrarCursosDisponibles(id_alumno: number): Observable<any> {  //Observable<curso[]>
+    return this.http.get(`${this.baseUrl}/tutor/cursosDisp/${id_alumno}`);
   }
 
   //Solicitar matriculación

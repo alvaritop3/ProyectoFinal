@@ -17,7 +17,6 @@ const routes: Routes = [
       {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent}
     ]
   }
-
 ];
 
 @NgModule({

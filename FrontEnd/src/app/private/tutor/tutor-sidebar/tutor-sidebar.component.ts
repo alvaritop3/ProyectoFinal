@@ -13,12 +13,12 @@ export class TutorSidebarComponent implements OnInit{
   constructor(private datosAlumno: DatosAlumnoService){}
 
   ngOnInit(): void {
-    this.id_alumno = this.datosAlumno.id;
+    // this.id_alumno = this.datosAlumno.id;
 
-    if(localStorage.getItem("id_alumno")){
-      
-      this.id_alumno = localStorage.getItem("id_alumno");
-    }
+    // if(localStorage.getItem("id_alumno")){
+    //   console.log(this.id_alumno)
+    //   this.id_alumno = localStorage.getItem("id_alumno");
+    // }
 
   }
 }
