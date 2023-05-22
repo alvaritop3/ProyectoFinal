@@ -2,19 +2,8 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
-#small {
-  display: none;
+
+.contenido{
+  margin-top: 20px;
 }
 
-@media (max-width: 991px) {
-  #contenido {
-    margin-top: 50px;
-  }
-  #big {
-    display: none;
-  }
-
-  #small {
-    display: block;
-  }
-}

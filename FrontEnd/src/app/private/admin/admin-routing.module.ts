@@ -5,13 +5,15 @@ import { VerCursosComponent } from './gestionCursos/ver-cursos/ver-cursos.compon
 import { VerMatriculasComponent } from './gestionMatriculas/ver-matriculas/ver-matriculas.component';
 import { VerMonitoresComponent } from './gestionMonitores/ver-monitores/ver-monitores.component';
 import { MisDatosComponent } from './gestionMisDatos/mis-datos/mis-datos.component';
-import { VerAlumnosComponent } from './gestionAlumos/ver-alumnos/ver-alumnos.component';
+import { VerAlumnosComponent } from './gestionAlumnos/ver-alumnos/ver-alumnos.component';
 import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.component';
 import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
 import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
 import { DetalleMonitorComponent } from './gestionMonitores/detalle-monitor/detalle-monitor.component';
 import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
 import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
+import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
+import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
 
 const routes: Routes = [
   {
@@ -23,12 +25,14 @@ const routes: Routes = [
       { path: 'detalleCurso/:idCurso', component: DetalleCursoComponent },
       { path: 'editarCurso/:idCurso', component: EditarCursosComponent },
       { path: 'matriculas', component: VerMatriculasComponent },
+      { path: 'detalleMatricula/:idMatricula', component: DetalleMatriculaComponent },
       { path: 'monitores', component: VerMonitoresComponent },
       { path: 'crearMonitor', component: CrearMonitorComponent },
       { path: 'detalleMonitor/:idMonitor', component: DetalleMonitorComponent },
       { path: 'editarMonitor/:idMonitor', component: EditarMonitorComponent },
       { path: 'misDatos', component: MisDatosComponent },
       { path: 'alumnos', component: VerAlumnosComponent },
+      { path: 'detalleAlumno/:idAlumno', component: DetalleAlumnoComponent },
 
       // {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent}
     ],

@@ -1,36 +1,17 @@
-img {
-    width: 80%;
-    max-height: 200px;
-    margin: 5px auto;
+
+a {
+  text-decoration: none;
 }
 
-a{
-    text-decoration: none;
+#center {
+  margin: 0px auto;
 }
-
-h1{
+h1, h5, h6 , p ,h4 {
+    color: black;
     text-align: center;
 }
 
-.card-text{
-    color: black;
-}
-
-.card-group{
-    width: 90%;
-    margin: 0px auto;
-    justify-content: center;
-}
-
 .card{
-max-height: 400px;
-max-width: 400px;
-}
-
-.card-body{
-    height:100%;
-}
-
-#center{
-    margin: 0px auto;
-}
+    margin: 7px;
+    width: 18rem
+  }

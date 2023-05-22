@@ -1,4 +1,18 @@
-h1{
+h1, h2, h3, h4, h5, p{
     color: black;
     text-align: center;
+}
+p{
+    font-size: small;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto;
+}
+
+.card{
+width: 200px;
+margin: 0px auto 5px auto;
 }

@@ -1,1 +1,61 @@
-<p>detalle-matricula works!</p>
+<div class="card bg-dark">
+    <div class="card-header text-center">
+      <h4>Número de Matrícula: {{ matricula.id }}</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-title">
+        Fecha de solicitud: {{ matricula.fecha | date : "d/M/yy" }} 
+          </p>
+      <hr />
+      <p class="card-text">Estado: {{ estado }}</p>
+      <a [routerLink]="['/admin/detalleAlumno', matricula.alumno_id]"><p class="card-text">Ver Alumno</p></a>
+      <a [routerLink]="['/admin/detalleCurso', matricula.curso_id]"><p class="card-text">Ver Curso</p></a>
+      <hr />
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="button primary"
+        data-bs-toggle="modal"
+        data-bs-target="#estadoModal"
+      >
+        Cambiar Estado
+      </button>
+    </div>
+  
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="estadoModal"
+    tabindex="-1"
+    aria-labelledby="estadoModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="estadoModalLabel">Cambiar estado</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <select name="estadoSelect" [(ngModel)]="estado">
+            <option>Pendiente</option>
+            <option>Aceptada</option>
+            <option>Rechazada</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarEstado()" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+           <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="cambiarEstado()">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

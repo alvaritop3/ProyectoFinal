@@ -20,7 +20,7 @@ export class MostrarAlumnosComponent implements OnInit {
   ngOnInit(): void {
     //Recupero el id del tutor del servicio
     this.id_tutor = this.datosUsuario.id;
-
+    
     //Me aseguro de que tengo el id con el localStorage
     if (localStorage.getItem('id')) {
       this.id_tutor = localStorage.getItem('id');

@@ -1,46 +1,30 @@
-<div class="d-flex">
-  <div id="sidebar">
-    <div id="sidebar-accordion" class="accordion">
-      <div class="list-group"> 
 
-        <a
-          routerLink="/tutor"
-          data-toggle="collapse"
-          aria-expanded="false"
-          class="list-group-item list-group-item-action bg-dark text-light"
-        >
-          Mi área personal
-        </a>
-        
-        <a
-          [routerLink]="['/tutor/cursos', id_alumno]"
-          data-toggle="collapse"
-          
-          class="list-group-item list-group-item-action bg-dark text-light"
-        >
-          Cursos disponibles
-        </a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/tutor">Inicio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/tutor/cursos', id_alumno]">Cursos disponibles</a>
+        </li>
 
-        <a
-        routerLink="/tutor/cursos"
-          data-toggle="collapse"
-          
-          class="list-group-item list-group-item-action bg-dark text-light"
-        >
-          Ver mis Cursos
-        </a>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/tutor/mostrarMatriculas', id_alumno]">Mis matrículas</a>
+        </li>
 
-        <a
-        routerLink="/tutor/cursos"
-          data-toggle="collapse"
-          
-          class="list-group-item list-group-item-action bg-dark text-light"
-        >
-          Mis datos
-        </a>
-       
-       
-      </div>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/tutor/historialCursos', id_alumno]">Historial de cursos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/tutor/miArea', id_tutor]">Mi área</a>
+        </li>
+
+      </ul>
     </div>
   </div>
-</div>
+</nav>

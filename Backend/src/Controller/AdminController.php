@@ -11,13 +11,14 @@ use App\Entity\Usuario;
 use App\Entity\Alumno;
 use App\Entity\Curso;
 use App\Entity\Sesion;
+use App\Entity\Matricula;
+use App\Entity\Asistencia;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class AdminController extends AbstractController
 {
-
 
     //Mostrar los cursos
     #[Route("/admin/cursos", name: "admin_lista_cursos", methods: ["GET"])]
@@ -264,25 +265,34 @@ class AdminController extends AbstractController
         return $this->json($data);
     }
 
-    //Mostrar monitor por id
-    #[Route("/admin/monitor/{id}", name: "admin_monitor_por_id", methods: ["GET"])]
+    //Mostrar usuario por id
+    #[Route("/admin/usuario/{id}", name: "admin_usuario_por_id", methods: ["GET"])]
     public function mostrarMonitor(ManagerRegistry $doctrine, int $id): Response
     {
-        $monitor = $doctrine->getRepository(Usuario::class)->find($id);
+        $usuario = $doctrine->getRepository(Usuario::class)->find($id);
 
-        if (!$monitor) {
+        if (!$usuario) {
 
-            return $this->json('Ningun Monitor encontrado con id ' . $id, 404);
+            return $this->json('Ningun Usuario encontrado con id ' . $id, 404);
         }
-
-        $data =  [
-            'nombre' => $monitor->getNombre(),
-            'apellidos' => $monitor->getApellidos(),
-            'email' => $monitor->getEmail(),
-            'telefono' => $monitor->getTelefono(),
-            'fecha_incorp' => $monitor->getFechaIncorp()->format('d/m/Y'),
-            'direccion' => $monitor->getDireccion()
-        ];
+        if($usuario->getRoles()[0] == "ROLE_MONITOR"){
+            $data =  [
+                'nombre' => $usuario->getNombre(),
+                'apellidos' => $usuario->getApellidos(),
+                'email' => $usuario->getEmail(),
+                'telefono' => $usuario->getTelefono(),
+                'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+                'direccion' => $usuario->getDireccion()
+            ];
+        }else{
+            $data =  [
+                'nombre' => $usuario->getNombre(),
+                'apellidos' => $usuario->getApellidos(),
+                'email' => $usuario->getEmail(),
+                'telefono' => $usuario->getTelefono(),
+                'direccion' => $usuario->getDireccion()
+            ];
+        }
 
         return $this->json($data);
     }
@@ -368,4 +378,146 @@ class AdminController extends AbstractController
 
         return $this->json($data);
     }
+
+
+    //Mostrar las matriculas
+    #[Route("/admin/matriculas", name: "admin_lista_matriculas", methods: ["GET"])]
+    public function mostrarMatriculas(ManagerRegistry $doctrine): Response
+    {
+        $matriculas = $doctrine
+            ->getRepository(Matricula::class)
+            ->findAll();
+
+        $data = [];
+
+        foreach ($matriculas as $matricula) {
+            $data[] = [
+                'id' => $matricula->getId(),
+                'estado' => $matricula->getEstado(),
+                'fecha' => $matricula->getFecha()->format('Y-m-d'),
+                'alumno_id' => $matricula->getSolicitadaPor()->getId(),
+                'curso_id' => $matricula->getCurso()->getId()
+            ];
+        }
+
+        return $this->json($data);
+    }
+
+
+
+    //Mostrar Matricula por id
+    #[Route("/admin/matricula/{id_matricula}", name: "admin_matricula_por_id", methods: ["GET"])]
+    public function mostrarMatricula(ManagerRegistry $doctrine, int $id_matricula): Response
+    {
+        $matricula = $doctrine->getRepository(Matricula::class)->find($id_matricula);
+
+        if (!$matricula) {
+
+            return $this->json('Ningun Curso encontrado con id ' . $id_matricula, 404);
+        }
+
+        $data = [
+            'id' => $matricula->getId(),
+            'estado' => $matricula->getEstado(),
+            'fecha' => $matricula->getFecha()->format('Y-m-d'),
+            'alumno_id' => $matricula->getSolicitadaPor()->getId(),
+            'curso_id' => $matricula->getCurso()->getId()
+        ];
+
+        return $this->json($data);
+    }
+
+    //Cambiar estado de una matricula
+    #[Route("/admin/cambiarEstadoMatricula/{id_matricula}", name: "admin_cambiar_estado_matricula", methods: ["PUT"])]
+    public function cambiarEstadoMatricula(ManagerRegistry $doctrine, Request $request, int $id_matricula): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $matricula = $entityManager->getRepository(Matricula::class)->find($id_matricula);
+
+        if (!$matricula) {
+            return $this->json('Ninguna matricula encontrado por el id ' . $matricula, 404);
+        }
+
+        //Recogemos los datos que vienen en la Request
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+        $estado = $data->estado;
+        $id_curso = $data->curso_id;
+        $id_alumno = $data->alumno_id;
+
+        //Modificamos el estado
+        $matricula->setEstado($estado);
+
+        //Hacemos cambios
+        $entityManager->flush();
+
+        //Si la matricula ha sido aceptada
+        if (strtolower($estado) == "aceptada") {
+            //Creamos las asistencias de los alumnos a las sesiones
+            $curso = $entityManager->getRepository(Curso::class)->find($id_curso);
+            $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
+
+            foreach ($curso->getSesiones() as $sesion) {
+                $asistencia = new Asistencia();
+                $asistencia->setAlumno($alumno);
+                $asistencia->setSesion($sesion);
+                $asistencia->setAsiste("");
+                $asistencia->setMotivo("");
+                $entityManager->persist($asistencia);
+                $entityManager->flush();
+            }
+        }
+
+        return $this->json('Estado de la matricula ' . $id_matricula . ' cambiada correctamente', 200);
+    }
+
+
+      //Mostrar los alumnos
+      #[Route("/admin/alumnos", name: "admin_lista_alumnos", methods: ["GET"])]
+      public function mostrarAlumnos(ManagerRegistry $doctrine): Response
+      {
+          $alumnos = $doctrine
+              ->getRepository(Alumno::class)
+              ->findAll();
+  
+          $data = [];
+  
+          foreach ($alumnos as $alumno) {
+              $data[] = [
+                  'id' => $alumno->getId(),
+                  'nombre' => $alumno->getNombre(),
+                  'apellidos' => $alumno->getApellidos(), 
+                  'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                  'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                  'tutor_id' => $alumno->getTutor()->getId()
+              ];
+          }
+
+          return $this->json($data);
+      }
+
+
+      //Mostrar Alumno por id
+    #[Route("/admin/alumno/{id}", name: "admin_alumno_por_id", methods: ["GET"])]
+    public function mostrarAlumno(ManagerRegistry $doctrine, int $id): Response
+    {
+        $alumno = $doctrine->getRepository(Alumno::class)->find($id);
+
+        if (!$alumno) {
+
+            return $this->json('Ningun Curso encontrado con id ' . $id, 404);
+        }
+
+        $data = [
+            'id' => $alumno->getId(),
+            'nombre' => $alumno->getNombre(),
+            'apellidos' => $alumno->getApellidos(), 
+            'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+            'tutor_nombre' => $alumno->getTutor()->getNombre(),
+            'tutor_id' => $alumno->getTutor()->getId()
+        ];
+
+        return $this->json($data);
+    }
+
 }

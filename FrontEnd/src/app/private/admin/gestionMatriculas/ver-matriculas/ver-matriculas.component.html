@@ -1,2 +1,17 @@
 <h1>Listado de Matriculas</h1>
-<hr>
+<hr />
+<div class="container">
+  <div class="card" *ngFor="let matricula of arrayMatriculasPendientes">
+    <div class="card-content">
+      <div class="card-body">
+        <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
+        <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
+          ><p>Gestionar</p></a>
+        <p>Estado: {{ matricula.estado }}</p>
+        <!-- <a [routerLink]="['/admin/detalleCurso', matricula.curso_id]"
+          ><p>Ver Curso</p></a>
+        <p>{{ matricula.alumno_id }}</p> -->
+      </div>
+    </div>
+  </div>
+</div>

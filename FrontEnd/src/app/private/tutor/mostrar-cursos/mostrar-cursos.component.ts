@@ -49,10 +49,7 @@ export class MostrarCursosComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           console.log(resp);
-          // this.arrayCursos = this.arrayCursos.filter((curso: any) => {
-          //   return curso.id !== cursoId;
-          // });
-
+          
           //Crear ventana para mensaje de se ha solicitado correctamente
         },
         error: (err) => {

@@ -5,6 +5,8 @@ import { MostrarAlumnosComponent } from './mostrar-alumnos/mostrar-alumnos.compo
 import { CrearAlumnoComponent } from './crear-alumno/crear-alumno.component';
 import { MostrarCursosComponent } from './mostrar-cursos/mostrar-cursos.component';
 import { HistorialCursosComponent } from './historial-cursos/historial-cursos.component';
+import { MostrarMatriculasComponent } from './mostrar-matriculas/mostrar-matriculas.component';
+import { MiAreaComponent } from './mi-area/mi-area.component';
 
 const routes: Routes = [
   {
@@ -13,8 +15,10 @@ const routes: Routes = [
     children:[
       {path: "", component: MostrarAlumnosComponent},
       {path: "cursos/:idAlumno", component: MostrarCursosComponent},
-      {path: "historialCursos", component: HistorialCursosComponent},
-      {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent}
+      {path: "historialCursos/:idAlumno", component: HistorialCursosComponent},
+      {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent},
+      {path: "mostrarMatriculas/:idAlumno", component: MostrarMatriculasComponent},
+      {path: "miArea/:idTutor", component: MiAreaComponent},
     ]
   }
 ];

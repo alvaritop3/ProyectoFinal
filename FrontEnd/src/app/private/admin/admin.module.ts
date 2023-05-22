@@ -11,14 +11,15 @@ import { VerMatriculasComponent } from './gestionMatriculas/ver-matriculas/ver-m
 import { MisDatosComponent } from './gestionMisDatos/mis-datos/mis-datos.component';
 import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
 import { HistorialCursosComponent } from './gestionCursos/historial-cursos/historial-cursos.component';
-import { VerAlumnosComponent } from './gestionAlumos/ver-alumnos/ver-alumnos.component';
-import { EditarAlumnosComponent } from './gestionAlumos/editar-alumnos/editar-alumnos.component';
+import { VerAlumnosComponent } from './gestionAlumnos/ver-alumnos/ver-alumnos.component';
+import { EditarAlumnosComponent } from './gestionAlumnos/editar-alumnos/editar-alumnos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.component';
 import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
 import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
 import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
 import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
+import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
 
 
 
@@ -40,7 +41,8 @@ import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula
     CrearMonitorComponent,
     EditarMonitorComponent,
     DetalleCursoComponent,
-    DetalleMatriculaComponent
+    DetalleMatriculaComponent,
+    DetalleAlumnoComponent
   
  
   ],

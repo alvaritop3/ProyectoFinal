@@ -1,0 +1,32 @@
+<h1>Listado de Alumnos</h1>
+<hr />
+<div class="busqueda">
+  <input
+    [(ngModel)]="nombreAlumno"
+    class="form-control mr-sm-2"
+    type="search"
+    aria-label="Buscar"
+  />
+  <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscar()">
+    <i class="bi bi-search"></i>
+  </button>
+</div>
+
+<div class="listado">
+  <div class="container-fluid d-flex justify-content-center">
+    <div class="row col-lg-12 d-flex justify-content-center">
+      <div class="card" *ngFor="let alumno of arrayAlumnosFiltrada">
+        <a [routerLink]="['/admin/detalleAlumno', alumno.id]">
+          <img
+            class="card-img-top"
+            src="../../../../assets/images/alumno_1.jpg"
+            alt="Imagen del alumno"
+          />
+          <div class="card-body">
+            <p>{{ alumno.nombre }} {{ alumno.apellidos }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

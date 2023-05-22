@@ -9,16 +9,20 @@ import { DatosAlumnoService } from 'src/app/services/datos-alumno.service';
 export class TutorSidebarComponent implements OnInit{
   
   id_alumno:any;
+  id_tutor: any;
   
   constructor(private datosAlumno: DatosAlumnoService){}
 
   ngOnInit(): void {
-    // this.id_alumno = this.datosAlumno.id;
+    this.id_alumno = this.datosAlumno.id;
 
-    // if(localStorage.getItem("id_alumno")){
-    //   console.log(this.id_alumno)
-    //   this.id_alumno = localStorage.getItem("id_alumno");
-    // }
+    if(localStorage.getItem("id_alumno")){
+      //console.log(this.id_alumno)
+      this.id_alumno = localStorage.getItem("id_alumno");
+      if (localStorage.getItem('id')) {
+        this.id_tutor = localStorage.getItem('id');
+      }
+    }
 
   }
 }
