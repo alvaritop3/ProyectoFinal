@@ -14,6 +14,7 @@ import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-cur
 import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
 import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
 import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
+import { EditarMisDatosComponent } from './gestionMisDatos/editar-mis-datos/editar-mis-datos.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,8 @@ const routes: Routes = [
       { path: 'crearMonitor', component: CrearMonitorComponent },
       { path: 'detalleMonitor/:idMonitor', component: DetalleMonitorComponent },
       { path: 'editarMonitor/:idMonitor', component: EditarMonitorComponent },
-      { path: 'misDatos', component: MisDatosComponent },
+      { path: 'misDatos/:idAdmin', component: MisDatosComponent },
+      { path: 'editarMisDatos/:idAdmin', component: EditarMisDatosComponent },
       { path: 'alumnos', component: VerAlumnosComponent },
       { path: 'detalleAlumno/:idAlumno', component: DetalleAlumnoComponent },
 

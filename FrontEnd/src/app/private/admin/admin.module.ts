@@ -20,6 +20,7 @@ import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar
 import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
 import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
 import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
+import { EditarMisDatosComponent } from './gestionMisDatos/editar-mis-datos/editar-mis-datos.component';
 
 
 
@@ -42,7 +43,8 @@ import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-
     EditarMonitorComponent,
     DetalleCursoComponent,
     DetalleMatriculaComponent,
-    DetalleAlumnoComponent
+    DetalleAlumnoComponent,
+    EditarMisDatosComponent
   
  
   ],

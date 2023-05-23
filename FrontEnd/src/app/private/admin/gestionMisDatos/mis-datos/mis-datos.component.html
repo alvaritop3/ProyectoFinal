@@ -1,2 +1,307 @@
 <h1>Mis datos</h1>
-<hr>
+<hr />
+
+<div class="card text-bg-dark mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img
+        src="../../../../../assets/images/alumno_1.jpg"
+        class="img-fluid rounded-start"
+        alt="..."
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">{{ admin.nombre }} {{ admin.apellidos }}</h4>
+        <p class="card-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-envelope"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+            />
+          </svg>
+          {{ admin.email }}
+        </p>
+        <p class="card-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-telephone"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+            />
+          </svg>
+          {{ admin.telefono }}
+        </p>
+        <p class="card-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-house"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"
+            />
+          </svg>
+          {{ admin.direccion }}
+        </p>
+        <p class="card-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="16"
+            fill="currentColor"
+            class="bi bi-calendar"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+            />
+          </svg>
+          Fecha de Incorporación: {{ admin.fecha_incorp }}
+        </p>
+
+        <button
+          class="button primary"
+          [routerLink]="['/admin/editarMisDatos', id_admin]"
+        >
+          Editar
+        </button>
+        <br /><br />
+
+        <button
+          class="button primary"
+          data-bs-toggle="modal"
+          data-bs-target="#crearAdminModal"
+        >
+          Crear Administrador
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="crearAdminModal"
+  tabindex="-1"
+  aria-labelledby="crearAdminModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+
+        <form (ngSubmit)="registro()" [formGroup]="registroForm">
+          <div class="card bg-dark text-white" style="border-radius: 1rem">
+            <div class="card-body p-5 text-center">
+              <div class="mb-md-5 mt-md-4 pb-5">
+                <h2 class="fw-bold mb-2 text-uppercase">Registrar Admin</h2>
+                <p class="text-white-50 mb-5">
+                  Introduzca los datos del/la administrador/a
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label for="nombre">Nombre</label>
+                      <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        required
+                        formControlName="nombre"
+                      />
+                      <div
+                        *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['required']"
+                        class="alert alert-danger"
+                      >
+                        El nombre no puede estar vacío
+                      </div>
+                      <div
+                        *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['minlength']"
+                        class="alert alert-danger"
+                      >
+                        Introduzca un nombre válido (más de tres caracteres)
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label for="apellidos">Apellidos</label>
+                      <input
+                        type="text"
+                        id="apellidos"
+                        name="apellidos"
+                        required
+                        formControlName="apellidos"
+                      />
+                      <div
+                        *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['required']"
+                        class="alert alert-danger"
+                      >
+                        El apellido no puede estar vacío
+                      </div>
+                      <div
+                        *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['minlength']"
+                        class="alert alert-danger"
+                      >
+                        Introduzca un apellido de más de tres caracteres
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label for="telefono">Telefono</label>
+                      <input
+                        type="text"
+                        id="telefono"
+                        name="telefono"
+                        required
+                        formControlName="telefono"
+                      />
+                      <div
+                        *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['required']"
+                        class="alert alert-danger"
+                      >
+                        El teléfono no puede estar vacío
+                      </div>
+                      <div
+                        *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['minlength']"
+                        class="alert alert-danger"
+                      >
+                        Introduzca un teléfono de 9 dígitos
+                      </div>
+                      <div
+                        *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['maxlength']"
+                        class="alert alert-danger"
+                      >
+                        Introduzca un teléfono de 9 dígitos
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label for="email">Email</label>
+                      <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        required
+                        formControlName="email"
+                      />
+                      <div
+                        *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['required']"
+                        class="alert alert-danger"
+                      >
+                        El email no puede estar vacío
+                      </div>
+                      <div
+                        *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['email']"
+                        class="alert alert-danger"
+                      >
+                        Introduzca un email válido
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-outline form-white mb-4">
+                    <label for="direccion">Direccion</label>
+                    <input
+                      type="text"
+                      id="direccion"
+                      name="direccion"
+                      required
+                      formControlName="direccion"
+                    />
+                    <div
+                      *ngIf="registroForm.get('direccion')?.touched && registroForm.get('direccion')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      La dirección no puede estar vacía
+                    </div>
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <label for="direccion">Fecha de Incorporación</label>
+                    <input
+                      type="date"
+                      id="fecha_incorp"
+                      name="fecha_incorp"
+                      required
+                      formControlName="fecha_incorp"
+                    />
+                    <div
+                      *ngIf="registroForm.get('fecha_incorp')?.touched && registroForm.get('fecha_incorp')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      La fecha de incorporación debe introducirse
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    formControlName="password"
+                  />
+                  <div
+                    *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.errors?.['required']"
+                    class="alert alert-danger"
+                  >
+                    La contraseña no puede estar vacía
+                  </div>
+                </div>
+                <button
+                  class="nav-link active button fit primary"
+                  type="submit"
+                  [disabled]="registroForm.invalid"
+                  data-bs-dismiss="modal"
+                >
+                  Crear Cuenta
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
