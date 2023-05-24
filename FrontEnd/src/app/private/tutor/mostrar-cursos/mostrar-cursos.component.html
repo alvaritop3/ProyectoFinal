@@ -21,7 +21,7 @@
         <td>{{ curso.nombre }}</td>
         <td>{{ curso.fecha_inicio | date:'dd/MM/yyyy'  }}</td>
         <td>{{ curso.fecha_fin | date:'dd/MM/yyyy' }}</td>
-        <td>{{ curso.precio }}</td>
+        <td>{{ curso.precio | number : ".2" }} €</td>
         <td>{{curso.estado}}</td>
         <td>
           <button

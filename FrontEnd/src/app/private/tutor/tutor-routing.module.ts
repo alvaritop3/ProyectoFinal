@@ -7,6 +7,9 @@ import { MostrarCursosComponent } from './mostrar-cursos/mostrar-cursos.componen
 import { HistorialCursosComponent } from './historial-cursos/historial-cursos.component';
 import { MostrarMatriculasComponent } from './mostrar-matriculas/mostrar-matriculas.component';
 import { MiAreaComponent } from './mi-area/mi-area.component';
+import { EditarMisDatosComponent } from './editar-mis-datos/editar-mis-datos.component';
+
+
 
 const routes: Routes = [
   {
@@ -19,6 +22,7 @@ const routes: Routes = [
       {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent},
       {path: "mostrarMatriculas/:idAlumno", component: MostrarMatriculasComponent},
       {path: "miArea/:idTutor", component: MiAreaComponent},
+      {path: "editarMisDatos/:idTutor", component: EditarMisDatosComponent}
     ]
   }
 ];

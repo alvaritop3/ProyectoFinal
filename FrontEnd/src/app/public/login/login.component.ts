@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { CredencialesInterface } from 'src/app/interfaces/credencialesInterface';
-import { DatosUsuario } from 'src/app/interfaces/datos-usuario';
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 import { LoginService } from 'src/app/services/login.service';
 import { RegistroService } from 'src/app/services/registro.service';

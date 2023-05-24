@@ -1,2 +1,27 @@
 <app-tutor-sidebar></app-tutor-sidebar>
-<p>mostrar-matriculas works!</p>
+<h1>Listado de Matriculas</h1>
+<hr />
+
+<div class="filtros">
+    <button class="nav-link active button primary" (click)="estado()">
+        Estado
+      </button>
+  <button class="nav-link active button primary" (click)="recientes()">
+    Recientes
+  </button>
+  <button class="nav-link active button primary" (click)="antiguas()">
+    Antiguas
+  </button>
+</div>
+<hr />
+<div class="container">
+  <div class="card" *ngFor="let matricula of arrayMatriculasOrdenadas">
+    <div class="card-content">
+      <div class="card-body" id="{{matricula.estado.toLocaleLowerCase()}}">
+        <h6>{{ matricula.nombre_curso }}</h6>
+        <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
+        <p>Estado: {{ matricula.estado }}</p>
+      </div>
+    </div>
+  </div>
+</div>

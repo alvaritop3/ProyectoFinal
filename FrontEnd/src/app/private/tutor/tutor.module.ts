@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TutorRoutingModule } from './tutor-routing.module';
 import { MostrarMatriculasComponent } from './mostrar-matriculas/mostrar-matriculas.component';
 import { MiAreaComponent } from './mi-area/mi-area.component';
+import { EditarMisDatosComponent } from './editar-mis-datos/editar-mis-datos.component';
+
 
 
 
@@ -24,6 +26,8 @@ import { MiAreaComponent } from './mi-area/mi-area.component';
     HistorialCursosComponent,
     MostrarMatriculasComponent,
     MiAreaComponent,
+    EditarMisDatosComponent,
+
    
   ],
   imports: [

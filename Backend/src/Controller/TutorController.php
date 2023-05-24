@@ -40,24 +40,64 @@ class TutorController extends AbstractController
         return $this->json($data);
     }
 
+    // //Dar de alta a un alumno
+    // #[Route("/tutor/addAlumno", name: "alumno_new", methods: ["POST"])]
+    // public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
+    // {
+    //     //Recogemos los datos que vienen en la Request
+    //     $jsonData = $request->getContent();
+    //     $data = json_decode($jsonData);
+    //     $nombre = $data->nombre;
+    //     $apellidos = $data->apellidos;
+
+    //     //Transformamos la fecha de nacimiento
+    //     $fechaString = $data->fecha_nac;
+    //     $timestamp = strtotime($fechaString);
+    //     $fecha_nac = new DateTime();
+    //     $fecha_nac->setTimestamp($timestamp);
+
+    //     //Recuperamos el id del tutor y lo convertimos en un objeto Usuario
+    //     $tutor = $doctrine->getRepository(Usuario::class)->find($data->tutor);
+
+    //     //Creamos el entityManager
+    //     $entityManager = $doctrine->getManager();
+
+    //     //Creamos alumno y guardamos los datos
+    //     $alumno = new Alumno();
+    //     $alumno->setNombre($nombre);
+    //     $alumno->setApellidos($apellidos);
+    //     $alumno->setFechaNac($fecha_nac);
+    //     $alumno->setTutor($tutor);
+
+    //     //Introducimos el alumno que acabamos de crear en el objeto Usuario (tutor)
+    //     $tutor->addAlumno($alumno);
+
+    //     $entityManager->persist($alumno);
+    //     $entityManager->flush();
+
+    //     return $this->json('Alumno ' . $alumno->getNombre() . ' creado con id ' . $alumno->getId());
+    // }
+
     //Dar de alta a un alumno
     #[Route("/tutor/addAlumno", name: "alumno_new", methods: ["POST"])]
     public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
     {
         //Recogemos los datos que vienen en la Request
-        $jsonData = $request->getContent();
-        $data = json_decode($jsonData);
-        $nombre = $data->nombre;
-        $apellidos = $data->apellidos;
+        // $jsonData = $request->getContent();
+        // $data = json_decode($jsonData);
+        $nombre = $request->request->get('nombre'); // Recuperar el campo 'nombre'
+        $apellidos = $request->request->get('apellidos'); // Recuperar el campo 'apellidos'
+        $tutor_id = $request->request->get('tutor'); // Recuperar el campo 'tutor'
+        $file = $request->files->get('file');
 
         //Transformamos la fecha de nacimiento
-        $fechaString = $data->fecha_nac;
-        $timestamp = strtotime($fechaString);
-        $fecha_nac = new DateTime();
-        $fecha_nac->setTimestamp($timestamp);
+         $fechaString = $request->request->get('fecha_nac');
+         $timestamp = strtotime($fechaString);
+         $fecha_nac = new DateTime();
+         $fecha_nac->setTimestamp($timestamp);
 
         //Recuperamos el id del tutor y lo convertimos en un objeto Usuario
-        $tutor = $doctrine->getRepository(Usuario::class)->find($data->tutor);
+        $tutor = $doctrine->getRepository(Usuario::class)->find($tutor_id);
 
         //Creamos el entityManager
         $entityManager = $doctrine->getManager();
@@ -77,6 +117,7 @@ class TutorController extends AbstractController
 
         return $this->json('Alumno ' . $alumno->getNombre() . ' creado con id ' . $alumno->getId());
     }
+
 
     //Editar los datos de un alumno
     #[Route("/tutor/editAlumno/{id}", name: "alumnot_edit", methods: ["PUT"])]
@@ -210,8 +251,28 @@ class TutorController extends AbstractController
     }
 
 
+    //Mostrar las matriculas de un alumno
+    #[Route("/tutor/matriculas/{id_alumno}", name: "tutor_lista_matriculas", methods: ["GET"])]
+    public function mostrarMatriculas(ManagerRegistry $doctrine, int $id_alumno ): Response
+    {
+        $matriculas = $doctrine
+            ->getRepository(Matricula::class)
+            ->findAll();
 
+        $data = [];
 
+        foreach ($matriculas as $matricula) {
+            if($matricula->getSolicitadaPor()->getId() == $id_alumno){
+                $data[] = [
+                    'id' => $matricula->getId(),
+                    'estado' => $matricula->getEstado(),
+                    'fecha' => $matricula->getFecha()->format('Y-m-d'),
+                    'nombre_curso'=>$matricula->getCurso()->getNombre()
+                ];
+            }
+        }
 
+        return $this->json($data);
+    }
 
 }

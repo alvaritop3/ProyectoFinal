@@ -413,7 +413,7 @@ class AdminController extends AbstractController
 
         if (!$matricula) {
 
-            return $this->json('Ningun Curso encontrado con id ' . $id_matricula, 404);
+            return $this->json('Ninguna Matricula encontrada con id ' . $id_matricula, 404);
         }
 
         $data = [

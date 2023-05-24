@@ -31,15 +31,20 @@ export class AdminService {
   }
 
   //Cambiar estado de un curso
-  cambiarEstadoCurso(id: number, estado: Object): Observable<any>{
-    return this.http.put(`${this.baseUrl}/admin/cambiarEstadoCurso/${id}`, estado);
+  cambiarEstadoCurso(id: number, estado: Object): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/admin/cambiarEstadoCurso/${id}`,
+      estado
+    );
   }
 
   //Obtener todas las sesiones de un curso
   listaSesiones(id_curso: number): Observable<SesionInterface[]> {
-    return this.http.get<SesionInterface[]>(`${this.baseUrl}/admin/sesiones/${id_curso}`);
+    return this.http.get<SesionInterface[]>(
+      `${this.baseUrl}/admin/sesiones/${id_curso}`
+    );
   }
-  
+
   //Servicio para obtener la lista de monitores
   listaMonitores(): Observable<UsuarioInterface[]> {
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/admin/monitores`);
@@ -58,31 +63,35 @@ export class AdminService {
   }
 
   //Servicio para obtener todas las matriculas
-  listaMatriculas(): Observable<MatriculaInterface[]> {  //<MatriculasInterface[]>
-    return this.http.get<MatriculaInterface[]>(`${this.baseUrl}/admin/matriculas`);
-  }
-
-
-  //Servicio para obtener el detalle de una matricula
-  mostrarMatricula(id: number): Observable<MatriculaInterface>{
-    return this.http.get<MatriculaInterface>(`${this.baseUrl}/admin/matricula/${id}`);
-  }
-
-  //Servicio para cambiar el estado de una matricula
-  cambiarEstadoMatricula(id: number, estado: Object): Observable<any>{
-    return this.http.put(`${this.baseUrl}/admin/cambiarEstadoMatricula/${id}`, estado);
-  }
-
-//Servicio para obtener todos los alumnos
-listaAlumnos(): Observable<AlumnoInterface[]> {
-  return this.http.get<AlumnoInterface[]>(`${this.baseUrl}/admin/alumnos`);
-}
-
-  //Obtener un alumno por id
-  mostrarAlumno(id: number): Observable<AlumnoInterface> {
-    return this.http.get<AlumnoInterface>(
-      `${this.baseUrl}/admin/alumno/${id}`
+  listaMatriculas(): Observable<MatriculaInterface[]> {
+    //<MatriculasInterface[]>
+    return this.http.get<MatriculaInterface[]>(
+      `${this.baseUrl}/admin/matriculas`
     );
   }
 
+  //Servicio para obtener el detalle de una matricula
+  mostrarMatricula(id: number): Observable<MatriculaInterface> {
+    return this.http.get<MatriculaInterface>(
+      `${this.baseUrl}/admin/matricula/${id}`
+    );
+  }
+
+  //Servicio para cambiar el estado de una matricula
+  cambiarEstadoMatricula(id: number, estado: Object): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/admin/cambiarEstadoMatricula/${id}`,
+      estado
+    );
+  }
+
+  //Servicio para obtener todos los alumnos
+  listaAlumnos(): Observable<AlumnoInterface[]> {
+    return this.http.get<AlumnoInterface[]>(`${this.baseUrl}/admin/alumnos`);
+  }
+
+  //Obtener un alumno por id
+  mostrarAlumno(id: number): Observable<AlumnoInterface> {
+    return this.http.get<AlumnoInterface>(`${this.baseUrl}/admin/alumno/${id}`);
+  }
 }
