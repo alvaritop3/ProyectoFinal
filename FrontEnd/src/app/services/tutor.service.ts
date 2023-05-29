@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DatosAlumnoService } from './datos-alumno.service';
 import { MatriculaInterface } from '../interfaces/matricula-interface';
-import { MatriculaInterfaceTutor } from '../interfaces/matricula-interface-tutor';
 
 @Injectable({
   providedIn: 'root',
@@ -60,5 +59,7 @@ export class TutorService {
       `${this.baseUrl}/tutor/matriculas/${idAlumno}`
     );
   }
+
+
 
 }

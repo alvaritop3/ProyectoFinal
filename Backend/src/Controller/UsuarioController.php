@@ -107,9 +107,8 @@ class UsuarioController extends AbstractController
             'nombre' => $user->getNombre(),
             'apellidos' => $user->getApellidos(),
             'email' => $user->getEmail(),
-            'telefono' => $user->getTelefono()
-            //Aquí puedo añadir más datos que quiera devolver
-
+            'telefono' => $user->getTelefono(),
+            'direccion'=> $user->getDireccion()
         ]);
     }
 

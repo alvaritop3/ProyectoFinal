@@ -13,9 +13,9 @@
 
     <div class="card" *ngFor="let alumno of arrayAlumnos">
       <a [routerLink]="['/tutor/cursos', alumno.id]">
-      <img class="card-img-top" src="../../../../assets/images/alumno_1.jpg" alt="Imagen del alumno">
+      <img class="card-img-top" src="http://localhost:8000/fotos/{{alumno.foto}}" alt="Imagen del alumno"> 
       <div class="card-body">
-        <h6 class="card-title"> {{ alumno.nombre }} {{ alumno.apellidos }}</h6>
+       <h6 class="card-title">{{ alumno.nombre }} {{ alumno.apellidos }} </h6>  
         <div>
         </div>
       </div>

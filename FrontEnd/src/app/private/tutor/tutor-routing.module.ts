@@ -22,7 +22,7 @@ const routes: Routes = [
       {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent},
       {path: "mostrarMatriculas/:idAlumno", component: MostrarMatriculasComponent},
       {path: "miArea/:idTutor", component: MiAreaComponent},
-      {path: "editarMisDatos/:idTutor", component: EditarMisDatosComponent}
+      {path: "editarMisDatos/:emailTutor", component: EditarMisDatosComponent}
     ]
   }
 ];

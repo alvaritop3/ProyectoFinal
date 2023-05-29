@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,11 +30,6 @@ class RegistroController extends AbstractController
         $direccion = $data->direccion;
         $password = $data->password;
 
-        // if (isset($data->roles)){
-        //     $roles = [$data->roles];
-        // }else{
-        //     $roles = ['ROLE_TUTOR'];
-        // }
         $roles = [$data->roles];
         
 

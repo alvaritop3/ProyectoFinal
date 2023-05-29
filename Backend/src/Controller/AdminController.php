@@ -275,7 +275,7 @@ class AdminController extends AbstractController
 
             return $this->json('Ningun Usuario encontrado con id ' . $id, 404);
         }
-        if($usuario->getRoles()[0] == "ROLE_MONITOR"){
+        if ($usuario->getRoles()[0] == "ROLE_MONITOR") {
             $data =  [
                 'nombre' => $usuario->getNombre(),
                 'apellidos' => $usuario->getApellidos(),
@@ -284,7 +284,7 @@ class AdminController extends AbstractController
                 'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
                 'direccion' => $usuario->getDireccion()
             ];
-        }else{
+        } else {
             $data =  [
                 'nombre' => $usuario->getNombre(),
                 'apellidos' => $usuario->getApellidos(),
@@ -472,32 +472,45 @@ class AdminController extends AbstractController
     }
 
 
-      //Mostrar los alumnos
-      #[Route("/admin/alumnos", name: "admin_lista_alumnos", methods: ["GET"])]
-      public function mostrarAlumnos(ManagerRegistry $doctrine): Response
-      {
-          $alumnos = $doctrine
-              ->getRepository(Alumno::class)
-              ->findAll();
-  
-          $data = [];
-  
-          foreach ($alumnos as $alumno) {
-              $data[] = [
-                  'id' => $alumno->getId(),
-                  'nombre' => $alumno->getNombre(),
-                  'apellidos' => $alumno->getApellidos(), 
-                  'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
-                  'tutor_nombre' => $alumno->getTutor()->getNombre(),
-                  'tutor_id' => $alumno->getTutor()->getId()
-              ];
-          }
+    //Mostrar los alumnos
+    #[Route("/admin/alumnos", name: "admin_lista_alumnos", methods: ["GET"])]
+    public function mostrarAlumnos(ManagerRegistry $doctrine): Response
+    {
+        $alumnos = $doctrine
+            ->getRepository(Alumno::class)
+            ->findAll();
 
-          return $this->json($data);
-      }
+        $data = [];
+
+        foreach ($alumnos as $alumno) {
+            if ($alumno->getFoto()) {
+                $data[] = [
+                    'id' => $alumno->getId(),
+                    'nombre' => $alumno->getNombre(),
+                    'apellidos' => $alumno->getApellidos(),
+                    'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                    'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                    'tutor_id' => $alumno->getTutor()->getId(),
+                    'foto' => $alumno->getFoto()
+                ];
+            } else {
+                $data[] = [
+                    'id' => $alumno->getId(),
+                    'nombre' => $alumno->getNombre(),
+                    'apellidos' => $alumno->getApellidos(),
+                    'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                    'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                    'tutor_id' => $alumno->getTutor()->getId(),
+                    'foto' => "fotoDefecto.png"
+                ];
+            };
+        };
+
+        return $this->json($data);
+    }
 
 
-      //Mostrar Alumno por id
+    //Mostrar Alumno por id
     #[Route("/admin/alumno/{id}", name: "admin_alumno_por_id", methods: ["GET"])]
     public function mostrarAlumno(ManagerRegistry $doctrine, int $id): Response
     {
@@ -507,17 +520,29 @@ class AdminController extends AbstractController
 
             return $this->json('Ningun Curso encontrado con id ' . $id, 404);
         }
+        if ($alumno->getFoto()) {
+            $data = [
+                'id' => $alumno->getId(),
+                'nombre' => $alumno->getNombre(),
+                'apellidos' => $alumno->getApellidos(),
+                'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                'tutor_id' => $alumno->getTutor()->getId(),
+                'foto' => $alumno->getFoto()
+            ];
+        } else {
+            $data = [
+                'id' => $alumno->getId(),
+                'nombre' => $alumno->getNombre(),
+                'apellidos' => $alumno->getApellidos(),
+                'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                'tutor_id' => $alumno->getTutor()->getId(),
+                'foto' => "fotoDefecto.png"
+            ];
+        }
 
-        $data = [
-            'id' => $alumno->getId(),
-            'nombre' => $alumno->getNombre(),
-            'apellidos' => $alumno->getApellidos(), 
-            'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
-            'tutor_nombre' => $alumno->getTutor()->getNombre(),
-            'tutor_id' => $alumno->getTutor()->getId()
-        ];
 
         return $this->json($data);
     }
-
 }

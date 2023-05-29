@@ -13,6 +13,8 @@ use App\Entity\Curso;
 use App\Entity\Matricula;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 
 
 class TutorController extends AbstractController
@@ -20,74 +22,48 @@ class TutorController extends AbstractController
 
     //Obtener todos los alumnos de un tutor
     #[Route("/tutor/getAlumnos/{id}", name: "alumnos_lista_por_tutor", methods: ["GET"])]
-    public function index(ManagerRegistry $doctrine, int $id): Response
+    public function index(ManagerRegistry $doctrine, int $id, UrlGeneratorInterface $urlGenerator): Response
     {
         $tutor = $doctrine->getRepository(Usuario::class)->find($id);
-
         $alumnos = $tutor->getAlumnos();
 
         $data = [];
 
         foreach ($alumnos as $alumno) {
-            $data[] = [
-                'id' => $alumno->getId(),
-                'nombre' => $alumno->getNombre(),
-                'apellidos' => $alumno->getApellidos(),
-                'fecha_nac' => $alumno->getFechaNac()->format('d-m-Y') //Tengo que devolver la fecha en formato String
-            ];
+            if($alumno->getFoto()){
+                //$rutaFoto = 'public/fotos/' . $alumno->getFoto();
+                //$urlFoto = $urlGenerator->generate('fotos', ['rutaFoto' => $rutaFoto], UrlGeneratorInterface::ABSOLUTE_URL);
+                
+                $data[] = [
+                    'id' => $alumno->getId(),
+                    'nombre' => $alumno->getNombre(),
+                    'apellidos' => $alumno->getApellidos(),
+                    'fecha_nac' => $alumno->getFechaNac()->format('d-m-Y'),
+                    'foto' => $alumno->getFoto()
+                ];
+            }else{
+                $data[] = [
+                    'id' => $alumno->getId(),
+                    'nombre' => $alumno->getNombre(),
+                    'apellidos' => $alumno->getApellidos(),
+                    'fecha_nac' => $alumno->getFechaNac()->format('d-m-Y'),
+                    'foto' => "fotoDefecto.png"
+                ];
+            }
+            
         }
 
         return $this->json($data);
     }
-
-    // //Dar de alta a un alumno
-    // #[Route("/tutor/addAlumno", name: "alumno_new", methods: ["POST"])]
-    // public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
-    // {
-    //     //Recogemos los datos que vienen en la Request
-    //     $jsonData = $request->getContent();
-    //     $data = json_decode($jsonData);
-    //     $nombre = $data->nombre;
-    //     $apellidos = $data->apellidos;
-
-    //     //Transformamos la fecha de nacimiento
-    //     $fechaString = $data->fecha_nac;
-    //     $timestamp = strtotime($fechaString);
-    //     $fecha_nac = new DateTime();
-    //     $fecha_nac->setTimestamp($timestamp);
-
-    //     //Recuperamos el id del tutor y lo convertimos en un objeto Usuario
-    //     $tutor = $doctrine->getRepository(Usuario::class)->find($data->tutor);
-
-    //     //Creamos el entityManager
-    //     $entityManager = $doctrine->getManager();
-
-    //     //Creamos alumno y guardamos los datos
-    //     $alumno = new Alumno();
-    //     $alumno->setNombre($nombre);
-    //     $alumno->setApellidos($apellidos);
-    //     $alumno->setFechaNac($fecha_nac);
-    //     $alumno->setTutor($tutor);
-
-    //     //Introducimos el alumno que acabamos de crear en el objeto Usuario (tutor)
-    //     $tutor->addAlumno($alumno);
-
-    //     $entityManager->persist($alumno);
-    //     $entityManager->flush();
-
-    //     return $this->json('Alumno ' . $alumno->getNombre() . ' creado con id ' . $alumno->getId());
-    // }
 
     //Dar de alta a un alumno
     #[Route("/tutor/addAlumno", name: "alumno_new", methods: ["POST"])]
     public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
     {
         //Recogemos los datos que vienen en la Request
-        // $jsonData = $request->getContent();
-        // $data = json_decode($jsonData);
-        $nombre = $request->request->get('nombre'); // Recuperar el campo 'nombre'
-        $apellidos = $request->request->get('apellidos'); // Recuperar el campo 'apellidos'
-        $tutor_id = $request->request->get('tutor'); // Recuperar el campo 'tutor'
+        $nombre = $request->request->get('nombre'); 
+        $apellidos = $request->request->get('apellidos'); 
+        $tutor_id = $request->request->get('tutor'); 
         $file = $request->files->get('file');
 
         //Transformamos la fecha de nacimiento
@@ -109,6 +85,16 @@ class TutorController extends AbstractController
         $alumno->setFechaNac($fecha_nac);
         $alumno->setTutor($tutor);
 
+        //Comprobamos si hay una imágen en el campo foto
+        if ($file) {
+            $fileName = uniqid().'.'.$file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir').'/public/fotos/', $fileName);
+            $alumno->setFoto($fileName);
+        }else{
+            $alumno->setFoto('fotoDefecto.png');
+        }
+       
+        
         //Introducimos el alumno que acabamos de crear en el objeto Usuario (tutor)
         $tutor->addAlumno($alumno);
 
@@ -136,6 +122,15 @@ class TutorController extends AbstractController
 
         $nombre = $data->nombre;
         $apellidos = $data->apellidos;
+
+        //Comprobamos si trae imagen
+        $file = $request->files->get('file');
+
+        if ($file) {
+            $fileName = uniqid().'.'.$file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir').'/public/fotos/', $fileName);
+            $alumno->setFoto($fileName);
+        }
 
         //Transformamos la fecha de nacimiento
         $fechaString = $data->fecha_nac;

@@ -35,6 +35,9 @@ class Alumno
     #[ORM\OneToMany(mappedBy: 'alumno', targetEntity: Asistencia::class)]
     private Collection $asistencias;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $foto = null;
+
     // #[ORM\ManyToMany(targetEntity: Sesion::class, mappedBy: 'alumnos')]
     // private Collection $sesiones;
 
@@ -181,6 +184,18 @@ class Alumno
                 $asistencia->setAlumno(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(?string $foto): self
+    {
+        $this->foto = $foto;
 
         return $this;
     }

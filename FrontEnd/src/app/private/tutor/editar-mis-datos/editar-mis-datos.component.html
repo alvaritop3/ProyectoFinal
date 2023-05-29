@@ -1,1 +1,90 @@
-<p>editar-mis-datos works!</p>
+<app-tutor-sidebar></app-tutor-sidebar>
+
+<h1>Editar mis datos</h1>
+<hr />
+
+<div id="carta">
+  <form (ngSubmit)="editar()">
+    <div class="card bg-dark text-white" style="border-radius: 1rem">
+      <div class="card-body p-5 text-center">
+        <div class="mb-md-5 mt-md-4 pb-5">
+          <!-- <h2 class="fw-bold mb-2 text-uppercase">Editar Mis datos</h2> -->
+          <p class="text-white-50 mb-5">
+            Introduzca los datos que desee modificar
+          </p>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  required
+                  [(ngModel)]="tutor.nombre"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="apellidos">Apellidos</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  name="apellidos"
+                  required
+                  [(ngModel)]="tutor.apellidos"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="telefono">Telefono</label>
+                <input
+                  type="text"
+                  id="telefono"
+                  name="telefono"
+                  required
+                  [(ngModel)]="tutor.telefono"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="email">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  [(ngModel)]="tutor.email"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-outline form-white mb-4">
+              <label for="direccion">Direccion</label>
+              <input
+                type="text"
+                id="direccion"
+                name="direccion"
+                required
+                [(ngModel)]="tutor.direccion"
+              />
+            </div>
+          </div>
+
+          <button class="nav-link active button fit primary" type="submit">
+            Modificar Mis Datos
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

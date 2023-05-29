@@ -20,6 +20,7 @@ export class DetalleAlumnoComponent implements OnInit {
     fecha_nac: '',
     tutor_nombre: '',
     tutor_id: 0,
+    foto: ''
   };
   //Almacenamos los datos del tutor
   tutor: UsuarioInterface = {
