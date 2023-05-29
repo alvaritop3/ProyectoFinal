@@ -143,8 +143,14 @@ class AdminController extends AbstractController
                     $sesion->setFecha($fecha);
                     $curso->addSesion($sesion);
                     $sesion->setCurso($curso);
-                    $entityManager->persist($sesion);
-                    $entityManager->flush();
+
+                    try {
+                        $entityManager->persist($sesion);
+                        $entityManager->flush();
+                    } catch (\Exception $e) {
+                        $data = 'Ha ocurrido un error: ' . $e->getMessage();
+                        return $this->json($data, 404);
+                    }
 
                     if ($i % 2 == 0) {
                         //Sumamos 7 días a la fecha
@@ -163,8 +169,14 @@ class AdminController extends AbstractController
 
                     $curso->addSesion($sesion);
                     $sesion->setCurso($curso);
-                    $entityManager->persist($sesion);
-                    $entityManager->flush();
+
+                    try {
+                        $entityManager->persist($sesion);
+                        $entityManager->flush();
+                    } catch (\Exception $e) {
+                        $data = 'Ha ocurrido un error: ' . $e->getMessage();
+                        return $this->json($data, 404);
+                    }
 
                     if ($i % 2 == 0) {
                         //Sumamos 7 días a la fecha
@@ -181,33 +193,30 @@ class AdminController extends AbstractController
                 $sesion->setHoraInicio($hora);
                 $sesion->setMonitor($monitor);
                 $sesion->setFecha($fecha);
+                $curso->addSesion($sesion);
+                $sesion->setCurso($curso);
+
+                try {
+                    $entityManager->persist($sesion);
+                    $entityManager->flush();
+                } catch (\Exception $e) {
+                    $data = 'Ha ocurrido un error: ' . $e->getMessage();
+                    return $this->json($data, 404);
+                }
 
                 //Sumamos 7 días a la fecha
                 $fecha->modify('+7 days');
-
-                $curso->addSesion($sesion);
-                $sesion->setCurso($curso);
-                $entityManager->persist($sesion);
-                $entityManager->flush();
             }
         }
-        $entityManager->flush();
 
-        $data = [
-            "nombre" => $nombre,
-            "precio" => $precio,
-            "estado" => $estado,
-            "id_monitor" => $id_monitor,
-            "tipo" => $tipo,
-            "hora" => $hora,
-            "fecha_inicio" => $fecha_inicio->format('Y-m-d'),
-            "fecha_fin" => $fecha_fin,
-            "fecha_inicio_mas_dos_dias" => $fecha->format('Y-m-d H:i:s')
-        ];
-        return $this->json($data);
+        try {
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
 
-
-        //return $this->json('Curso ' . $curso->getNombre() . ' creado con id ' . $curso->getId());
+        return $this->json('Curso creado correctamente', 404);
     }
 
     //Cambiar estado de un curso
@@ -229,8 +238,14 @@ class AdminController extends AbstractController
         //Modificamos el estado
         $curso->setEstado($estado);
 
-        //Hacemos cambios
-        $entityManager->flush();
+        try {
+            //Hacemos cambios
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+
 
         return $this->json('Estado del curso ' . $id_curso . ' cambiado correctamente', 200);
     }
@@ -338,11 +353,12 @@ class AdminController extends AbstractController
         try {
             //Hacemos cambios
             $entityManager->flush();
-            return $this->json("Monitor editado correctamente", 200);
         } catch (\Exception $e) {
             $data = 'Ha ocurrido un error: ' . $e->getMessage();
             return $this->json($data, 404);
         }
+
+        return $this->json("Monitor editado correctamente", 200);
     }
 
 
@@ -379,7 +395,6 @@ class AdminController extends AbstractController
         return $this->json($data);
     }
 
-
     //Mostrar las matriculas
     #[Route("/admin/matriculas", name: "admin_lista_matriculas", methods: ["GET"])]
     public function mostrarMatriculas(ManagerRegistry $doctrine): Response
@@ -402,7 +417,6 @@ class AdminController extends AbstractController
 
         return $this->json($data);
     }
-
 
 
     //Mostrar Matricula por id
@@ -444,12 +458,21 @@ class AdminController extends AbstractController
         $estado = $data->estado;
         $id_curso = $data->curso_id;
         $id_alumno = $data->alumno_id;
+        $id_admin = $data->admin_id;
 
-        //Modificamos el estado
+        $admin = $entityManager->getRepository(Usuario::class)->find($id_admin);
+
         $matricula->setEstado($estado);
+        $matricula->setAtendidaPor($admin);
 
-        //Hacemos cambios
-        $entityManager->flush();
+        try {
+            //Hacemos cambios
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+
 
         //Si la matricula ha sido aceptada
         if (strtolower($estado) == "aceptada") {
@@ -461,16 +484,50 @@ class AdminController extends AbstractController
                 $asistencia = new Asistencia();
                 $asistencia->setAlumno($alumno);
                 $asistencia->setSesion($sesion);
-                $asistencia->setAsiste("");
+                $asistencia->setAsiste("Si");
                 $asistencia->setMotivo("");
-                $entityManager->persist($asistencia);
-                $entityManager->flush();
+
+                try {
+                    $entityManager->persist($asistencia);
+                    $entityManager->flush();
+                } catch (\Exception $e) {
+                    $data = 'Ha ocurrido un error: ' . $e->getMessage();
+                    return $this->json($data, 404);
+                }
             }
         }
 
         return $this->json('Estado de la matricula ' . $id_matricula . ' cambiada correctamente', 200);
     }
 
+    //Mostrar las matriculas que ha gestionado un admin
+    #[Route("/admin/matriculasGestionadas/{id_admin}", name: "admin_lista_matriculas_gestionadas", methods: ["GET"])]
+    public function mostrarMatriculasGestionadas(ManagerRegistry $doctrine, int $id_admin): Response
+    {
+        $matriculas = $doctrine
+            ->getRepository(Matricula::class)
+            ->findAll();
+
+        $entityManager = $doctrine->getManager();
+        $admin = $entityManager->getRepository(Curso::class)->find($id_admin);
+        $data = [];
+
+        foreach ($matriculas as $matricula) {
+            if ($matricula->getAtendidaPor() == $admin) {
+                
+                $data[] = [
+                    'id' => $matricula->getId(),
+                    'estado' => $matricula->getEstado(),
+                    'fecha' => $matricula->getFecha()->format('Y-m-d'),
+                    'alumno_id' => $matricula->getSolicitadaPor()->getId(),
+                    'curso_id' => $matricula->getCurso()->getId(),
+                    // 'atendida_por' => $matricula->getAtendidaPor()->getNombre()
+                ];
+            }
+        }
+
+        return $this->json($data);
+    }
 
     //Mostrar los alumnos
     #[Route("/admin/alumnos", name: "admin_lista_alumnos", methods: ["GET"])]

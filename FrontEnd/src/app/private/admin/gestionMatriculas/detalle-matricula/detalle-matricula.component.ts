@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatriculaInterface } from 'src/app/interfaces/matricula-interface';
 import { AdminService } from 'src/app/services/admin.service';
+import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 
 @Component({
   selector: 'app-detalle-matricula',
@@ -10,6 +11,7 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class DetalleMatriculaComponent implements OnInit {
   id_matricula!: any;
+  id_admin!: number;
 
   matricula: MatriculaInterface = {
     id: 0,
@@ -24,10 +26,14 @@ export class DetalleMatriculaComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private route: ActivatedRoute, 
-    private router: Router
+    private router: Router,
+    private datosUsuario: DatosUsuarioService
   ) {
     //Recojo el id de la matricula
     this.id_matricula = this.route.snapshot.paramMap.get('idMatricula');
+    //Recojo el id del admin
+    this.id_admin = this.datosUsuario.id;
+    
   }
 
   ngOnInit(): void {
@@ -50,6 +56,7 @@ export class DetalleMatriculaComponent implements OnInit {
       estado: this.estado,
       alumno_id: this.matricula.alumno_id,
       curso_id: this.matricula.curso_id,
+      admin_id: this.id_admin
     };
 
     this.adminService

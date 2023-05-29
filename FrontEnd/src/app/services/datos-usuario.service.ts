@@ -10,5 +10,7 @@ export class DatosUsuarioService {
   apellidos!: string;
   telefono!: string;
 
-  constructor() {}
+  constructor() {
+    this.id = Number(localStorage.getItem('id'));
+  }
 }

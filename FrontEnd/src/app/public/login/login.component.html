@@ -1,23 +1,23 @@
-<div class="login">
+<div class="agua" id="carta">
 <div class="container">
   <button (click)="cambiar()" class="nav-link active button fit primary">{{botonName}}</button>
 
-
   <!-- Login-->
-  <div *ngIf="botonName =='Login'">
+  <div class='formularios' *ngIf="botonName =='Ir a Registro'">
     
     <form (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="card bg-dark text-white" style="border-radius: 1rem">
         <div class="card-body p-5 text-center">
           <div class="mb-md-5 mt-md-4 pb-5">
             <h1 class="fw-bold mb-2 text-uppercase">Iniciar sesión</h1>
-            <h3 class="text-white-50 mb-5">
+            <h5 class="text-white-50 mb-5">
               Introduzca su email y contraseña para iniciar sesión
-            </h3>
+            </h5>
 
             <div class="form-outline">
               <label for="email">Email</label>
-              <input                
+              <input 
+                class="login"               
                 type="text"
                 id="email"
                 name="email"
@@ -47,6 +47,7 @@
                 name="password"
                 required
                 formControlName="password"
+                class="login"  
               />
               <div
                 *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
@@ -60,10 +61,9 @@
             </div>
 
             <button
-              class="nav-link active button fit primary"
+              class="nav-link active button primary"
               type="submit"
               [disabled]="loginForm.invalid"
-              
             >
               Iniciar Sesión
             </button>
@@ -74,7 +74,7 @@
   </div>
 
   <!--Registro-->
-  <div *ngIf="botonName !=='Login'">
+  <div class='formularios' *ngIf="botonName !=='Ir a Registro'">
     <form (ngSubmit)="registro()" [formGroup]="registroForm">
       <div class="card bg-dark text-white" style="border-radius: 1rem">
         <div class="card-body p-5 text-center">

@@ -64,7 +64,6 @@ export class AdminService {
 
   //Servicio para obtener todas las matriculas
   listaMatriculas(): Observable<MatriculaInterface[]> {
-    //<MatriculasInterface[]>
     return this.http.get<MatriculaInterface[]>(
       `${this.baseUrl}/admin/matriculas`
     );
@@ -85,6 +84,14 @@ export class AdminService {
     );
   }
 
+  //Servicio para obtener las matriculas que ha gestionado un admin
+  listaMatriculasGestionadas(
+    id_admin: number
+  ): Observable<MatriculaInterface[]> {
+    return this.http.get<MatriculaInterface[]>(
+      `${this.baseUrl}/admin/matriculasGestionadas/${id_admin}`
+    );
+  }
   //Servicio para obtener todos los alumnos
   listaAlumnos(): Observable<AlumnoInterface[]> {
     return this.http.get<AlumnoInterface[]>(`${this.baseUrl}/admin/alumnos`);

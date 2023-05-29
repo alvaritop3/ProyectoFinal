@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DatosAlumnoService } from './datos-alumno.service';
 import { MatriculaInterface } from '../interfaces/matricula-interface';
+import { UsuarioInterface } from '../interfaces/usuario-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +61,9 @@ export class TutorService {
     );
   }
 
-
-
+  //Modificar datos del tutor
+  //Editar los datos del tutor
+  editarTutor(email: string, tutor: UsuarioInterface): Observable<any> {
+    return this.http.put(`${this.baseUrl}/tutor/editTutor/${email}`, tutor);
+  }
 }

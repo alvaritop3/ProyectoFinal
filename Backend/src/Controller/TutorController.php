@@ -30,10 +30,10 @@ class TutorController extends AbstractController
         $data = [];
 
         foreach ($alumnos as $alumno) {
-            if($alumno->getFoto()){
+            if ($alumno->getFoto()) {
                 //$rutaFoto = 'public/fotos/' . $alumno->getFoto();
                 //$urlFoto = $urlGenerator->generate('fotos', ['rutaFoto' => $rutaFoto], UrlGeneratorInterface::ABSOLUTE_URL);
-                
+
                 $data[] = [
                     'id' => $alumno->getId(),
                     'nombre' => $alumno->getNombre(),
@@ -41,7 +41,7 @@ class TutorController extends AbstractController
                     'fecha_nac' => $alumno->getFechaNac()->format('d-m-Y'),
                     'foto' => $alumno->getFoto()
                 ];
-            }else{
+            } else {
                 $data[] = [
                     'id' => $alumno->getId(),
                     'nombre' => $alumno->getNombre(),
@@ -50,7 +50,6 @@ class TutorController extends AbstractController
                     'foto' => "fotoDefecto.png"
                 ];
             }
-            
         }
 
         return $this->json($data);
@@ -61,16 +60,16 @@ class TutorController extends AbstractController
     public function newAlumno(ManagerRegistry $doctrine, Request $request): Response
     {
         //Recogemos los datos que vienen en la Request
-        $nombre = $request->request->get('nombre'); 
-        $apellidos = $request->request->get('apellidos'); 
-        $tutor_id = $request->request->get('tutor'); 
+        $nombre = $request->request->get('nombre');
+        $apellidos = $request->request->get('apellidos');
+        $tutor_id = $request->request->get('tutor');
         $file = $request->files->get('file');
 
         //Transformamos la fecha de nacimiento
-         $fechaString = $request->request->get('fecha_nac');
-         $timestamp = strtotime($fechaString);
-         $fecha_nac = new DateTime();
-         $fecha_nac->setTimestamp($timestamp);
+        $fechaString = $request->request->get('fecha_nac');
+        $timestamp = strtotime($fechaString);
+        $fecha_nac = new DateTime();
+        $fecha_nac->setTimestamp($timestamp);
 
         //Recuperamos el id del tutor y lo convertimos en un objeto Usuario
         $tutor = $doctrine->getRepository(Usuario::class)->find($tutor_id);
@@ -87,14 +86,14 @@ class TutorController extends AbstractController
 
         //Comprobamos si hay una imágen en el campo foto
         if ($file) {
-            $fileName = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('kernel.project_dir').'/public/fotos/', $fileName);
+            $fileName = uniqid() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir') . '/public/fotos/', $fileName);
             $alumno->setFoto($fileName);
-        }else{
+        } else {
             $alumno->setFoto('fotoDefecto.png');
         }
-       
-        
+
+
         //Introducimos el alumno que acabamos de crear en el objeto Usuario (tutor)
         $tutor->addAlumno($alumno);
 
@@ -127,8 +126,8 @@ class TutorController extends AbstractController
         $file = $request->files->get('file');
 
         if ($file) {
-            $fileName = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('kernel.project_dir').'/public/fotos/', $fileName);
+            $fileName = uniqid() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir') . '/public/fotos/', $fileName);
             $alumno->setFoto($fileName);
         }
 
@@ -248,7 +247,7 @@ class TutorController extends AbstractController
 
     //Mostrar las matriculas de un alumno
     #[Route("/tutor/matriculas/{id_alumno}", name: "tutor_lista_matriculas", methods: ["GET"])]
-    public function mostrarMatriculas(ManagerRegistry $doctrine, int $id_alumno ): Response
+    public function mostrarMatriculas(ManagerRegistry $doctrine, int $id_alumno): Response
     {
         $matriculas = $doctrine
             ->getRepository(Matricula::class)
@@ -257,12 +256,12 @@ class TutorController extends AbstractController
         $data = [];
 
         foreach ($matriculas as $matricula) {
-            if($matricula->getSolicitadaPor()->getId() == $id_alumno){
+            if ($matricula->getSolicitadaPor()->getId() == $id_alumno) {
                 $data[] = [
                     'id' => $matricula->getId(),
                     'estado' => $matricula->getEstado(),
                     'fecha' => $matricula->getFecha()->format('Y-m-d'),
-                    'nombre_curso'=>$matricula->getCurso()->getNombre()
+                    'nombre_curso' => $matricula->getCurso()->getNombre()
                 ];
             }
         }
@@ -270,4 +269,72 @@ class TutorController extends AbstractController
         return $this->json($data);
     }
 
+    //Editar los datos de un tutor
+    #[Route("/tutor/editTutor/{email}", name: "tutor_edit_tutor", methods: ["PUT"])]
+    public function editTutor(ManagerRegistry $doctrine, Request $request, string $email): Response
+    {
+        //Creamos el entityManager
+        $entityManager = $doctrine->getManager();
+
+        $userRepository = $entityManager->getRepository(Usuario::class);
+        // busca el tutor según su correo electrónico
+        $tutor = $userRepository->findOneBy(['email' => $email]);
+
+        // comprueba si se encontró el usuario
+        if (!$tutor) {
+            return new JsonResponse(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        //Recogemos los datos que vienen en la Request
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+
+        $nombre = $data->nombre;
+        $apellidos = $data->apellidos;
+        $email = $data->email;
+        $telefono = $data->telefono;
+        $direccion = $data->direccion;
+
+        //Comprobamos que los datos no vengan vacíos
+        if (!empty($nombre)) {
+            $tutor->setNombre($nombre);
+        } else {
+            return $this->json('El nombre no puede estar vacio', 404);
+        }
+
+        if (!empty($apellidos)) {
+            $tutor->setApellidos($apellidos);
+        } else {
+            return $this->json('Los apellidos no pueden estar vacios', 404);
+        }
+
+        if (!empty($email)) {
+            $tutor->setEmail($email);
+        } else {
+            return $this->json('El email no puede estar vacio', 404);
+        }
+
+        if (!empty($telefono)) {
+            $tutor->setTelefono($telefono);
+        } else {
+            return $this->json('El telefono no puede estar vacio', 404);
+        }
+
+        if (!empty($direccion)) {
+            $tutor->setDireccion($direccion);
+        } else {
+            return $this->json('La direccion no puede estar vacia', 404);
+        }
+
+        try {
+            //Hacemos cambios
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+
+
+        return $this->json('Datos modificados correctamente', 200);
+    }
 }

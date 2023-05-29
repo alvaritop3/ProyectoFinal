@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
   //Contenido del botón
-  botonName: string = 'Login';
+  botonName: string = 'Ir a Registro';
 
   //Formularios
   loginForm!: FormGroup;
@@ -47,10 +47,10 @@ export class LoginComponent implements OnInit {
   }
 
   cambiar() {
-    if (this.botonName == 'Login') {
-      this.botonName = 'Registro';
+    if (this.botonName == 'Ir a Registro') {
+      this.botonName = 'Ir a Login';
     } else {
-      this.botonName = 'Login';
+      this.botonName = 'Ir a Registro';
     }
   }
   //LLamamos al Servicio para crear un usuario nuevo (tutor)
