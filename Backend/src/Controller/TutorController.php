@@ -22,7 +22,7 @@ class TutorController extends AbstractController
 
     //Obtener todos los alumnos de un tutor
     #[Route("/tutor/getAlumnos/{id}", name: "alumnos_lista_por_tutor", methods: ["GET"])]
-    public function index(ManagerRegistry $doctrine, int $id, UrlGeneratorInterface $urlGenerator): Response
+    public function index(ManagerRegistry $doctrine, int $id): Response
     {
         $tutor = $doctrine->getRepository(Usuario::class)->find($id);
         $alumnos = $tutor->getAlumnos();
@@ -31,9 +31,6 @@ class TutorController extends AbstractController
 
         foreach ($alumnos as $alumno) {
             if ($alumno->getFoto()) {
-                //$rutaFoto = 'public/fotos/' . $alumno->getFoto();
-                //$urlFoto = $urlGenerator->generate('fotos', ['rutaFoto' => $rutaFoto], UrlGeneratorInterface::ABSOLUTE_URL);
-
                 $data[] = [
                     'id' => $alumno->getId(),
                     'nombre' => $alumno->getNombre(),
@@ -106,7 +103,6 @@ class TutorController extends AbstractController
 
     //Editar los datos de un alumno
     #[Route("/tutor/editAlumno/{id}", name: "alumnot_edit", methods: ["PUT"])]
-
     public function edit(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         $entityManager = $doctrine->getManager();
@@ -155,29 +151,39 @@ class TutorController extends AbstractController
         return $this->json($respuesta);
     }
 
-    //Mostrar los cursos en los que puede solicitar matricula
+    //Mostrar los cursos en los que puede solicitar matricula (que estén activos y no haya solicitado matricula)
     #[Route("/tutor/cursosDisp/{id_alumno}", name: "tutor_lista_cursos_disponibles", methods: ["GET"])]
     public function mostrarCursosActivos(ManagerRegistry $doctrine, int $id_alumno): Response
     {
-        //Obtenemos todos los cursos
+        $entityManager = $doctrine->getManager();
+        $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
+    
+        if (!$alumno) {
+            return $this->json('Ningún alumno encontrado por el id ' . $id_alumno, 404);
+        }
+        
+        $fechaActual = new \DateTime();
+    
+        // Obtenemos todos los cursos
         $cursos = $doctrine
             ->getRepository(Curso::class)
             ->findAll();
-
+    
         $data = [];
-
-        //Recorremos el array de cursos para buscar aquellos que no hayan sido solicitados por el alumno
+    
         foreach ($cursos as $curso) {
             $matriculado = false;
-
+    
+            //comprobamos que el alumno no haya solicitado este curso
             foreach ($curso->getMatriculas() as $matricula) {
-
                 if ($matricula->getSolicitadaPor()->getId() == $id_alumno) {
                     $matriculado = true;
                     break;
                 }
             }
-            if (!$matriculado) {
+    
+            //Comprobamos que el curso no ha comenzado
+            if (!$matriculado && $curso->getFechaInicio() > $fechaActual) {
                 $data[] = [
                     'id' => $curso->getId(),
                     'nombre' => $curso->getNombre(),
@@ -188,10 +194,41 @@ class TutorController extends AbstractController
                 ];
             }
         }
-
+    
         return $this->json($data);
     }
 
+    //Mostrar el historial de cursos 
+    #[Route("/tutor/historialCursos/{id_alumno}", name: "tutor_historial_cursos", methods: ["GET"])]
+    public function mostrarHistorialCursos(ManagerRegistry $doctrine, int $id_alumno): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
+
+        if (!$alumno) {
+            return $this->json('Ningún alumno encontrado por el id ' . $id_alumno, 404);
+        }
+
+        $data = [];
+
+        // Obtener los cursos matriculados por el alumno
+        $matriculas = $alumno->getMatriculasRealizadas();
+
+        foreach ($matriculas as $matricula) {
+            $curso = $matricula->getCurso();
+
+            $data[] = [
+                'id' => $curso->getId(),
+                'nombre' => $curso->getNombre(),
+                'fecha_inicio' => $curso->getFechaInicio()->format('Y-m-d'),
+                'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
+                'precio' => $curso->getPrecio(),
+                'estado' => $curso->getEstado()
+            ];
+        }
+
+        return $this->json($data);
+    }
 
     //Solicitar matricula de alumno en curso
     #[Route("/tutor/solicitarMatricula", name: "tutor_solicitar_matricula", methods: ["POST"])]

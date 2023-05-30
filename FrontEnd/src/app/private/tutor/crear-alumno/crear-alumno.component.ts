@@ -11,9 +11,13 @@ import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 })
 export class CrearAlumnoComponent implements OnInit {
   alumnoForm!: FormGroup;
-  id_tutor!:any;
+  id_tutor!: any;
   selectedFile: File | undefined;
 
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,19 +31,10 @@ export class CrearAlumnoComponent implements OnInit {
 
   ngOnInit(): void {
     this.alumnoForm = this.initFormAlumno();
-    
   }
 
   //LLamamos al servicio para dar de alta a un alumno
   registrarAlumno(): void {
-    
-    // let datos = {
-    //   nombre: this.alumnoForm.value.nombre,
-    //   apellidos: this.alumnoForm.value.apellidos,
-    //   fecha_nac: this.alumnoForm.value.fecha_nac,
-    //   tutor: this.id_tutor, 
-    // };
-
     const formData = new FormData();
     formData.append('file', this.selectedFile!);
     formData.append('nombre', this.alumnoForm.value.nombre);
@@ -49,20 +44,30 @@ export class CrearAlumnoComponent implements OnInit {
 
     this.tutorService.registrarAlumno(formData).subscribe({
       next: (resp) => {
-        //Mostrar mensaje de que el alumno se ha creado correctamente
-        console.log(resp);
-        //this.router.navigate(['/tutor']);
+        this.successMessage = resp;
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.showSuccess = false;
+        }, 4000);
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = err;
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.router.navigate(['/tutor']);
+        }, 4000);
       },
     });
   }
 
-  onFileSelected(event: any){
+  onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
-
 
   //Validadores del formulario
   initFormAlumno(): FormGroup {

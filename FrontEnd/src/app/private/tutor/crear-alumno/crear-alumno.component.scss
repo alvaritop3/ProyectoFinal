@@ -1,25 +1,36 @@
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
 }
 
-label{
-    display: block;
+label {
+  display: block;
+}
+#apellidos,
+#nombre {
+  width: 60%;
+  margin: 0px auto;
 }
 
-#registrar{
-    margin: 30px auto;
+#registrar {
+  margin: 30px auto;
 }
 
-#card{
-   border-radius: 1rem;
-   width: 90%;
-   margin: 0px auto;
+.card {
+  border-radius: 1rem;
+  width: 90%;
+  margin: 20px auto;
 }
 
-.row{
-    margin: 10px auto;
+.row {
+  margin: 10px auto;
 }
 
-#modalLabel{
-    color: black;
+#modalLabel {
+  color: black;
 }
+
+#foto {
+  color: white;
+  width: 90%;
+}
+

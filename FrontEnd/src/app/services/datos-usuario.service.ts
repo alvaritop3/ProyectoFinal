@@ -12,5 +12,6 @@ export class DatosUsuarioService {
 
   constructor() {
     this.id = Number(localStorage.getItem('id'));
+    this.email = String(localStorage.getItem('email'));
   }
 }

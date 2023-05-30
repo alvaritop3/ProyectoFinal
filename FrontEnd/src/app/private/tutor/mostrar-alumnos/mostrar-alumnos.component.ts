@@ -13,6 +13,7 @@ export class MostrarAlumnosComponent implements OnInit {
   arrayAlumnos: Array<AlumnoInterface> = [];
   id_tutor!: any;
 
+
   constructor(
     private tutorService: TutorService,
     private datosUsuario: DatosUsuarioService
@@ -36,5 +37,6 @@ export class MostrarAlumnosComponent implements OnInit {
         console.log(err);
       },
     });
-  }
+  } 
+
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioInterface } from 'src/app/interfaces/usuario-interface';
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 import { LoginService } from 'src/app/services/login.service';
-import { TutorService } from 'src/app/services/tutor.service';
+
 
 @Component({
   selector: 'app-mi-area',
@@ -22,15 +22,16 @@ export class MiAreaComponent implements OnInit {
   };
 
   constructor(
-    private tutorService: TutorService,
     private datosUsuario: DatosUsuarioService,
     private loginService: LoginService
   ) {
     //Recogemos el email del servicio
     this.tutor.email = this.datosUsuario.email;
+    
   }
 
   ngOnInit(): void {
+    this.tutor.email = this.datosUsuario.email;
     //Obtenemos los datos del tutor por el email almacenado en el servicio
     this.loginService.getDatosByEmail(this.tutor.email).subscribe({
       next: (tutor: UsuarioInterface) => {

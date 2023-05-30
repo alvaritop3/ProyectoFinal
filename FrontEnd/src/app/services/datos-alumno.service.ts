@@ -9,6 +9,8 @@ export class DatosAlumnoService {
   apellidos: string = '';
   fecha_nac: string = '';
 
-  constructor() { }
+  constructor() { 
+    this.id = Number(localStorage.getItem('id_alumno'));
+  }
   
 }

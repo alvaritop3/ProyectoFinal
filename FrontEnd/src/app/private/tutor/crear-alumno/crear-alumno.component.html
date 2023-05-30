@@ -1,108 +1,96 @@
-<app-tutor-sidebar></app-tutor-sidebar>
-
 <div class="container">
   <form (ngSubmit)="registrarAlumno()" [formGroup]="alumnoForm">
-    <div id="card" class="card bg-dark text-white">
+    <div class="card" class="card bg-dark text-white">
       <div class="card-body p-5 text-center">
         <div class="mb-md-5 mt-md-4 pb-5">
           <h2 class="fw-bold mb-2 text-uppercase">Añadir Alumno</h2>
           <p class="text-white-50 mb-5">Introduzca los datos del alumno</p>
 
           <div class="row">
-            <div class="col-md-10 mb-6">
-              <div class="form-outline">
-                <label for="nombre">Nombre</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  required
-                  formControlName="nombre"
-                />
-                <div
-                  *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['required']"
-                  class="alert alert-danger"
-                >
-                  El nombre no puede estar vacío
-                </div>
-                <div
-                  *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['minlength']"
-                  class="alert alert-danger"
-                >
-                  Introduzca un nombre válido (más de tres caracteres)
-                </div>
+            <div class="form-outline" id="mid">
+              <label for="nombre">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required
+                formControlName="nombre"
+              />
+              <div
+                *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                El nombre no puede estar vacío
+              </div>
+              <div
+                *ngIf="alumnoForm.get('nombre')?.touched && alumnoForm.get('nombre')?.errors?.['minlength']"
+                class="alert alert-danger"
+              >
+                Introduzca un nombre válido (más de tres caracteres)
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-10 mb-6">
-              <div class="form-outline">
-                <label for="apellidos">Apellidos</label>
-                <input
-                  type="text"
-                  id="apellidos"
-                  name="apellidos"
-                  required
-                  formControlName="apellidos"
-                />
-                <div
-                  *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['required']"
-                  class="alert alert-danger"
-                >
-                  El apellido no puede estar vacío
-                </div>
-                <div
-                  *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['minlength']"
-                  class="alert alert-danger"
-                >
-                  Introduzca un apellido de más de tres caracteres
-                </div>
+            <div class="form-outline">
+              <label for="apellidos">Apellidos</label>
+              <input
+                type="text"
+                id="apellidos"
+                name="apellidos"
+                required
+                formControlName="apellidos"
+              />
+              <div
+                *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                El apellido no puede estar vacío
+              </div>
+              <div
+                *ngIf="alumnoForm.get('apellidos')?.touched && alumnoForm.get('apellidos')?.errors?.['minlength']"
+                class="alert alert-danger"
+              >
+                Introduzca un apellido de más de tres caracteres
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-10 mb-6">
-              <div class="form-outline">
-                <label for="fecha_nac">Fecha de Nacimiento</label>
-                <input
-                  style="color: black"
-                  type="date"
-                  id="fecha_nac"
-                  name="fecha_nac"
-                  required
-                  formControlName="fecha_nac"
-                />
-                <div
-                  *ngIf="alumnoForm.get('fecha_nac')?.touched && alumnoForm.get('fecha_nac')?.errors?.['required']"
-                  class="alert alert-danger"
-                >
-                  Debe seleccionar una fecha
-                </div>
+            <div class="form-outline">
+              <label for="fecha_nac">Fecha de Nacimiento</label>
+              <input
+                style="color: black"
+                type="date"
+                id="fecha_nac"
+                name="fecha_nac"
+                required
+                formControlName="fecha_nac"
+              />
+              <div
+                *ngIf="alumnoForm.get('fecha_nac')?.touched && alumnoForm.get('fecha_nac')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                Debe seleccionar una fecha
+              </div>
 
-                <div class="row">
-                  <div class="col-md-10 mb-6">
-                    <div class="form-outline">
-                      <label for="fecha_nac">Foto</label>
-                      <input
-                        type="file"
-                        id="foto"
-                        name="foto"
-                        (change)="onFileSelected($event)"
-                      />
-                      </div>
-                    </div>
+              <div class="row">
+                  <div class="form-outline">
+                    <label for="fecha_nac">Foto</label>
+                    <input
+                      type="file"
+                      id="foto"
+                      name="foto"
+                      (change)="onFileSelected($event)"
+                    />
                   </div>
-                <button
-                  id="registrar"
-                  class="nav-link active button fit primary"
-                  type="submit"
-                  [disabled]="alumnoForm.invalid"
-                  data-bs-toggle="modal"
-                  data-bs-target="#creadoModal"
-                >
-                  Registrar Alumno
-                </button>
               </div>
+              <button
+                id="registrar"
+                class="nav-link active button fit primary"
+                type="submit"
+                [disabled]="alumnoForm.invalid"
+              >
+                Registrar Alumno
+              </button>
             </div>
           </div>
         </div>
@@ -110,28 +98,11 @@
     </div>
   </form>
 
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="creadoModal"
-    tabindex="-1"
-    aria-labelledby="modalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalLabel">
-            Alumno creado correctamente
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-      </div>
-    </div>
+  <div class="alert alert-success custom-alert" *ngIf="showSuccess">
+    {{ successMessage }}
+  </div>
+
+  <div class="alert alert-danger custom-alert" *ngIf="showError">
+    {{ errorMessage }}
   </div>
 </div>

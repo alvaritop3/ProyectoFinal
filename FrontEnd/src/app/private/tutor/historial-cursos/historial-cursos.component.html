@@ -1,3 +1,36 @@
 <app-tutor-sidebar></app-tutor-sidebar>
 <h1>Mis Cursos</h1>
-<hr>
+<hr />
+
+<div class="container">
+  <table class="table" *ngIf="arrayHistorialCursos.length>0">
+    
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha Inicio</th>
+        <th scope="col">Fecha Fin</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of arrayHistorialCursos">
+        <td>{{ curso.nombre }}</td>
+        <td>{{ curso.fecha_inicio | date:'dd/MM/yyyy'  }}</td>
+        <td>{{ curso.fecha_fin | date:'dd/MM/yyyy' }}</td>
+        <td>{{ curso.precio | number : ".2" }} €</td>
+        <td>{{curso.estado}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container" *ngIf="arrayHistorialCursos.length==0">
+    <h4>No hay ningún curso en su historial</h4>
+  <hr />
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+    {{ errorMessage }}
+  </div>

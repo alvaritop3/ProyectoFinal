@@ -2,7 +2,7 @@
 <h1>Listado de Matriculas</h1>
 <hr />
 
-<div class="filtros">
+<div class="filtros" *ngIf="arrayMatriculasOrdenadas.length>0">
     <button class="nav-link active button primary" (click)="estado()">
         Estado
       </button>
@@ -11,6 +11,12 @@
   </button>
   <button class="nav-link active button primary" (click)="antiguas()">
     Antiguas
+  </button>
+</div>
+<div *ngIf="arrayMatriculasOrdenadas.length==0">
+  <h6>No ha realizado ninguna matricula aún</h6>
+  <button [routerLink]="['/tutor/cursos', idAlumno]" class="nav-link active button fit primary" >
+    Ir a los Cursos Disponibles
   </button>
 </div>
 <hr />

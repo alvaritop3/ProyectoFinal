@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DatosAlumnoService } from './datos-alumno.service';
 import { MatriculaInterface } from '../interfaces/matricula-interface';
 import { UsuarioInterface } from '../interfaces/usuario-interface';
+import { CursoInterface } from '../interfaces/curso-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,6 @@ export class TutorService {
 
   //Modificar a alumno
   modificarAlumno(datos: any): Observable<any> {
-    //Tengo que pasarle en el path el id del alumno /id
     const id_alumno = this.datosAlumno.id;
 
     return this.http.put(
@@ -39,16 +39,15 @@ export class TutorService {
   }
 
   //Mostrar los cursos disponibles para un alumno
-  mostrarCursosDisponibles(id_alumno: number): Observable<any> {
-    //Observable<curso[]>
-    return this.http.get(`${this.baseUrl}/tutor/cursosDisp/${id_alumno}`);
+  mostrarCursosDisponibles(id_alumno: number): Observable<CursoInterface[]> {
+    return this.http.get<CursoInterface[]>(
+      `${this.baseUrl}/tutor/cursosDisp/${id_alumno}`
+    );
   }
 
   //Solicitar matriculación
-  solicitarMatricula(datosMatricula: any): Observable<any> {
-    //Observable<matricula>
-
-    return this.http.post(
+  solicitarMatricula(datosMatricula: any): Observable<MatriculaInterface> {
+    return this.http.post<MatriculaInterface>(
       `${this.baseUrl}/tutor/solicitarMatricula`,
       datosMatricula
     );
@@ -61,9 +60,14 @@ export class TutorService {
     );
   }
 
-  //Modificar datos del tutor
   //Editar los datos del tutor
   editarTutor(email: string, tutor: UsuarioInterface): Observable<any> {
     return this.http.put(`${this.baseUrl}/tutor/editTutor/${email}`, tutor);
   }
+
+  //Ver historial de cursos
+  verHistorial(idAlumno:number):Observable<CursoInterface[]>{
+    return this.http.get<CursoInterface[]>(`${this.baseUrl}/tutor/historialCursos/${idAlumno}`);
+  }
+  
 }
