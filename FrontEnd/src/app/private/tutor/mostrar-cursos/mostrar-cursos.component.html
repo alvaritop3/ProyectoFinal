@@ -2,6 +2,7 @@
 <h1>Listado de cursos disponibles</h1>
   <hr />
 <div class="container">
+  <div class="table-responsive">
   <table class="table" *ngIf="arrayCursos.length>0">
     <thead>
       <tr class="table-dark">
@@ -22,7 +23,7 @@
         <td>{{curso.estado}}</td>
         <td>
           <button
-            class="button fit primary"
+            class="button primary"
             (click)="solicitarMatricula(curso.id)"
           >
             Solcitar
@@ -31,6 +32,8 @@
       </tr>
     </tbody>
   </table>
+</div>
+
 </div>
 
 <div class="container" *ngIf="arrayCursos.length==0">

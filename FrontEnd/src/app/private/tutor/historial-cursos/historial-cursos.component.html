@@ -3,8 +3,8 @@
 <hr />
 
 <div class="container">
+  <div class="table-responsive">
   <table class="table" *ngIf="arrayHistorialCursos.length>0">
-    
     <thead>
       <tr class="table-dark">
         <th scope="col">Nombre</th>
@@ -24,6 +24,7 @@
       </tr>
     </tbody>
   </table>
+</div>
 </div>
 
 <div class="container" *ngIf="arrayHistorialCursos.length==0">

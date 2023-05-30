@@ -8,3 +8,15 @@ input{
 #precio{
     width: 90%;
 }
+
+#boton{
+margin-top: 20px;
+}
+
+//Ocultamos algunos campos de la tabla en dispositivos más pequeños
+@media screen and (max-width: 767px) {
+    .table td:nth-of-type(2),
+    .table th:nth-of-type(3) {
+      display: none;
+    }
+  }

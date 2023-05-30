@@ -18,7 +18,6 @@ export class VerCursosComponent implements OnInit {
   //Array de cursos
   arrayCursosActivos: Array<CursoInterface> = [];
   arrayCursosFinalizados: Array<CursoInterface> = [];
-  arrayCursosFuturos: Array<CursoInterface> = [];
 
   constructor(private adminService: AdminService, private fb: FormBuilder) {}
 
@@ -28,20 +27,42 @@ export class VerCursosComponent implements OnInit {
       next: (cursos) => {
         this.arrayCursos = cursos;
 
-        //Filtramos los cursos por fecha para devolver los activos
-        this.arrayCursosActivos = cursos.filter((curso: any) => {
-          let fecha_inicio = new Date(curso.fecha_inicio);
-          let fecha_fin = new Date(curso.fecha_fin);
+        //Ordenamos de más recientes a mas antiguos
+        this.arrayCursos = this.arrayCursos.sort((a: any, b: any) => {
+          let fechaInicioA: any = new Date(a.fecha_inicio);
+          let fechaInicioB: any = new Date(b.fecha_inicio);
 
-          return (
-            this.fechaActual >= fecha_inicio && this.fechaActual <= fecha_fin
-          );
+          return fechaInicioB - fechaInicioA;
         });
+
+        //Filtramos los cursos por fecha para devolver los activos (los que se están impartiendo y los que van a comenzar)
+        this.arrayCursosActivos = this.arrayCursos
+          .filter((curso: any) => {
+            let fecha_fin = new Date(curso.fecha_fin);
+            return this.fechaActual <= fecha_fin;
+          })
+          .sort((a: any, b: any) => {
+            let fechaInicioA: any = new Date(a.fecha_inicio);
+            let fechaInicioB: any = new Date(b.fecha_inicio);
+
+            return fechaInicioA - fechaInicioB;
+          });
+
+        //Filtramos los cursos para devolver aquellos que ya han finalizado
+        this.arrayCursosFinalizados = this.arrayCursos
+          .filter((curso: any) => {
+            const fechaFin = new Date(curso.fecha_fin);
+            return fechaFin < this.fechaActual;
+          })
+          .sort((a: any, b: any) => {
+            const fechaFinA: any = new Date(a.fecha_fin);
+            const fechaFinB: any = new Date(b.fecha_fin);
+            return fechaFinB - fechaFinA;
+          });
       },
       error: (err) => {
         console.log(err);
-      }
+      },
     });
   }
-
 }
