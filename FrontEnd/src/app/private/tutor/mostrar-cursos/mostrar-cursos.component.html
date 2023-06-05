@@ -1,45 +1,61 @@
 <app-tutor-sidebar></app-tutor-sidebar>
 <h1>Listado de cursos disponibles</h1>
-  <hr />
+<hr />
 <div class="container">
   <div class="table-responsive">
-  <table class="table" *ngIf="arrayCursos.length>0">
-    <thead>
-      <tr class="table-dark">
-        <th scope="col">Nombre</th>
-        <th scope="col">Fecha Inicio</th>
-        <th scope="col">Fecha Fin</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Matrícula</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let curso of arrayCursos">
-        <td>{{ curso.nombre }}</td>
-        <td>{{ curso.fecha_inicio | date:'dd/MM/yyyy'  }}</td>
-        <td>{{ curso.fecha_fin | date:'dd/MM/yyyy' }}</td>
-        <td>{{ curso.precio | number : ".2" }} €</td>
-        <td>{{curso.estado}}</td>
-        <td>
-          <button
-            class="button primary"
-            (click)="solicitarMatricula(curso.id)"
-          >
-            Solcitar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table" *ngIf="arrayCursos.length > 0">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha Inicio</th>
+          <th scope="col">Fecha Fin</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Matrícula</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let curso of arrayCursos">
+          <td>
+            <div
+              class="dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ curso.nombre }}
+            </div>
+            <ul class="dropdown-menu">
+              <li><strong>Monitor/a: </strong>{{ curso.monitor }}</li>
+              <li><strong>Estado: </strong>{{ curso.estado }}</li>
+            </ul>
+          </td>
+          <td>{{ curso.fecha_inicio | date : "dd/MM" }}</td>
+          <td>{{ curso.fecha_fin | date : "dd/MM" }}</td>
+          <td>{{ curso.precio | number : ".2" }} €</td>
+          <td>{{ curso.hora }}:00h</td>
+          <td>
+            <button
+              class="button primary"
+              (click)="solicitarMatricula(curso.id)"
+            >
+              Solcitar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-success custom-alert" *ngIf="showSuccess">
+    {{ successMessage }}
+  </div>
+
+  <div class="alert alert-danger custom-alert" *ngIf="showError">
+    {{ errorMessage }}
+  </div>
 </div>
 
-</div>
-
-<div class="container" *ngIf="arrayCursos.length==0">
+<div class="container" *ngIf="arrayCursos.length == 0">
   <h4>No hay cursos disponibles para realizar la matrícula</h4>
   <hr />
 </div>
-
-
-

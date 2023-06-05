@@ -8,68 +8,80 @@ import { TutorService } from 'src/app/services/tutor.service';
 @Component({
   selector: 'app-editar-mis-datos',
   templateUrl: './editar-mis-datos.component.html',
-  styleUrls: ['./editar-mis-datos.component.scss']
+  styleUrls: ['./editar-mis-datos.component.scss'],
 })
-export class EditarMisDatosComponent implements OnInit{
-//Email del tutor
-tutor_email:string = "";
-//Inicializamos un usuario con los campos vacios
-tutor: UsuarioInterface = {
-  id: 0,
-  nombre: "",
-  apellidos: "",
-  direccion: "",
-  email: "",
-  telefono: "",
-  roles: [],
-  fecha_incorp: ""
-};
+export class EditarMisDatosComponent implements OnInit {
+  //Email del tutor
+  tutor_email: string = '';
+  //Inicializamos un usuario con los campos vacios
+  tutor: UsuarioInterface = {
+    id: 0,
+    nombre: '',
+    apellidos: '',
+    direccion: '',
+    email: '',
+    telefono: '',
+    roles: [],
+    fecha_incorp: '',
+  };
 
-constructor(
-  private tutorService: TutorService,
-  private loginService: LoginService,
-  private route: ActivatedRoute,
-  private router: Router,
-  private datosUsuario: DatosUsuarioService
-) {
-  //Recojo el email del tutor
-  this.tutor_email = this.route.snapshot.paramMap.get('emailTutor')!;
-  console.log(this.tutor_email);
-}
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
-ngOnInit(): void {
- 
- //Llamamos al servicio para obtener el monitor por el id
- this.loginService.getDatosByEmail(this.tutor_email).subscribe({
-  next: (tutor:UsuarioInterface) => {
-    this.tutor = tutor;
+  constructor(
+    private tutorService: TutorService,
+    private loginService: LoginService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private datosUsuario: DatosUsuarioService
+  ) {
+    //Recojo el email del tutor
+    this.tutor_email = this.route.snapshot.paramMap.get('emailTutor')!;
+  }
 
-  },
-  error: (err:any) => {
-    console.log(err);
-  },
-});
-}
+  ngOnInit(): void {
+    //Llamamos al servicio para obtener el monitor por el id
+    this.loginService.getDatosByEmail(this.tutor_email).subscribe({
+      next: (tutor: UsuarioInterface) => {
+        this.tutor = tutor;
+      },
+      error: (err: any) => {
+        
+        this.errorMessage = "Ha ocurrido un error";
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+          this.router.navigate(['/tutor']);
+        }, 4000);
+      },
+    });
+  }
 
-editar() {
+  editar() {
 
-  //Controlar que los campos están introducidos correctamente
-  
-  this.tutorService.editarTutor(this.tutor_email, this.tutor).subscribe({
-    next: (resp)=>{
-      //Avisar de que los datos se han efectuado correctamente
-      //this.router.navigate(['/tutor/']);
-      console.log(resp);
-    },
-    error: (err)=>{
-      //Capturamos el mensaje del error
-      console.log(err.error);
-      
-    }
-  });
-  
-  
-}
-
-
+    this.tutorService.editarTutor(this.tutor_email, this.tutor).subscribe({
+      next: (resp) => {
+        this.successMessage = resp;
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.showSuccess = false;
+        }, 4000);
+      },
+      error: (err) => {
+        console.log(err.error);
+        this.errorMessage = err;
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.router.navigate([`/tutor/miArea/${this.tutor.email}`]);
+        }, 4000);
+      },
+    });
+  }
 }

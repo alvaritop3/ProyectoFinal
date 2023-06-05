@@ -17,12 +17,6 @@ export class TutorSidebarComponent implements OnInit {
   ngOnInit(): void {
     this.id_alumno = this.datosAlumno.id;
     this.id_tutor = this.datosUsuario.id;
-    // if (localStorage.getItem('id_alumno')) {
-    //   this.id_alumno = localStorage.getItem('id_alumno');
-    //   if (localStorage.getItem('id')) {
-    //     this.id_tutor = localStorage.getItem('id');
-    //   }
-    // }
   }
 
    //Borramos los datos del usuario

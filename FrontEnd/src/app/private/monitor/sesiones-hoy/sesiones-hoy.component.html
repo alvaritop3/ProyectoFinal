@@ -1,0 +1,24 @@
+<h1>Sesiones de Hoy</h1>
+<hr />
+<div class="container">
+  <div class="card" *ngFor="let sesion of sesiones">
+    <div class="card-content">
+      <div class="card-body">
+        <p>{{ sesion.fecha | date : "d/M/yy" }}</p>
+        <p>{{ sesion.hora_inicio}}:00h</p>
+        <a [routerLink]="['/monitor/pasarLista', sesion.id]"
+          ><button class="button primary fit">Pasar Lista</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div *ngIf="sesiones.length == 0">
+    <h5>Hoy no imparte ninguna sesión</h5>
+  </div>
+
+
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+    {{ errorMessage }}
+  </div>

@@ -1,0 +1,48 @@
+<div class="card bg-dark">
+  <div class="card-header text-center">
+    <h2>{{ curso.nombre }}</h2>
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">
+      De {{ curso.fecha_inicio | date : "d/M/yy" }} a
+      {{ curso.fecha_fin | date : "d/M/yy" }}
+    </h4>
+    <hr />
+    <h5 class="card-text">Estado: {{ estado }}</h5>
+    <hr />
+  </div>
+
+  <!-- ACORDEÓN DE SESIONES -->
+  <div class="accordion accordion-flush" id="acordeon">
+    <div class="accordion-item" *ngFor="let sesion of sesiones; let i = index">
+      <h2 class="accordion-header">
+        <div
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#flush-collapse' + i"
+          aria-expanded="false"
+          [attr.aria-controls]="'flush-collapse' + i"
+        >
+          Sesion {{ i + 1 }}: {{ sesion.fecha | date : "d/M/yy" }}
+          {{ sesion.hora_inicio }}:00h
+        </div>
+      </h2>
+      <div
+        [id]="'flush-collapse' + i"
+        class="accordion-collapse collapse"
+        data-bs-parent="#acordeon"
+      >
+        <div class="accordion-body">
+          <a [routerLink]="['/monitor/pasarLista', sesion.id]">
+            <button class="button primary">Pasar Lista</button></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
+</div>

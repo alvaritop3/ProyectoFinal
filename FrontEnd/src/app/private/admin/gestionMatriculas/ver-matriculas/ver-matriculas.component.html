@@ -6,7 +6,7 @@
       <div class="card-body">
         <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
         <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
-          ><p>Gestionar</p></a>
+          ><button class="button primary fit">Gestionar</button></a>
         <p>Estado: {{ matricula.estado }}</p>
       </div>
     </div>
@@ -16,18 +16,19 @@
 <hr />
 <h4>Matriculas Gestionadas</h4>
 <hr />
-<div class="gestionadas">
-  <div *ngIf="arrayMatriculasGestionadas.length > 0">
+
+  <div *ngIf="arrayMatriculasGestionadas.length > 0" class="container">
     <div class="card" *ngFor="let matricula of arrayMatriculasGestionadas">
       <div class="card-content">
         <div class="card-body">
           <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
           <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
-            ><p>Gestionar</p></a
-          >
+          ><button class="button primary fit">Detalles</button></a>
           <p>Estado: {{ matricula.estado }}</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <div *ngIf="arrayMatriculasGestionadas.length == 0">
+    <h5>Aún no ha gestionado ninguna matrícula</h5>
+  </div>

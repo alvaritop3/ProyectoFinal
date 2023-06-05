@@ -55,8 +55,6 @@ export class LoginComponent implements OnInit {
   }
   //LLamamos al Servicio para crear un usuario nuevo (tutor)
   registro(): void {
-    //Para obtener un valor determinado del formulario:
-    //console.log(this.registroForm.value.apellidos)
 
     const usuario = this.registroForm.value;
     this.registroForm.value.roles = 'ROLE_TUTOR';
@@ -96,7 +94,7 @@ export class LoginComponent implements OnInit {
         if (this.roles.includes('ROLE_TUTOR')) {
           this.router.navigate(['/tutor']);
         } else if (this.roles.includes('ROLE_MONITOR')) {
-          this.router.navigate(['/monitor']);
+          this.router.navigate(['/monitor/misCursos/', this.datosUsuario.id]);
         } else if (this.roles.includes('ROLE_ADMIN')) {
           this.router.navigate(['/admin']);
         }

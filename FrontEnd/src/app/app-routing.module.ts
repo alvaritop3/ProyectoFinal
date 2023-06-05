@@ -33,6 +33,10 @@ const routes: Routes = [
     
   },
   {
+    path: 'monitor', loadChildren:()=>import('./private/monitor/monitor.module').then((m)=>m.MonitorModule)
+    
+  },
+  {
     path: '**',
     redirectTo: ''
   }

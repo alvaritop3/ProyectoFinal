@@ -190,7 +190,9 @@ class TutorController extends AbstractController
                     'fecha_inicio' => $curso->getFechaInicio()->format('Y-m-d'),
                     'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
                     'precio' => $curso->getPrecio(),
-                    'estado' => $curso->getEstado()
+                    'estado' => $curso->getEstado(),
+                    'hora'=> $curso->getSesiones()[0]->getHoraInicio(),
+                    'monitor' =>$curso->getSesiones()[0]->getMonitor()->getNombre()
                 ];
             }
         }
@@ -223,7 +225,8 @@ class TutorController extends AbstractController
                 'fecha_inicio' => $curso->getFechaInicio()->format('Y-m-d'),
                 'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
                 'precio' => $curso->getPrecio(),
-                'estado' => $curso->getEstado()
+                'estado' => $curso->getEstado(), 'hora'=> $curso->getSesiones()[0]->getHoraInicio(),
+                'monitor' =>$curso->getSesiones()[0]->getMonitor()->getNombre()
             ];
         }
 

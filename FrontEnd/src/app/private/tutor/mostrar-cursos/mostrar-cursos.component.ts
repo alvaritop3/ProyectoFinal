@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TutorService } from 'src/app/services/tutor.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatosAlumnoService } from 'src/app/services/datos-alumno.service';
 
 @Component({
@@ -17,11 +17,16 @@ export class MostrarCursosComponent implements OnInit {
   fechaActual: Date = new Date();
 
   id_alumno!: any;
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
   constructor(
     private tutorService: TutorService,
     private route: ActivatedRoute,
-    private datosAlumno: DatosAlumnoService
+    private datosAlumno: DatosAlumnoService,
+    private router: Router,
   ) {
     //Recojo el id del  alumno
     this.id_alumno = this.route.snapshot.paramMap.get('idAlumno');
@@ -36,7 +41,6 @@ export class MostrarCursosComponent implements OnInit {
   }
 
   solicitarMatricula(cursoId: number) {
-
     //Creamos el body de la petición
     let datosMatricula = {
       id_curso: cursoId,
@@ -48,20 +52,30 @@ export class MostrarCursosComponent implements OnInit {
       .solicitarMatricula(JSON.stringify(datosMatricula))
       .subscribe({
         next: (resp) => {
-          console.log(resp);
-          
-          //Crear ventana para mensaje de se ha solicitado correctamente
+          this.successMessage = 'La matricula se ha solicitado correctamente';
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.showSuccess = false;
+          }, 4000);
         },
         error: (err) => {
-          console.log(err);
+          this.errorMessage = "Ha ocurrido un error solicitando la matrícula";
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, 4000);
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.router.navigate([`/tutor/cursos/${this.id_alumno}`]);
+          }, 4000);
         },
       });
 
-      //Llamamos de nuevo a la función para que actualice la tabla de cursos
-      this.cursosDisponibles();
+    //Llamamos de nuevo a la función para que actualice la tabla de cursos
+    this.cursosDisponibles();
   }
 
-  
   cursosDisponibles() {
     //Este servicio devuelve los cursos en los que el alumno aún no se ha matriculado
     this.tutorService.mostrarCursosDisponibles(this.id_alumno).subscribe({
@@ -90,5 +104,4 @@ export class MostrarCursosComponent implements OnInit {
       },
     });
   }
-
 }
