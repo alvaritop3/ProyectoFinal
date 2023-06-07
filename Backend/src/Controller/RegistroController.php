@@ -21,25 +21,25 @@ class RegistroController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         //Recogemos los datos que vienen en la Request
-        $jsonData = $request->getContent();
-        $data = json_decode($jsonData);
-        $nombre = $data->nombre;
-        $apellidos = $data->apellidos;
-        $email = $data->email;
-        $telefono = $data->telefono;
-        $direccion = $data->direccion;
-        $password = $data->password;
+        // $jsonData = $request->getContent();
+        // $data = json_decode($jsonData);
+        $nombre = $request->request->get('nombre');
+        $apellidos = $request->request->get('apellidos');
+        $email = $request->request->get('email');
+        $telefono = $request->request->get('telefono');
+        $direccion = $request->request->get('direccion');
+        $password = $request->request->get('password');
+        $file = $request->files->get('file');
+        $roles = [$request->request->get('roles')];
 
-        $roles = [$data->roles];
-        
 
         //Creamos usuario
         $usuario = new Usuario();
 
         //Comprobamos que la fecha no venga vacia
-        if (isset($data->fecha_incorp)) {
+        if ($request->request->get('fecha_incorp') !== null) {
             //Transformamos la fecha de nacimiento
-            $fechaString = $data->fecha_incorp;
+            $fechaString = $request->request->get('fecha_incorp');
             $timestamp = strtotime($fechaString);
             $fecha_incorp = new DateTime();
             $fecha_incorp->setTimestamp($timestamp);
@@ -54,6 +54,14 @@ class RegistroController extends AbstractController
             $usuario,
             $password
         );
+        //Comprobamos si hay una imágen en el campo foto
+        if ($file) {
+            $fileName = uniqid() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir') . '/public/fotos/', $fileName);
+            $usuario->setFoto($fileName);
+        } else {
+            $usuario->setFoto('fotoDefecto.png');
+        }
 
         $usuario->setNombre($nombre);
         $usuario->setApellidos($apellidos);

@@ -7,4 +7,5 @@ export interface UsuarioInterface {
   telefono: string;
   roles?: Array<string>;
   fecha_incorp?: string;
+  foto?: string;
 }

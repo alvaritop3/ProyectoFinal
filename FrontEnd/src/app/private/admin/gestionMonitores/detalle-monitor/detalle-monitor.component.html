@@ -2,7 +2,7 @@
   <div class="row g-0">
     <div class="col-md-4">
       <img
-        src="../../../../../assets/images/alumno_1.jpg"
+        src="http://localhost:8000/fotos/{{ monitor.foto }}"
         class="img-fluid rounded-start"
         alt="..."
       />
@@ -68,7 +68,7 @@
               d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
             />
           </svg>
-        Fecha de Incorporación: {{ monitor.fecha_incorp }}
+          Fecha de Incorporación: {{ monitor.fecha_incorp }}
         </p>
 
         <button
@@ -78,14 +78,10 @@
           Editar
         </button>
         <br /><br />
-
-        <!-- <button
-          class="button primary"
-          
-        >
-          Mostrar cursos
-        </button> -->
       </div>
     </div>
   </div>
+</div>
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
 </div>

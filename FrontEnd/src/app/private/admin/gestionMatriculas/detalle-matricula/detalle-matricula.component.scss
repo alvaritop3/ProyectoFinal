@@ -1,13 +1,17 @@
-
-#estadoModalLabel{
-    color: black;
+#estadoModalLabel {
+  color: black;
 }
 
-p{
-    color: white;
+p {
+  color: white;
 }
 
-.card{
-    margin: 0px auto;
-    width: 60%;
+.card {
+  margin: 0px auto;
+  width: 60%;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
 }

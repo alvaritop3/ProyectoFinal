@@ -9,20 +9,24 @@ import { AdminService } from 'src/app/services/admin.service';
   templateUrl: './editar-monitor.component.html',
   styleUrls: ['./editar-monitor.component.scss'],
 })
-export class EditarMonitorComponent implements OnInit{
+export class EditarMonitorComponent implements OnInit {
   //Donde almacenaremos el id del monitor que viene por la ruta
   id_monitor!: any;
   //Inicializamos un usuario con los campos vacios
   monitor: UsuarioInterface = {
     id: 0,
-    nombre: "",
-    apellidos: "",
-    direccion: "",
-    email: "",
-    telefono: "",
+    nombre: '',
+    apellidos: '',
+    direccion: '',
+    email: '',
+    telefono: '',
     roles: [],
-    fecha_incorp: ""
+    fecha_incorp: '',
   };
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
   constructor(
     private adminService: AdminService,
@@ -31,38 +35,46 @@ export class EditarMonitorComponent implements OnInit{
   ) {
     //Recojo el id del monitor
     this.id_monitor = this.route.snapshot.paramMap.get('idMonitor');
-
   }
 
   ngOnInit(): void {
-   //Llamamos al servicio para obtener el monitor por el id
-   this.adminService.mostrarMonitor(this.id_monitor).subscribe({
-    next: (monitor) => {
-      this.monitor = monitor;
-
-    },
-    error: (err) => {
-      console.log(err);
-    },
-  });
+    //Llamamos al servicio para obtener el monitor por el id
+    this.adminService.mostrarMonitor(this.id_monitor).subscribe({
+      next: (monitor) => {
+        this.monitor = monitor;
+      },
+      error: (err) => {
+        this.errorMessage =
+          'Ha ocurrido un error obteniendo los datos del monitor';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
+      },
+    });
   }
 
   editar() {
-
-    //Controlar que los campos están introducidos correctamente
-    
     this.adminService.editarMonitor(this.id_monitor, this.monitor).subscribe({
-      next: (resp)=>{
-        //Avisar de que los datos se han efectuado correctamente
-        this.router.navigate(['/admin/monitores']);
-
+      next: (resp) => {
+        this.successMessage = 'Monitor modificado correctamente';
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.showSuccess = false;
+        }, 4000);
       },
-      error: (err)=>{
-        console.log(err)
-      }
+      error: (err) => {
+        this.errorMessage = 'No se ha podido moidificar el monitor';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.router.navigate(['/admin/monitores']);
+        }, 4000);
+      },
     });
-    
-    
   }
-
 }

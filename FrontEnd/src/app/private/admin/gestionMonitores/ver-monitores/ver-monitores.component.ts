@@ -5,31 +5,25 @@ import { AdminService } from 'src/app/services/admin.service';
 @Component({
   selector: 'app-ver-monitores',
   templateUrl: './ver-monitores.component.html',
-  styleUrls: ['./ver-monitores.component.scss']
+  styleUrls: ['./ver-monitores.component.scss'],
 })
-export class VerMonitoresComponent implements OnInit{
-
+export class VerMonitoresComponent implements OnInit {
   //Array donde se almacenan los monitores
-   arrayMonitores: Array<UsuarioInterface> = [];
+  arrayMonitores: Array<UsuarioInterface> = [];
 
-   constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService) {}
 
-   ngOnInit(): void {
-     
+  ngOnInit(): void {
     //Llamamos al servicio para traer a todos los monitores
     this.adminService.listaMonitores().subscribe({
-      next:(monitores) =>{
+      next: (monitores) => {
         this.arrayMonitores = monitores;
       },
-      error: (err)=>{
+      error: (err) => {
         console.log(err);
-      }
-    })
-   }
+      },
+    });
+  }
 
-
-
-   editarMonitor(id: number){
-    
-   }
+  editarMonitor(id: number) {}
 }

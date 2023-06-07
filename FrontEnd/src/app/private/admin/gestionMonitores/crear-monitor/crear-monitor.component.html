@@ -1,180 +1,192 @@
 <div id="carta">
-<form (ngSubmit)="registro()" [formGroup]="registroForm">
-  <div class="card bg-dark text-white" style="border-radius: 1rem">
-    <div class="card-body p-5 text-center">
-      <div class="mb-md-5 mt-md-4 pb-5">
-        <h2 class="fw-bold mb-2 text-uppercase">Registrar Monitor/a</h2>
-        <p class="text-white-50 mb-5">Introduzca los datos del monitor/a</p>
+  <form (ngSubmit)="registro()" [formGroup]="registroForm">
+    <div class="card bg-dark text-white" style="border-radius: 1rem">
+      <div class="card-body p-5 text-center">
+        <div class="mb-md-5 mt-md-4 pb-5">
+          <h2 class="fw-bold mb-2 text-uppercase">Registrar Monitor/a</h2>
+          <p class="text-white-50 mb-5">Introduzca los datos del monitor/a</p>
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="form-outline">
-              <label for="nombre">Nombre</label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                required
-                formControlName="nombre"
-              />
-              <div
-                *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                El nombre no puede estar vacío
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  required
+                  formControlName="nombre"
+                />
+                <div
+                  *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El nombre no puede estar vacío
+                </div>
+                <div
+                  *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['minlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un nombre válido (más de tres caracteres)
+                </div>
               </div>
-              <div
-                *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['minlength']"
-                class="alert alert-danger"
-              >
-                Introduzca un nombre válido (más de tres caracteres)
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="apellidos">Apellidos</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  name="apellidos"
+                  required
+                  formControlName="apellidos"
+                />
+                <div
+                  *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El apellido no puede estar vacío
+                </div>
+                <div
+                  *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['minlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un apellido de más de tres caracteres
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
-            <div class="form-outline">
-              <label for="apellidos">Apellidos</label>
-              <input
-                type="text"
-                id="apellidos"
-                name="apellidos"
-                required
-                formControlName="apellidos"
-              />
-              <div
-                *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                El apellido no puede estar vacío
-              </div>
-              <div
-                *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['minlength']"
-                class="alert alert-danger"
-              >
-                Introduzca un apellido de más de tres caracteres
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="form-outline">
-              <label for="telefono">Telefono</label>
-              <input
-                type="text"
-                id="telefono"
-                name="telefono"
-                required
-                formControlName="telefono"
-              />
-              <div
-                *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                El teléfono no puede estar vacío
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="telefono">Telefono</label>
+                <input
+                  type="text"
+                  id="telefono"
+                  name="telefono"
+                  required
+                  formControlName="telefono"
+                />
+                <div
+                  *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El teléfono no puede estar vacío
+                </div>
+                <div
+                  *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['minlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un teléfono de 9 dígitos
+                </div>
+                <div
+                  *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['maxlength']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un teléfono de 9 dígitos
+                </div>
               </div>
-              <div
-                *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['minlength']"
-                class="alert alert-danger"
-              >
-                Introduzca un teléfono de 9 dígitos
-              </div>
-              <div
-                *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['maxlength']"
-                class="alert alert-danger"
-              >
-                Introduzca un teléfono de 9 dígitos
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="form-outline">
+                <label for="email">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  formControlName="email"
+                />
+                <div
+                  *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El email no puede estar vacío
+                </div>
+                <div
+                  *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['email']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un email válido
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
-            <div class="form-outline">
-              <label for="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                required
-                formControlName="email"
-              />
-              <div
-                *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                El email no puede estar vacío
-              </div>
-              <div
-                *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['email']"
-                class="alert alert-danger"
-              >
-                Introduzca un email válido
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
+          <div class="row">
+            <div class="form-outline form-white mb-4">
+              <label for="direccion">Direccion</label>
+              <input
+                type="text"
+                id="direccion"
+                name="direccion"
+                required
+                formControlName="direccion"
+              />
+              <div
+                *ngIf="registroForm.get('direccion')?.touched && registroForm.get('direccion')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                La dirección no puede estar vacía
+              </div>
+            </div>
+
+            <div class="form-outline form-white mb-4">
+              <label for="direccion">Fecha de Incorporación</label>
+              <br />
+              <input
+                type="date"
+                id="fecha_incorp"
+                name="fecha_incorp"
+                required
+                formControlName="fecha_incorp"
+              />
+              <div
+                *ngIf="registroForm.get('fecha_incorp')?.touched && registroForm.get('fecha_incorp')?.errors?.['required']"
+                class="alert alert-danger"
+              >
+                La fecha de incorporación debe introducirse
+              </div>
+            </div>
+          </div>
+
           <div class="form-outline form-white mb-4">
-            <label for="direccion">Direccion</label>
+            <label for="password">Password</label>
             <input
-              type="text"
-              id="direccion"
-              name="direccion"
+              type="password"
+              id="password"
+              name="password"
               required
-              formControlName="direccion"
+              formControlName="password"
             />
             <div
-              *ngIf="registroForm.get('direccion')?.touched && registroForm.get('direccion')?.errors?.['required']"
+              *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.errors?.['required']"
               class="alert alert-danger"
             >
-              La dirección no puede estar vacía
+              La contraseña no puede estar vacía
             </div>
           </div>
-
-          <div class="form-outline form-white mb-4">
-            <label for="direccion">Fecha de Incorporación</label>
-            <input
-              type="date"
-              id="fecha_incorp"
-              name="fecha_incorp"
-              required
-              formControlName="fecha_incorp"
-            />
-            <div
-              *ngIf="registroForm.get('fecha_incorp')?.touched && registroForm.get('fecha_incorp')?.errors?.['required']"
-              class="alert alert-danger"
-            >
-              La fecha de incorporación debe introducirse
+          <div class="row">
+            <div class="form-outline">
+              <label for="fecha_nac">Foto</label>
+              <input
+                type="file"
+                id="foto"
+                name="foto"
+                (change)="onFileSelected($event)"
+              />
             </div>
           </div>
-        </div>
-
-        <div class="form-outline form-white mb-4">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            formControlName="password"
-          />
-          <div
-            *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.errors?.['required']"
-            class="alert alert-danger"
+          <button
+            class="nav-link active button fit primary"
+            type="submit"
+            [disabled]="registroForm.invalid"
           >
-            La contraseña no puede estar vacía
-          </div>
+            Crear Cuenta
+          </button>
         </div>
-        <button
-          class="nav-link active button fit primary"
-          type="submit"
-          [disabled]="registroForm.invalid"
-        >
-          Crear Cuenta
-        </button>
       </div>
     </div>
-  </div>
-</form>
+  </form>
 </div>

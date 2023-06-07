@@ -264,16 +264,31 @@ class AdminController extends AbstractController
         foreach ($usuarios as $monitor) {
 
             if ($monitor->getRoles()[0] == "ROLE_MONITOR") {
-                $data[] = [
-                    'id' => $monitor->getId(),
-                    'nombre' => $monitor->getNombre(),
-                    'apellidos' => $monitor->getApellidos(),
-                    'email' => $monitor->getEmail(),
-                    'telefono' => $monitor->getTelefono(),
-                    'fecha_incorp' => $monitor->getFechaIncorp()->format('Y-m-d'),
-                    'direccion' => $monitor->getDireccion(),
-                    'roles' => $monitor->getRoles()
-                ];
+                if ($monitor->getFoto()) {
+                    $data[] = [
+                        'id' => $monitor->getId(),
+                        'nombre' => $monitor->getNombre(),
+                        'apellidos' => $monitor->getApellidos(),
+                        'email' => $monitor->getEmail(),
+                        'telefono' => $monitor->getTelefono(),
+                        'fecha_incorp' => $monitor->getFechaIncorp()->format('Y-m-d'),
+                        'direccion' => $monitor->getDireccion(),
+                        'roles' => $monitor->getRoles(),
+                        'foto' => $monitor->getFoto()
+                    ];
+                } else {
+                    $data[] = [
+                        'id' => $monitor->getId(),
+                        'nombre' => $monitor->getNombre(),
+                        'apellidos' => $monitor->getApellidos(),
+                        'email' => $monitor->getEmail(),
+                        'telefono' => $monitor->getTelefono(),
+                        'fecha_incorp' => $monitor->getFechaIncorp()->format('Y-m-d'),
+                        'direccion' => $monitor->getDireccion(),
+                        'roles' => $monitor->getRoles(),
+                        'foto' => "fotoDefecto.png"
+                    ];
+                }
             }
         }
 
@@ -297,7 +312,8 @@ class AdminController extends AbstractController
                 'email' => $usuario->getEmail(),
                 'telefono' => $usuario->getTelefono(),
                 'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
-                'direccion' => $usuario->getDireccion()
+                'direccion' => $usuario->getDireccion(),
+                'foto' => $usuario->getFoto()
             ];
         } else {
             $data =  [

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlumnoInterface } from 'src/app/interfaces/alumno-interface';
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 
@@ -12,11 +13,13 @@ import { TutorService } from 'src/app/services/tutor.service';
 export class MostrarAlumnosComponent implements OnInit {
   arrayAlumnos: Array<AlumnoInterface> = [];
   id_tutor!: any;
-
+  errorMessage: string = '';
+  showError: boolean = false;
 
   constructor(
     private tutorService: TutorService,
-    private datosUsuario: DatosUsuarioService
+    private datosUsuario: DatosUsuarioService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,12 +34,15 @@ export class MostrarAlumnosComponent implements OnInit {
     this.tutorService.listaDeAlumnos(this.id_tutor).subscribe({
       next: (alumnos) => {
         this.arrayAlumnos = alumnos;
-        
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = 'Ha ocurrido un error cargando los alumnos';
+        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate(['/tutor']);
+          this.showError = false;
+        }, 4000);
       },
     });
-  } 
-
+  }
 }

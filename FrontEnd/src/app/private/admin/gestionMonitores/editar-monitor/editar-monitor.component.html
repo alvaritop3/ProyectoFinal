@@ -1,11 +1,13 @@
 <div id="carta">
-<form (ngSubmit)="editar()">
+  <form (ngSubmit)="editar()">
     <div class="card bg-dark text-white" style="border-radius: 1rem">
       <div class="card-body p-5 text-center">
         <div class="mb-md-5 mt-md-4 pb-5">
           <h2 class="fw-bold mb-2 text-uppercase">Editar Monitor/a</h2>
-          <p class="text-white-50 mb-5">Introduzca los datos del monitor/a que desee modificar</p>
-  
+          <p class="text-white-50 mb-5">
+            Introduzca los datos del monitor/a que desee modificar
+          </p>
+
           <div class="row">
             <div class="col-md-6 mb-4">
               <div class="form-outline">
@@ -32,7 +34,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="col-md-6 mb-4">
               <div class="form-outline">
@@ -59,7 +61,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="row">
             <div class="form-outline form-white mb-4">
               <label for="direccion">Direccion</label>
@@ -72,15 +74,20 @@
               />
             </div>
           </div>
-  
-          <button
-            class="nav-link active button fit primary"
-            type="submit"
-          >
+
+          <button class="nav-link active button fit primary" type="submit">
             Modificar Monitor
           </button>
         </div>
       </div>
     </div>
-  </form> 
+  </form>
+</div>
+
+<div class="alert alert-success custom-alert" *ngIf="showSuccess">
+  {{ successMessage }}
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
 </div>

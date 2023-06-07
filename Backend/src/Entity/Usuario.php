@@ -54,6 +54,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'monitor', targetEntity: Sesion::class)]
     private Collection $sesiones;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $foto = null;
+
     public function __construct()
     {
         $this->alumnos = new ArrayCollection();
@@ -296,6 +299,18 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
                 $sesione->setMonitor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(?string $foto): self
+    {
+        $this->foto = $foto;
 
         return $this;
     }
