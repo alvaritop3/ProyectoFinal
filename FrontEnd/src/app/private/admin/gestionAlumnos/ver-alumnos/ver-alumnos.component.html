@@ -6,8 +6,9 @@
     class="form-control mr-sm-2"
     type="search"
     aria-label="Buscar"
+    (keyup)="buscar()"
   />
-  <button class="btn btn-outline-success my-2 my-sm-0" (click)="buscar()">
+  <button class="btn btn-outline-info my-2 my-sm-0" (click)="buscar()">
     <i class="bi bi-search"></i>
   </button>
 </div>
@@ -29,4 +30,7 @@
       </div>
     </div>
   </div>
+</div>
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
 </div>

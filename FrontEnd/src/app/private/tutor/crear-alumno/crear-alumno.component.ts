@@ -44,14 +44,15 @@ export class CrearAlumnoComponent implements OnInit {
 
     this.tutorService.registrarAlumno(formData).subscribe({
       next: (resp) => {
-        this.successMessage = "Alumno dado de alta correctamente";
+        this.successMessage = 'Alumno dado de alta correctamente';
         this.showSuccess = true;
         setTimeout(() => {
           this.showSuccess = false;
         }, 4000);
       },
       error: (err) => {
-        this.errorMessage = "No se ha podido dar de alta al alumno, intentelo de nuevo más tarde";
+        this.errorMessage =
+          'No se ha podido dar de alta al alumno, intentelo de nuevo más tarde';
         this.showError = true;
         setTimeout(() => {
           this.showError = false;

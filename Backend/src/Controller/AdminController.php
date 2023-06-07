@@ -514,7 +514,7 @@ class AdminController extends AbstractController
 
         foreach ($matriculas as $matricula) {
             if ($matricula->getAtendidaPor() == $admin) {
-                
+
                 $data[] = [
                     'id' => $matricula->getId(),
                     'estado' => $matricula->getEstado(),
@@ -599,6 +599,29 @@ class AdminController extends AbstractController
             ];
         }
 
+
+        return $this->json($data);
+    }
+
+    #[Route("/admin/misDatos/{id}", name: "admin_mis_datos", methods: ["GET"])]
+    public function show(ManagerRegistry $doctrine, int $id): Response
+    {
+        $usuario = $doctrine->getRepository(Usuario::class)->find($id);
+
+        if (!$usuario) {
+
+            return $this->json('Ningun Admin encontrado con id ' . $id, 404);
+        }
+
+        $data =  [
+            'id' => $usuario->getId(),
+            'nombre' => $usuario->getNombre(),
+            'apellidos' => $usuario->getApellidos(),
+            'email' => $usuario->getEmail(),
+            'telefono' => $usuario->getTelefono(),
+            'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+            'direccion' => $usuario->getDireccion()
+        ];
 
         return $this->json($data);
     }

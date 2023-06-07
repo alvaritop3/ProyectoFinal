@@ -1,19 +1,21 @@
-h1, p{
-    color: black;
-    text-align: center;
+h1,
+p {
+  color: black;
+  text-align: center;
 }
 
-.busqueda{
-    width: 90%;
-    display: flex;
-    margin: 0px auto;
+.busqueda {
+  width: 90%;
+  display: flex;
+  margin: 0px auto;
+  justify-content: center;
 }
-.busqueda input{
-    width: 70%;
-    margin-right:20px;
+.busqueda input {
+  width: 70%;
+  margin-right: 5px;
 }
 
-.card{
-    margin: 7px;
-    width: 10rem
-  }
+.card {
+  margin: 7px;
+  width: 10rem;
+}

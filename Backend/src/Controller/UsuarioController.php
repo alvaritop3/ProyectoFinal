@@ -108,7 +108,7 @@ class UsuarioController extends AbstractController
             'apellidos' => $user->getApellidos(),
             'email' => $user->getEmail(),
             'telefono' => $user->getTelefono(),
-            'direccion'=> $user->getDireccion()
+            'direccion' => $user->getDireccion()
         ]);
     }
 
@@ -128,7 +128,7 @@ class UsuarioController extends AbstractController
             'apellidos' => $usuario->getApellidos(),
             'email' => $usuario->getEmail(),
             'telefono' => $usuario->getTelefono(),
-            //                'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+            'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
             'direccion' => $usuario->getDireccion()
         ];
 

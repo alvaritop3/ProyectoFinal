@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnoInterface } from 'src/app/interfaces/alumno-interface';
 import { AdminService } from 'src/app/services/admin.service';
 import { UsuarioInterface } from 'src/app/interfaces/usuario-interface';
@@ -20,7 +20,7 @@ export class DetalleAlumnoComponent implements OnInit {
     fecha_nac: '',
     tutor_nombre: '',
     tutor_id: 0,
-    foto: ''
+    foto: '',
   };
   //Almacenamos los datos del tutor
   tutor: UsuarioInterface = {
@@ -32,10 +32,13 @@ export class DetalleAlumnoComponent implements OnInit {
     telefono: '',
     roles: [],
   };
+  errorMessage: string = '';
+  showError: boolean = false;
 
   constructor(
     private adminService: AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.id_alumno = this.route.snapshot.paramMap.get('idAlumno');
   }
@@ -52,12 +55,24 @@ export class DetalleAlumnoComponent implements OnInit {
             this.tutor = tutor;
           },
           error: (err) => {
-            console.log(err);
+            this.errorMessage =
+              'Ha ocurrido un error obteniendo los datos del tutor';
+            this.showError = true;
+            setTimeout(() => {
+              this.showError = false;
+              this.router.navigate(['/admin']);
+            }, 4000);
           },
         });
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage =
+          'Ha ocurrido un error obteniendo los datos del alumno';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+          this.router.navigate(['/admin']);
+        }, 4000);
       },
     });
   }

@@ -113,7 +113,6 @@
         ></button>
       </div>
       <div class="modal-body">
-
         <form (ngSubmit)="registro()" [formGroup]="registroForm">
           <div class="card bg-dark text-white" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
@@ -295,7 +294,6 @@
             </div>
           </div>
         </form>
-        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -304,4 +302,11 @@
       </div>
     </div>
   </div>
+</div>
+<div class="alert alert-success custom-alert" *ngIf="showSuccess">
+  {{ successMessage }}
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
 </div>

@@ -20,15 +20,18 @@ export class DetalleCursoComponent implements OnInit {
     precio: 0,
     estado: '',
   };
-
   sesiones: SesionInterface[] = [];
-
   estado!: string;
+
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
 
   constructor(
     private adminService: AdminService,
     private route: ActivatedRoute
-  ) // private router: Router
+  )
   {
     //Recojo el id del curso
     this.id_curso = this.route.snapshot.paramMap.get('idCurso');
@@ -40,7 +43,7 @@ export class DetalleCursoComponent implements OnInit {
       next: (curso) => {
         this.curso = curso;
         this.estado = curso.estado;
-        // console.log(this.curso);
+        
       },
       error: (err) => {
         console.log(err);
@@ -51,8 +54,6 @@ export class DetalleCursoComponent implements OnInit {
     this.adminService.listaSesiones(this.id_curso).subscribe({
       next: (sesiones) => {
         this.sesiones = sesiones;
-        // console.log(sesiones);
-        // console.log(sesiones[0].monitor);
       },
       error: (err) => {
         console.log(err);
@@ -66,10 +67,18 @@ export class DetalleCursoComponent implements OnInit {
     let datos = { estado: this.estado };
     this.adminService.cambiarEstadoCurso(this.id_curso, datos).subscribe({
       next: (response) => {
-        console.log(response);
+        this.successMessage = "Estado del curso modificado correctamente";
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.showSuccess = false;
+        }, 4000);
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = "No se ha podido cambiar el estado del curso";
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
       },
     });
   }

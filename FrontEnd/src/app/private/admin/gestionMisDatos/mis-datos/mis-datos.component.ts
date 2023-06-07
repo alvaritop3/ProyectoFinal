@@ -12,9 +12,12 @@ import { RegistroService } from 'src/app/services/registro.service';
 })
 export class MisDatosComponent implements OnInit {
   id_admin!: any;
-
-   //Formulario
-   registroForm!: FormGroup;
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
+  //Formulario
+  registroForm!: FormGroup;
 
   admin: UsuarioInterface = {
     id: 0,
@@ -33,8 +36,7 @@ export class MisDatosComponent implements OnInit {
     private adminService: AdminService,
     private route: ActivatedRoute,
     private router: Router
-  ) 
-  {
+  ) {
     //Recojo el id del monitor
     this.id_admin = this.route.snapshot.paramMap.get('idAdmin');
     //Inicializamos el formulario
@@ -43,12 +45,17 @@ export class MisDatosComponent implements OnInit {
 
   ngOnInit(): void {
     //Llamamos al servicio para obtener el monitor por el id
-    this.adminService.mostrarMonitor(this.id_admin).subscribe({
+    this.adminService.mostrarMisDatos(this.id_admin).subscribe({
       next: (admin) => {
         this.admin = admin;
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = 'Ha ocurrido un error obteniendo los datos';
+        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+          this.showError = false;
+        }, 4000);
       },
     });
   }
@@ -62,15 +69,24 @@ export class MisDatosComponent implements OnInit {
     //Llamamos al servicio para registrar al nuevo usuario monitor
     this.registroService.registro(admin).subscribe({
       next: (resp) => {
-        console.log(resp);
-        this.router.navigate(['/admin']);
+        this.successMessage = 'Admin creado correctamente';
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin/']);
+          this.showSuccess = false;
+        }, 4000);
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage =
+          'Ha ocurrido un error creando el nuevo administrador';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
       },
     });
   }
-  
+
   //Validadores de los formularios
   initFormRegistro(): FormGroup {
     return this.fb.group({

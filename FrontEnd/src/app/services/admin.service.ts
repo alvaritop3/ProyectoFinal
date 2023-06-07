@@ -101,4 +101,11 @@ export class AdminService {
   mostrarAlumno(id: number): Observable<AlumnoInterface> {
     return this.http.get<AlumnoInterface>(`${this.baseUrl}/admin/alumno/${id}`);
   }
+
+  //Obtener los datos de un admin por id
+  mostrarMisDatos(id: number): Observable<UsuarioInterface> {
+    return this.http.get<UsuarioInterface>(
+      `${this.baseUrl}/admin/misDatos/${id}`
+    );
+  }
 }
