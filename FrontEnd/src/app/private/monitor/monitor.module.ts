@@ -10,7 +10,8 @@ import { MiAreaComponent } from './mi-area/mi-area.component';
 import { CursoDetalleComponent } from './curso-detalle/curso-detalle.component';
 import { PasarListaComponent } from './pasar-lista/pasar-lista.component';
 import { SesionesHoyComponent } from './sesiones-hoy/sesiones-hoy.component';
-
+import { ListaDetalleComponent } from './pasar-lista/lista-detalle/lista-detalle.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,11 +22,9 @@ import { SesionesHoyComponent } from './sesiones-hoy/sesiones-hoy.component';
     MiAreaComponent,
     CursoDetalleComponent,
     PasarListaComponent,
-    SesionesHoyComponent
+    SesionesHoyComponent,
+    ListaDetalleComponent,
   ],
-  imports: [
-    CommonModule,
-    MonitorRoutingModule
-  ]
+  imports: [CommonModule, MonitorRoutingModule, FormsModule],
 })
-export class MonitorModule { }
+export class MonitorModule {}

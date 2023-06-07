@@ -11,6 +11,7 @@ use App\Entity\Usuario;
 use App\Entity\Alumno;
 use App\Entity\Curso;
 use App\Entity\Sesion;
+use App\Entity\Asistencia;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,8 +46,8 @@ class MonitorController extends AbstractController
                     'fecha_fin' => $sesion->getCurso()->getFechaFin()->format('Y-m-d'),
                     'precio' => $sesion->getCurso()->getPrecio(),
                     'estado' => $sesion->getCurso()->getEstado(),
-                    'hora'=> $sesion->getHoraInicio(),
-                    'monitor' =>$sesion->getMonitor()->getNombre()
+                    'hora' => $sesion->getHoraInicio(),
+                    'monitor' => $sesion->getMonitor()->getNombre()
                 ];
             }
         }
@@ -54,39 +55,39 @@ class MonitorController extends AbstractController
         return $this->json($data);
     }
 
-     //Mostrar sesiones de un curso
-     #[Route("/monitor/sesiones/{id_curso}", name: "monitor_sesiones_por_curso", methods: ["GET"])]
-     public function mostrarSesiones(ManagerRegistry $doctrine, int $id_curso): Response
-     {
-         $curso = $doctrine->getRepository(Curso::class)->find($id_curso);
- 
-         if (!$curso) {
-             return $this->json('Ningun curso encontrado por el id ' . $id_curso, 404);
-         }
- 
-         $sesiones = $doctrine
-             ->getRepository(Sesion::class)
-             ->findAll();
- 
-         $data = [];
- 
-         //Recorremos el array de sesiones y devolvemos las que coincidan con el id del curso
-         foreach ($sesiones as $sesion) {
- 
-             if ($sesion->getCurso()->getId() == $curso->getId()) {
-                 $data[] = [
-                     "id" => $sesion->getId(),
-                     "fecha" => $sesion->getFecha()->format('Y-m-d'),
-                     "hora_inicio" => $sesion->getHoraInicio(),
-                     "monitor" => $sesion->getMonitor()->getNombre() . " " . $sesion->getMonitor()->getApellidos()
-                 ];
-             }
-         }
- 
-         return $this->json($data);
-     }
+    //Mostrar sesiones de un curso
+    #[Route("/monitor/sesiones/{id_curso}", name: "monitor_sesiones_por_curso", methods: ["GET"])]
+    public function mostrarSesiones(ManagerRegistry $doctrine, int $id_curso): Response
+    {
+        $curso = $doctrine->getRepository(Curso::class)->find($id_curso);
 
-     //Mostrar Detalles del Curso por id
+        if (!$curso) {
+            return $this->json('Ningun curso encontrado por el id ' . $id_curso, 404);
+        }
+
+        $sesiones = $doctrine
+            ->getRepository(Sesion::class)
+            ->findAll();
+
+        $data = [];
+
+        //Recorremos el array de sesiones y devolvemos las que coincidan con el id del curso
+        foreach ($sesiones as $sesion) {
+
+            if ($sesion->getCurso()->getId() == $curso->getId()) {
+                $data[] = [
+                    "id" => $sesion->getId(),
+                    "fecha" => $sesion->getFecha()->format('Y-m-d'),
+                    "hora_inicio" => $sesion->getHoraInicio(),
+                    "monitor" => $sesion->getMonitor()->getNombre() . " " . $sesion->getMonitor()->getApellidos()
+                ];
+            }
+        }
+
+        return $this->json($data);
+    }
+
+    //Mostrar Detalles del Curso por id
     #[Route("/monitor/curso/{id}", name: "monitor_curso_por_id", methods: ["GET"])]
     public function mostrarCurso(ManagerRegistry $doctrine, int $id): Response
     {
@@ -109,24 +110,24 @@ class MonitorController extends AbstractController
         return $this->json($data);
     }
 
-     //Mostrar todas las sesiones de un monitor en la fecha actual
-     #[Route("/monitor/sesionesHoy/{id_monitor}", name: "monitor_sesiones_por_dia_actual", methods: ["GET"])]
-     public function sesionesHoy(ManagerRegistry $doctrine, int $id_monitor): Response
-     {
-         $monitor = $doctrine->getRepository(Usuario::class)->find($id_monitor);
- 
-         if (!$monitor) {
-             return $this->json('Ningun monitor encontrado por el id ' . $id_monitor, 404);
-         }
- 
-         $sesiones = $monitor->getSesiones();
-         
-         $fechaActual = new DateTime();
-         $data = [];
- 
-         foreach ($sesiones as $sesion) {
+    //Mostrar todas las sesiones de un monitor en la fecha actual
+    #[Route("/monitor/sesionesHoy/{id_monitor}", name: "monitor_sesiones_por_dia_actual", methods: ["GET"])]
+    public function sesionesHoy(ManagerRegistry $doctrine, int $id_monitor): Response
+    {
+        $monitor = $doctrine->getRepository(Usuario::class)->find($id_monitor);
+
+        if (!$monitor) {
+            return $this->json('Ningun monitor encontrado por el id ' . $id_monitor, 404);
+        }
+
+        $sesiones = $monitor->getSesiones();
+
+        $fechaActual = new DateTime();
+        $data = [];
+
+        foreach ($sesiones as $sesion) {
             $fechaSesion = $sesion->getFecha(); // Suponiendo que la fecha de la sesión está almacenada en una propiedad llamada "fecha"
-    
+
             // Comparamos solo la fecha sin tener en cuenta la hora
             if ($fechaSesion->format('Y-m-d') === $fechaActual->format('Y-m-d')) {
                 $data[] = [
@@ -136,7 +137,99 @@ class MonitorController extends AbstractController
                 ];
             }
         }
-    
+
         return $this->json($data);
-     }
+    }
+
+    //Devuelve las asistencias de una sesión
+    #[Route("/monitor/asistenciaDeSesion/{id_sesion}", name: "monitor_asistencias_de_sesion", methods: ["GET"])]
+    public function asistenciasDeSesion(ManagerRegistry $doctrine, int $id_sesion): Response
+    {
+        $sesion = $doctrine->getRepository(Sesion::class)->find($id_sesion);
+
+        if (!$sesion) {
+            return $this->json('Ninguna asistencia encontrada por el id ' . $id_sesion, 404);
+        }
+
+        $asistencias = $sesion->getAsistencias();
+        $data = [];
+        foreach ($asistencias as $asistencia) {
+            $data[] = [
+                "id" => $asistencia->getId(),
+                "asiste" => $asistencia->getAsiste(),
+                "motivo" => $asistencia->getMotivo(),
+                "alumno_id" => $asistencia->getAlumno()->getId()
+            ];
+        }
+
+        return $this->json($data);
+    }
+
+    //Mostrar Alumno por id
+    #[Route("/monitor/alumno/{idAlumno}", name: "monitor_alumno_por_id", methods: ["GET"])]
+    public function mostrarAlumnoPorId(ManagerRegistry $doctrine, int $idAlumno): Response
+    {
+        $alumno = $doctrine->getRepository(Alumno::class)->find($idAlumno);
+
+        if (!$alumno) {
+
+            return $this->json('Ningun Curso encontrado con id ' . $idAlumno, 404);
+        }
+        if ($alumno->getFoto()) {
+            $data = [
+                'id' => $alumno->getId(),
+                'nombre' => $alumno->getNombre(),
+                'apellidos' => $alumno->getApellidos(),
+                'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                'tutor_id' => $alumno->getTutor()->getId(),
+                'foto' => $alumno->getFoto()
+            ];
+        } else {
+            $data = [
+                'id' => $alumno->getId(),
+                'nombre' => $alumno->getNombre(),
+                'apellidos' => $alumno->getApellidos(),
+                'fecha_nac' => $alumno->getFechaNac()->format('Y-m-d'),
+                'tutor_nombre' => $alumno->getTutor()->getNombre(),
+                'tutor_id' => $alumno->getTutor()->getId(),
+                'foto' => "fotoDefecto.png"
+            ];
+        }
+
+
+        return $this->json($data);
+    }
+
+    //Cambiar asistencia de un alumno en una sesion
+    #[Route("/monitor/editarAsistencia/{id_asistencia}", name: "monitor_cambiar_estado_asistencia", methods: ["PUT"])]
+    public function cambiarEstadoCurso(ManagerRegistry $doctrine, Request $request, int $id_asistencia): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $asistencia = $entityManager->getRepository(Asistencia::class)->find($id_asistencia);
+
+        if (!$asistencia) {
+            return $this->json('Ninguna asistencia encontrada por el id ' . $id_asistencia, 404);
+        }
+
+        //Recogemos los datos que vienen en la Request
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+        $motivo = $data->motivo;
+        $asiste = $data->asiste;
+
+        $asistencia->setMotivo($motivo);
+        $asistencia->setAsiste($asiste);
+
+        try {
+            //Hacemos cambios
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+
+
+        return $this->json('Estado de la asistencia ' . $id_asistencia . ' cambiado correctamente', 200);
+    }
 }

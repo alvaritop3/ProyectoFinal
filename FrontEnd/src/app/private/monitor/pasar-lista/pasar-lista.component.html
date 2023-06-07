@@ -1,1 +1,17 @@
-<p>pasar-lista works!</p>
+<h1>Control de asistencia</h1>
+<hr />
+<div
+  *ngIf="arrayAsistencias.length > 0"
+  class="container-fluid d-flex justify-content-center"
+>
+  <app-lista-detalle
+    *ngFor="let asistencia of arrayAsistencias"
+    [asistencia]="asistencia"
+  ></app-lista-detalle>
+</div>
+<div *ngIf="arrayAsistencias.length == 0">
+  <h5>No hay registros de asistencias para esta sesión</h5>
+</div>
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
+</div>

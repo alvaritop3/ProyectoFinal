@@ -1,0 +1,50 @@
+<div class="row col-lg-12 d-flex justify-content-center">
+  <div class="card">
+    <img
+      class="card-img-top"
+      alt="Imagen del alumno"
+      src="http://localhost:8000/fotos/{{ alumno.foto }}"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ alumno.nombre }} {{ alumno.apellidos }}</h5>
+      <p>Asiste</p>
+      <input
+        type="radio"
+        id="asisteSi"
+        name="asisteSi"
+        [(ngModel)]="asiste"
+        value="si"
+        [disabled]="formDes"
+      />
+      <label for="asisteSi" class="descr">Si</label>
+      <input
+        type="radio"
+        id="asisteNo"
+        name="asisteNo"
+        [(ngModel)]="asiste"
+        value="no"
+        [disabled]="formDes"
+      />
+      <label for="asisteNo" class="descr">No</label>
+      <br />
+      <label for="motivo" class="form-label">Motivo</label>
+      <textarea
+        [(ngModel)]="motivo"
+        class="form-control"
+        id="motivo"
+        rows="3"
+        [disabled]="formDes"
+      ></textarea>
+      <button [disabled]="formDes" class="button primary" (click)="guardar()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="alert alert-success custom-alert" *ngIf="showSuccess">
+  {{ successMessage }}
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
+</div>
