@@ -183,10 +183,17 @@
             type="submit"
             [disabled]="registroForm.invalid"
           >
-            Crear Cuenta
+            Crear Monitor/a
           </button>
         </div>
       </div>
     </div>
   </form>
+</div>
+<div class="alert alert-success custom-alert" *ngIf="showSuccess">
+  {{ successMessage }}
+</div>
+
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
 </div>
