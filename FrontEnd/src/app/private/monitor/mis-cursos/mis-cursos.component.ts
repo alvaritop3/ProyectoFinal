@@ -29,11 +29,10 @@ export class MisCursosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.monitorService.listaCursos(this.id_monitor).subscribe({
       next: (cursos) => {
         this.arrayCursos = cursos;
-         //Filtramos los cursos por fecha para devolver los activos, ordenamos de fecha más próxima a más lejana y de menor a mayor hora
+        //Filtramos los cursos por fecha para devolver los activos, ordenamos de fecha más próxima a más lejana y de menor a mayor hora
         this.arrayCursosActivos = cursos
           .filter((curso: any) => {
             let fecha_inicio = new Date(curso.fecha_inicio);
@@ -54,13 +53,13 @@ export class MisCursosComponent implements OnInit {
           });
       },
       error: (err) => {
-        console.log("error");
+        console.log('error');
         this.errorMessage = 'Ha ocurrido un error obteniendo los cursos';
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
         }, 4000);
-      }
+      },
     });
   }
 }

@@ -3,7 +3,6 @@ import { UsuarioInterface } from 'src/app/interfaces/usuario-interface';
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 import { LoginService } from 'src/app/services/login.service';
 
-
 @Component({
   selector: 'app-mi-area',
   templateUrl: './mi-area.component.html',
@@ -27,7 +26,6 @@ export class MiAreaComponent implements OnInit {
   ) {
     //Recogemos el email del servicio
     this.tutor.email = this.datosUsuario.email;
-    
   }
 
   ngOnInit(): void {

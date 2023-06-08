@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DatosAlumnoService {
   id!: number;
-  nombre: string ='';
+  nombre: string = '';
   apellidos: string = '';
   fecha_nac: string = '';
 
-  constructor() { 
+  constructor() {
     this.id = Number(localStorage.getItem('id_alumno'));
   }
-  
 }

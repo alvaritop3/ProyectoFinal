@@ -26,7 +26,7 @@ export class MostrarCursosComponent implements OnInit {
     private tutorService: TutorService,
     private route: ActivatedRoute,
     private datosAlumno: DatosAlumnoService,
-    private router: Router,
+    private router: Router
   ) {
     //Recojo el id del  alumno
     this.id_alumno = this.route.snapshot.paramMap.get('idAlumno');
@@ -59,7 +59,7 @@ export class MostrarCursosComponent implements OnInit {
           }, 4000);
         },
         error: (err) => {
-          this.errorMessage = "Ha ocurrido un error solicitando la matrícula";
+          this.errorMessage = 'Ha ocurrido un error solicitando la matrícula';
           this.showError = true;
           setTimeout(() => {
             this.showError = false;

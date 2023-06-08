@@ -12,24 +12,26 @@ export class TutorSidebarComponent implements OnInit {
   id_alumno: any;
   id_tutor: any;
 
-  constructor(private datosUsuario: DatosUsuarioService, private datosAlumno: DatosAlumnoService, private router: Router) {}
+  constructor(
+    private datosUsuario: DatosUsuarioService,
+    private datosAlumno: DatosAlumnoService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.id_alumno = this.datosAlumno.id;
     this.id_tutor = this.datosUsuario.id;
   }
 
-   //Borramos los datos del usuario
-   logout(): void {
-
+  //Borramos los datos del usuario
+  logout(): void {
     localStorage.clear();
     this.datosUsuario.id = 0;
-    this.datosUsuario.nombre = "";
-    this.datosUsuario.apellidos = "";
-    this.datosUsuario.email = "";
-    this.datosUsuario.telefono ="";
+    this.datosUsuario.nombre = '';
+    this.datosUsuario.apellidos = '';
+    this.datosUsuario.email = '';
+    this.datosUsuario.telefono = '';
 
     this.router.navigate(['/']);
-    
   }
 }

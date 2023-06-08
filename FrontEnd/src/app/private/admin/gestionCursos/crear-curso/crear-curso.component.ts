@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioInterface } from 'src/app/interfaces/usuario-interface';
 import { AdminService } from 'src/app/services/admin.service';
@@ -18,7 +23,11 @@ export class CrearCursoComponent implements OnInit {
   //Boolean para controlar el envio
   envioOk: boolean = false;
 
-  constructor(private adminService: AdminService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private adminService: AdminService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //Inicializamos el formulario reactivo
@@ -44,20 +53,18 @@ export class CrearCursoComponent implements OnInit {
       estado: 'sin empezar',
       monitor: this.cursoNuevoForm.value.monitor,
       tipo: this.cursoNuevoForm.value.tipo,
-      hora: this.cursoNuevoForm.value.hora
+      hora: this.cursoNuevoForm.value.hora,
     };
 
-
     this.adminService.crearCurso(nuevoCurso).subscribe({
-      next: (resp)=>{
+      next: (resp) => {
         console.log(resp);
         this.router.navigate(['/admin']);
       },
-      error: (err) =>{
+      error: (err) => {
         console.log(err);
-      }
+      },
     });
-  
   }
 
   //Validadores del formulario
@@ -84,7 +91,7 @@ export class CrearCursoComponent implements OnInit {
       ],
       monitor: [['', Validators.required, Validators.minLength(2)]],
       tipo: new FormControl(),
-      hora: new FormControl()
+      hora: new FormControl(),
     });
   }
 }

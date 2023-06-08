@@ -3,25 +3,26 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
   constructor(private loginService: LoginService) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     //Recuperamos el token del localStorage y en el caso de que haya, lo incluimos en la cabecera
     const token = this.loginService.getToken();
 
-    if (token){
+    if (token) {
       const clonado = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${token}`)
-      })
+        headers: request.headers.set('Authorization', `Bearer ${token}`),
+      });
       return next.handle(clonado);
     }
 

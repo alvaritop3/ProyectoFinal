@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
   }
   //LLamamos al Servicio para crear un usuario nuevo (tutor)
   registro(): void {
-
     const usuario = this.registroForm.value;
     this.registroForm.value.roles = 'ROLE_TUTOR';
 
@@ -80,31 +79,30 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe({
-        next:(datos: any) => {
-        //Almaceno el id del usuario en el servicio
-        this.datosUsuario.id = datos.id;
-        this.datosUsuario.nombre = datos.nombre;
-        this.datosUsuario.apellidos = datos.apellidos;
-        this.datosUsuario.email  =  datos.email;
-        this.datosUsuario.telefono = datos.telefono;
-        //Almaceno el id en el localStorage
-        localStorage.setItem("id", datos.id);
-        
-        //Dependiendo del rol que tenga le hago un navigate diferente
-        if (this.roles.includes('ROLE_TUTOR')) {
-          this.router.navigate(['/tutor']);
-        } else if (this.roles.includes('ROLE_MONITOR')) {
-          this.router.navigate(['/monitor/misCursos/', this.datosUsuario.id]);
-        } else if (this.roles.includes('ROLE_ADMIN')) {
-          this.router.navigate(['/admin']);
-        }
-      },
-      error: (err)=>{
-        this.loginIncorrecto = true;
-       console.log('Ha habido un error');
-      }
-      });
+        next: (datos: any) => {
+          //Almaceno el id del usuario en el servicio
+          this.datosUsuario.id = datos.id;
+          this.datosUsuario.nombre = datos.nombre;
+          this.datosUsuario.apellidos = datos.apellidos;
+          this.datosUsuario.email = datos.email;
+          this.datosUsuario.telefono = datos.telefono;
+          //Almaceno el id en el localStorage
+          localStorage.setItem('id', datos.id);
 
+          //Dependiendo del rol que tenga le hago un navigate diferente
+          if (this.roles.includes('ROLE_TUTOR')) {
+            this.router.navigate(['/tutor']);
+          } else if (this.roles.includes('ROLE_MONITOR')) {
+            this.router.navigate(['/monitor/misCursos/', this.datosUsuario.id]);
+          } else if (this.roles.includes('ROLE_ADMIN')) {
+            this.router.navigate(['/admin']);
+          }
+        },
+        error: (err) => {
+          this.loginIncorrecto = true;
+          console.log('Ha habido un error');
+        },
+      });
   }
 
   //Validadores de los formularios
@@ -119,7 +117,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       direccion: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
-      roles:['']
+      roles: [''],
     });
   }
 

@@ -7,26 +7,14 @@ import { LoginComponent } from './login/login.component';
 import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     HomeComponent,
     CursosComponent,
     ContactoComponent,
-    LoginComponent
+    LoginComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  exports:[
-    HomeComponent,
-    CursosComponent, 
-    ContactoComponent,
-    LoginComponent
-  ]
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
+  exports: [HomeComponent, CursosComponent, ContactoComponent, LoginComponent],
 })
-export class PublicModule { }
+export class PublicModule {}

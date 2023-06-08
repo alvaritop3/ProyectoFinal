@@ -66,8 +66,9 @@ export class TutorService {
   }
 
   //Ver historial de cursos
-  verHistorial(idAlumno:number):Observable<CursoInterface[]>{
-    return this.http.get<CursoInterface[]>(`${this.baseUrl}/tutor/historialCursos/${idAlumno}`);
+  verHistorial(idAlumno: number): Observable<CursoInterface[]> {
+    return this.http.get<CursoInterface[]>(
+      `${this.baseUrl}/tutor/historialCursos/${idAlumno}`
+    );
   }
-  
 }

@@ -8,11 +8,11 @@ h4 {
 .container {
   margin-top: 20px;
 }
-strong{
-    color: black;
+strong {
+  color: black;
 }
-.dropdown-menu{
-width: 30%
+.dropdown-menu {
+  width: 30%;
 }
 //Ocultamos algunos campos de la tabla en dispositivos más pequeños
 @media screen and (max-width: 767px) {
@@ -28,5 +28,4 @@ width: 30%
     font-size: 12px;
     padding: 5px 10px;
   }
-  
 }

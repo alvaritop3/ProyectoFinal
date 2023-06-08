@@ -48,8 +48,7 @@ export class EditarMisDatosComponent implements OnInit {
         this.tutor = tutor;
       },
       error: (err: any) => {
-        
-        this.errorMessage = "Ha ocurrido un error";
+        this.errorMessage = 'Ha ocurrido un error';
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
@@ -60,7 +59,6 @@ export class EditarMisDatosComponent implements OnInit {
   }
 
   editar() {
-
     this.tutorService.editarTutor(this.tutor_email, this.tutor).subscribe({
       next: (resp) => {
         this.successMessage = resp;

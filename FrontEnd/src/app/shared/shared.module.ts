@@ -5,23 +5,9 @@ import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterLinkActive } from '@angular/router';
 
-
-
-
-
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent
-  ],
-  imports: [
-    CommonModule,
-    AppRoutingModule,
-    RouterLinkActive,
-  ],
-  exports:[
-    HeaderComponent,
-    FooterComponent
-  ]
+  declarations: [HeaderComponent, FooterComponent],
+  imports: [CommonModule, AppRoutingModule, RouterLinkActive],
+  exports: [HeaderComponent, FooterComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

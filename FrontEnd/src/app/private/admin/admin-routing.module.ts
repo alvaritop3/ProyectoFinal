@@ -11,7 +11,6 @@ import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-mo
 import { EditarMonitorComponent } from './gestionMonitores/editar-monitor/editar-monitor.component';
 import { DetalleMonitorComponent } from './gestionMonitores/detalle-monitor/detalle-monitor.component';
 import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-curso.component';
-import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
 import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
 import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
 import { EditarMisDatosComponent } from './gestionMisDatos/editar-mis-datos/editar-mis-datos.component';
@@ -24,9 +23,11 @@ const routes: Routes = [
       { path: '', component: VerCursosComponent },
       { path: 'crearCurso', component: CrearCursoComponent },
       { path: 'detalleCurso/:idCurso', component: DetalleCursoComponent },
-      { path: 'editarCurso/:idCurso', component: EditarCursosComponent },
       { path: 'matriculas', component: VerMatriculasComponent },
-      { path: 'detalleMatricula/:idMatricula', component: DetalleMatriculaComponent },
+      {
+        path: 'detalleMatricula/:idMatricula',
+        component: DetalleMatriculaComponent,
+      },
       { path: 'monitores', component: VerMonitoresComponent },
       { path: 'crearMonitor', component: CrearMonitorComponent },
       { path: 'detalleMonitor/:idMonitor', component: DetalleMonitorComponent },
@@ -35,8 +36,6 @@ const routes: Routes = [
       { path: 'editarMisDatos/:idAdmin', component: EditarMisDatosComponent },
       { path: 'alumnos', component: VerAlumnosComponent },
       { path: 'detalleAlumno/:idAlumno', component: DetalleAlumnoComponent },
-
-      // {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent}
     ],
   },
 ];

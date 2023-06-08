@@ -34,7 +34,7 @@
           aria-expanded="false"
           [attr.aria-controls]="'flush-collapse' + i"
         >
-          Sesion {{i+1}}: {{ sesion.fecha | date : "d/M/yy" }}
+          Sesion {{ i + 1 }}: {{ sesion.fecha | date : "d/M/yy" }}
         </div>
       </h2>
       <div
@@ -78,10 +78,20 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cerrarEstado()" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cerrarEstado()"
+          data-bs-dismiss="modal"
+        >
           Cerrar
         </button>
-        <button type="button" class="btn btn-primary" (click)="cambiarEstado()" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="cambiarEstado()"
+          data-bs-dismiss="modal"
+        >
           Guardar Cambios
         </button>
       </div>

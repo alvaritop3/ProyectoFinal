@@ -31,8 +31,7 @@ export class DetalleCursoComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private route: ActivatedRoute
-  )
-  {
+  ) {
     //Recojo el id del curso
     this.id_curso = this.route.snapshot.paramMap.get('idCurso');
   }
@@ -43,7 +42,6 @@ export class DetalleCursoComponent implements OnInit {
       next: (curso) => {
         this.curso = curso;
         this.estado = curso.estado;
-        
       },
       error: (err) => {
         console.log(err);
@@ -67,14 +65,14 @@ export class DetalleCursoComponent implements OnInit {
     let datos = { estado: this.estado };
     this.adminService.cambiarEstadoCurso(this.id_curso, datos).subscribe({
       next: (response) => {
-        this.successMessage = "Estado del curso modificado correctamente";
+        this.successMessage = 'Estado del curso modificado correctamente';
         this.showSuccess = true;
         setTimeout(() => {
           this.showSuccess = false;
         }, 4000);
       },
       error: (err) => {
-        this.errorMessage = "No se ha podido cambiar el estado del curso";
+        this.errorMessage = 'No se ha podido cambiar el estado del curso';
         this.showError = true;
         setTimeout(() => {
           this.showError = false;

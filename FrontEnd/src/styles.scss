@@ -1,25 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
 }
 
-#carta{
-    width: 80%;
-    margin: 15px auto;
+#carta {
+  width: 80%;
+  margin: 15px auto;
 }
 
-h1{
-    color: black;
-    margin: 15px auto;
-    text-align: center;
+h1 {
+  color: black;
+  margin: 15px auto;
+  text-align: center;
 }
 
 .custom-alert {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-  }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}

@@ -13,9 +13,6 @@ import { MostrarMatriculasComponent } from './mostrar-matriculas/mostrar-matricu
 import { MiAreaComponent } from './mi-area/mi-area.component';
 import { EditarMisDatosComponent } from './editar-mis-datos/editar-mis-datos.component';
 
-
-
-
 @NgModule({
   declarations: [
     TutorComponent,
@@ -27,14 +24,7 @@ import { EditarMisDatosComponent } from './editar-mis-datos/editar-mis-datos.com
     MostrarMatriculasComponent,
     MiAreaComponent,
     EditarMisDatosComponent,
-
-   
   ],
-  imports: [
-    CommonModule,
-    TutorRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+  imports: [CommonModule, TutorRoutingModule, FormsModule, ReactiveFormsModule],
 })
-export class TutorModule { }
+export class TutorModule {}

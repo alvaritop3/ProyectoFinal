@@ -7,10 +7,9 @@ import { MonitorService } from 'src/app/services/monitor.service';
 @Component({
   selector: 'app-curso-detalle',
   templateUrl: './curso-detalle.component.html',
-  styleUrls: ['./curso-detalle.component.scss']
+  styleUrls: ['./curso-detalle.component.scss'],
 })
 export class CursoDetalleComponent {
-
   id_curso!: any;
 
   curso: CursoInterface = {
@@ -20,7 +19,7 @@ export class CursoDetalleComponent {
     fecha_fin: '',
     precio: 0,
     estado: '',
-    hora: ''
+    hora: '',
   };
 
   sesiones: SesionInterface[] = [];
@@ -32,8 +31,7 @@ export class CursoDetalleComponent {
   constructor(
     private monitorService: MonitorService,
     private route: ActivatedRoute
-  )
-  {
+  ) {
     //Recojo el id del curso
     this.id_curso = this.route.snapshot.paramMap.get('idCurso');
   }
@@ -44,7 +42,6 @@ export class CursoDetalleComponent {
       next: (curso) => {
         this.curso = curso;
         this.estado = curso.estado;
-         
       },
       error: (err) => {
         this.errorMessage = 'Ha ocurrido un error obteniendo los cursos';
@@ -69,5 +66,4 @@ export class CursoDetalleComponent {
       },
     });
   }
-
 }

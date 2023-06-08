@@ -1,5 +1,5 @@
 <h1>Listado de Monitores</h1>
-<hr>
+<hr />
 <table class="table">
   <thead>
     <tr class="table-dark">
@@ -10,7 +10,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let monitor of arrayMonitores">
-      <a [routerLink]="['/admin/detalleMonitor', monitor.id]"><td>{{ monitor.nombre }} {{ monitor.apellidos }}</td></a>
+      <a [routerLink]="['/admin/detalleMonitor', monitor.id]"
+        ><td>{{ monitor.nombre }} {{ monitor.apellidos }}</td></a
+      >
       <td>{{ monitor.email }}</td>
       <td>{{ monitor.telefono }}</td>
     </tr>
@@ -19,4 +21,4 @@
 
 <a routerLink="/admin/crearMonitor">
   <button class="nav-link active button fit primary">Crear Monitor</button>
-  </a>
+</a>

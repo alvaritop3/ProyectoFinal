@@ -8,9 +8,8 @@ describe('VerMatriculasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VerMatriculasComponent ]
-    })
-    .compileComponents();
+      declarations: [VerMatriculasComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VerMatriculasComponent);
     component = fixture.componentInstance;

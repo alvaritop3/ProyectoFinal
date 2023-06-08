@@ -1,20 +1,20 @@
-h4{
-    color: black;
-    text-align: center;
+h4 {
+  color: black;
+  text-align: center;
 }
-strong{
+strong {
   color: black;
 }
-.dropdown-menu{
-width: 30%
+.dropdown-menu {
+  width: 30%;
 }
 
 //Ocultamos algunos campos de la tabla en dispositivos más pequeños
 @media screen and (max-width: 767px) {
-    .table td:nth-of-type(3),
-    .table th:nth-of-type(3),
-    .table td:nth-of-type(4),
-    .table th:nth-of-type(4) {
-      display: none;
-    }
+  .table td:nth-of-type(3),
+  .table th:nth-of-type(3),
+  .table td:nth-of-type(4),
+  .table th:nth-of-type(4) {
+    display: none;
   }
+}

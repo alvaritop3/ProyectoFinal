@@ -1,4 +1,4 @@
 export interface DatosUsuario {
-    id: number
-    name: string
+  id: number;
+  name: string;
 }

@@ -24,7 +24,6 @@ export class LoginService {
       .pipe(
         map((response: HttpResponse<any>) => {
           const body = response.body;
-          //console.log(body['token']);
           const token = body['token'];
 
           localStorage.setItem('token', token);

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
@@ -9,10 +8,7 @@ import { DetalleMonitorComponent } from './gestionMonitores/detalle-monitor/deta
 import { VerCursosComponent } from './gestionCursos/ver-cursos/ver-cursos.component';
 import { VerMatriculasComponent } from './gestionMatriculas/ver-matriculas/ver-matriculas.component';
 import { MisDatosComponent } from './gestionMisDatos/mis-datos/mis-datos.component';
-import { EditarCursosComponent } from './gestionCursos/editar-cursos/editar-cursos.component';
-import { HistorialCursosComponent } from './gestionCursos/historial-cursos/historial-cursos.component';
 import { VerAlumnosComponent } from './gestionAlumnos/ver-alumnos/ver-alumnos.component';
-import { EditarAlumnosComponent } from './gestionAlumnos/editar-alumnos/editar-alumnos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearCursoComponent } from './gestionCursos/crear-curso/crear-curso.component';
 import { CrearMonitorComponent } from './gestionMonitores/crear-monitor/crear-monitor.component';
@@ -21,9 +17,6 @@ import { DetalleCursoComponent } from './gestionCursos/detalle-curso/detalle-cur
 import { DetalleMatriculaComponent } from './gestionMatriculas/detalle-matricula/detalle-matricula.component';
 import { DetalleAlumnoComponent } from './gestionAlumnos/detalle-alumno/detalle-alumno.component';
 import { EditarMisDatosComponent } from './gestionMisDatos/editar-mis-datos/editar-mis-datos.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -34,25 +27,15 @@ import { EditarMisDatosComponent } from './gestionMisDatos/editar-mis-datos/edit
     VerCursosComponent,
     VerMatriculasComponent,
     MisDatosComponent,
-    EditarCursosComponent,
-    HistorialCursosComponent,
     VerAlumnosComponent,
-    EditarAlumnosComponent,
     CrearCursoComponent,
     CrearMonitorComponent,
     EditarMonitorComponent,
     DetalleCursoComponent,
     DetalleMatriculaComponent,
     DetalleAlumnoComponent,
-    EditarMisDatosComponent
-  
- 
+    EditarMisDatosComponent,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+  imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule],
 })
-export class AdminModule { }
+export class AdminModule {}

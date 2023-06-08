@@ -25,7 +25,7 @@ export class DetalleMatriculaComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router,
     private datosUsuario: DatosUsuarioService
   ) {
@@ -33,7 +33,6 @@ export class DetalleMatriculaComponent implements OnInit {
     this.id_matricula = this.route.snapshot.paramMap.get('idMatricula');
     //Recojo el id del admin
     this.id_admin = this.datosUsuario.id;
-    
   }
 
   ngOnInit(): void {
@@ -56,7 +55,7 @@ export class DetalleMatriculaComponent implements OnInit {
       estado: this.estado,
       alumno_id: this.matricula.alumno_id,
       curso_id: this.matricula.curso_id,
-      admin_id: this.id_admin
+      admin_id: this.id_admin,
     };
 
     this.adminService

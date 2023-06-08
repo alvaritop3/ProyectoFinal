@@ -1,30 +1,30 @@
 <h1>Cursos Finalizados</h1>
 <hr />
-<div class="table-responsive" *ngIf='arrayCursosFinalizados.length>0'>
-    <table class="table">
-      <thead>
-        <tr class="table-dark">
-          <th scope="col">Nombre</th>
-          <th scope="col">Fecha Inicio</th>
-          <th scope="col">Fecha Fin</th>
-          <th scope="col">Hora</th>
-          <th scope="col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let curso of arrayCursosFinalizados">
-          <a [routerLink]="['/monitor/detalleCurso', curso.id]"
-            ><td>{{ curso.nombre }}</td></a
-          >
-          <td>{{ curso.fecha_inicio | date : "d/M/yy" }}</td>
-          <td>{{ curso.fecha_fin | date : "d/M/yy" }}</td>
-          <td>{{curso.hora}}:00h</td>
-          <td>{{ curso.estado }}</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-    
-    <div *ngIf='arrayCursosFinalizados.length==0'>
-        <h5>No ha impartido ningún curso aún</h5>
-    </div>
+<div class="table-responsive" *ngIf="arrayCursosFinalizados.length > 0">
+  <table class="table">
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha Inicio</th>
+        <th scope="col">Fecha Fin</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of arrayCursosFinalizados">
+        <a [routerLink]="['/monitor/detalleCurso', curso.id]"
+          ><td>{{ curso.nombre }}</td></a
+        >
+        <td>{{ curso.fecha_inicio | date : "d/M/yy" }}</td>
+        <td>{{ curso.fecha_fin | date : "d/M/yy" }}</td>
+        <td>{{ curso.hora }}:00h</td>
+        <td>{{ curso.estado }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="arrayCursosFinalizados.length == 0">
+  <h5>No ha impartido ningún curso aún</h5>
+</div>

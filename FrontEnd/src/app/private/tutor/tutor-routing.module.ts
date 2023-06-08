@@ -9,26 +9,33 @@ import { MostrarMatriculasComponent } from './mostrar-matriculas/mostrar-matricu
 import { MiAreaComponent } from './mi-area/mi-area.component';
 import { EditarMisDatosComponent } from './editar-mis-datos/editar-mis-datos.component';
 
-
-
 const routes: Routes = [
   {
     path: '',
     component: TutorComponent,
-    children:[
-      {path: "", component: MostrarAlumnosComponent},
-      {path: "cursos/:idAlumno", component: MostrarCursosComponent},
-      {path: "historialCursos/:idAlumno", component: HistorialCursosComponent},
-      {path: "crearAlumno/:idTutor", component: CrearAlumnoComponent},
-      {path: "mostrarMatriculas/:idAlumno", component: MostrarMatriculasComponent},
-      {path: "miArea/:idTutor", component: MiAreaComponent},
-      {path: "editarMisDatos/:emailTutor", component: EditarMisDatosComponent}
-    ]
-  }
+    children: [
+      { path: '', component: MostrarAlumnosComponent },
+      { path: 'cursos/:idAlumno', component: MostrarCursosComponent },
+      {
+        path: 'historialCursos/:idAlumno',
+        component: HistorialCursosComponent,
+      },
+      { path: 'crearAlumno/:idTutor', component: CrearAlumnoComponent },
+      {
+        path: 'mostrarMatriculas/:idAlumno',
+        component: MostrarMatriculasComponent,
+      },
+      { path: 'miArea/:idTutor', component: MiAreaComponent },
+      {
+        path: 'editarMisDatos/:emailTutor',
+        component: EditarMisDatosComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TutorRoutingModule { }
+export class TutorRoutingModule {}

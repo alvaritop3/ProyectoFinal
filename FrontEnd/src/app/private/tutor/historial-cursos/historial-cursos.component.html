@@ -4,47 +4,47 @@
 
 <div class="container">
   <div class="table-responsive">
-  <table class="table" *ngIf="arrayHistorialCursos.length>0">
-    <thead>
-      <tr class="table-dark">
-        <th scope="col">Nombre</th>
-        <th scope="col">Fecha Inicio</th>
-        <th scope="col">Fecha Fin</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let curso of arrayHistorialCursos">
-        <td>
-          <div
-          class="dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          {{ curso.nombre }}
-        </div>
-        <ul class="dropdown-menu">
-          <li><strong>Monitor/a: </strong>{{ curso.monitor }}</li>
-          <li><strong>Hora: </strong>{{ curso.hora }}:00h</li>
-          <li><strong>Estado: </strong>{{ curso.estado }}</li>
-        </ul>
-        </td>
-        <td>{{ curso.fecha_inicio | date:'dd/MM/yyyy'  }}</td>
-        <td>{{ curso.fecha_fin | date:'dd/MM/yyyy' }}</td>
-        <td>{{ curso.precio | number : ".2" }} €</td>
-        <td>{{curso.estado}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <table class="table" *ngIf="arrayHistorialCursos.length > 0">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha Inicio</th>
+          <th scope="col">Fecha Fin</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let curso of arrayHistorialCursos">
+          <td>
+            <div
+              class="dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ curso.nombre }}
+            </div>
+            <ul class="dropdown-menu">
+              <li><strong>Monitor/a: </strong>{{ curso.monitor }}</li>
+              <li><strong>Hora: </strong>{{ curso.hora }}:00h</li>
+              <li><strong>Estado: </strong>{{ curso.estado }}</li>
+            </ul>
+          </td>
+          <td>{{ curso.fecha_inicio | date : "dd/MM/yyyy" }}</td>
+          <td>{{ curso.fecha_fin | date : "dd/MM/yyyy" }}</td>
+          <td>{{ curso.precio | number : ".2" }} €</td>
+          <td>{{ curso.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<div class="container" *ngIf="arrayHistorialCursos.length==0">
-    <h4>No hay ningún curso en su historial</h4>
+<div class="container" *ngIf="arrayHistorialCursos.length == 0">
+  <h4>No hay ningún curso en su historial</h4>
   <hr />
 </div>
 
 <div class="alert alert-danger custom-alert" *ngIf="showError">
-    {{ errorMessage }}
-  </div>
+  {{ errorMessage }}
+</div>

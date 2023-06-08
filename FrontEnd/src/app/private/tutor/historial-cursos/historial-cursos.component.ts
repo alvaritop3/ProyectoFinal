@@ -29,16 +29,18 @@ export class HistorialCursosComponent implements OnInit {
       next: (resp) => {
         this.arrayHistorialCursos = resp;
         //Ordenamos los cursos de más recientes a más antiguos
-        this.arrayHistorialCursos = this.arrayHistorialCursos.sort((a: any, b: any) => {
-          let fechaInicioA: any = new Date(a.fecha_inicio);
-          let fechaInicioB: any = new Date(b.fecha_inicio);
+        this.arrayHistorialCursos = this.arrayHistorialCursos.sort(
+          (a: any, b: any) => {
+            let fechaInicioA: any = new Date(a.fecha_inicio);
+            let fechaInicioB: any = new Date(b.fecha_inicio);
 
-          return fechaInicioB - fechaInicioA;
-        });
-        
+            return fechaInicioB - fechaInicioA;
+          }
+        );
       },
       error: (err) => {
-        this.errorMessage = "Ha ocurrido un error mostrando el historial de cursos, vuelva a Inicio";
+        this.errorMessage =
+          'Ha ocurrido un error mostrando el historial de cursos, vuelva a Inicio';
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
