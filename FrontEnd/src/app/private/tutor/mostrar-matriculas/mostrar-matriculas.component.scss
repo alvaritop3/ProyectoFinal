@@ -1,39 +1,39 @@
-h6{
-    color: black;
-    text-align: center;
+h6 {
+  color: black;
+  text-align: center;
 }
 
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0px auto;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px auto;
 }
 
-.card{
-width: 250px;
-margin: 0px auto 5px auto;
-text-align: center;
+.card {
+  width: 250px;
+  margin: 0px auto 5px auto;
+  text-align: center;
 }
 
-.filtros{
-display: flex;
-flex-wrap: wrap;
-width: 80%;
-justify-content: space-between;
-margin:0px auto 15px auto;
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  justify-content: space-between;
+  margin: 0px auto 15px auto;
 }
 
 button {
-width: 200px;
-margin: 0px auto 5px auto;
+  width: 200px;
+  margin: 0px auto 5px auto;
 }
 
-#aceptada{
-    background-color: rgb(162, 237, 162);
+.aceptada {
+  background-color: rgb(162, 237, 162);
 }
-#rechazada{
-    background-color: rgb(236, 161, 161);
+.rechazada {
+  background-color: rgb(236, 161, 161);
 }
-#pendiente{
-    background-color: rgb(230, 198, 138);
+.pendiente {
+  background-color: rgb(230, 198, 138);
 }

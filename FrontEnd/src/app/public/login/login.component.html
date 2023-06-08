@@ -1,240 +1,240 @@
 <div class="agua" id="carta">
-<div class="container">
-  <button (click)="cambiar()" class="nav-link active button fit primary">{{botonName}}</button>
+  <div class="container">
+    <button (click)="cambiar()" class="nav-link active button fit primary">
+      {{ botonName }}
+    </button>
 
-  <!-- Login-->
-  <div class='formularios' *ngIf="botonName =='Ir a Registro'">
-    
-    <form (ngSubmit)="login()" [formGroup]="loginForm">
-      <div class="card bg-dark text-white" style="border-radius: 1rem">
-        <div class="card-body p-5 text-center">
-          <div class="mb-md-5 mt-md-4 pb-5">
-            <h1 class="fw-bold mb-2 text-uppercase">Iniciar sesión</h1>
-            <h5 class="text-white-50 mb-5">
-              Introduzca su email y contraseña para iniciar sesión
-            </h5>
+    <!-- Login-->
+    <div class="formularios" *ngIf="botonName == 'Ir a Registro'">
+      <form (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="card bg-dark text-white" style="border-radius: 1rem">
+          <div class="card-body p-0 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+              <h1 class="fw-bold mb-2 text-uppercase">Iniciar sesión</h1>
+              <h5 class="text-white-50 mb-5">
+                Introduzca su email y contraseña para iniciar sesión
+              </h5>
 
-            <div class="form-outline">
-              <label for="email">Email</label>
-              <input 
-                class="login"               
-                type="text"
-                id="email"
-                name="email"
-                required
-                formControlName="username"
-              />
-              <div
-                *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                El email no puede estar vacío
+              <div class="form-outline">
+                <label for="email">Email</label>
+                <input
+                  class="login"
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  formControlName="username"
+                />
+                <div
+                  *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  El email no puede estar vacío
+                </div>
+                <div
+                  *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['email']"
+                  class="alert alert-danger"
+                >
+                  Introduzca un email válido
+                </div>
               </div>
-              <div
-                *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['email']"
-                class="alert alert-danger"
-              >
-                Introduzca un email válido
-              </div>
-            </div>
 
-            <!-- CAMPO PASSWORD -->
-            <div class="form-outline form-white mb-4">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                formControlName="password"
-                class="login"  
-              />
-              <div
-                *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                La contraseña no puede estar vacía
+              <!-- CAMPO PASSWORD -->
+              <div class="form-outline form-white mb-4">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  formControlName="password"
+                  class="login"
+                />
+                <div
+                  *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  La contraseña no puede estar vacía
+                </div>
               </div>
-            </div>
-            <div *ngIf="loginIncorrecto" class="alert alert-danger">
-              Email y/o contraseña incorrectos
-            </div>
+              <div *ngIf="loginIncorrecto" class="alert alert-danger">
+                Email y/o contraseña incorrectos
+              </div>
 
-            <button
-              class="nav-link active button primary"
-              type="submit"
-              [disabled]="loginForm.invalid"
-            >
-              Iniciar Sesión
-            </button>
+              <button
+                class="nav-link active button primary"
+                type="submit"
+                [disabled]="loginForm.invalid"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
-  <!--Registro-->
-  <div class='formularios' *ngIf="botonName !=='Ir a Registro'">
-    <form (ngSubmit)="registro()" [formGroup]="registroForm">
-      <div class="card bg-dark text-white" style="border-radius: 1rem">
-        <div class="card-body p-5 text-center">
-          <div class="mb-md-5 mt-md-4 pb-5">
-            <h2 class="fw-bold mb-2 text-uppercase">Crear una cuenta</h2>
-            <p class="text-white-50 mb-5">Introduzca sus datos personales</p>
+    <!--Registro-->
+    <div class="formularios" *ngIf="botonName !== 'Ir a Registro'">
+      <form (ngSubmit)="registro()" [formGroup]="registroForm">
+        <div class="card bg-dark text-white" style="border-radius: 1rem">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+              <h2 class="fw-bold mb-2 text-uppercase">Crear una cuenta</h2>
+              <p class="text-white-50 mb-5">Introduzca sus datos personales</p>
 
-            <div class="row">
-              <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                  <label for="nombre">Nombre</label>
-                  <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    required
-                    formControlName="nombre"
-                  />
-                  <div
-                    *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['required']"
-                    class="alert alert-danger"
-                  >
-                    El nombre no puede estar vacío
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label for="nombre">Nombre</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      name="nombre"
+                      required
+                      formControlName="nombre"
+                    />
+                    <div
+                      *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      El nombre no puede estar vacío
+                    </div>
+                    <div
+                      *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['minlength']"
+                      class="alert alert-danger"
+                    >
+                      Introduzca un nombre válido (más de tres caracteres)
+                    </div>
                   </div>
-                  <div
-                    *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.errors?.['minlength']"
-                    class="alert alert-danger"
-                  >
-                    Introduzca un nombre válido (más de tres caracteres)
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label for="apellidos">Apellidos</label>
+                    <input
+                      type="text"
+                      id="apellidos"
+                      name="apellidos"
+                      required
+                      formControlName="apellidos"
+                    />
+                    <div
+                      *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      El apellido no puede estar vacío
+                    </div>
+                    <div
+                      *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['minlength']"
+                      class="alert alert-danger"
+                    >
+                      Introduzca un apellido de más de tres caracteres
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                  <label for="apellidos">Apellidos</label>
-                  <input
-                    type="text"
-                    id="apellidos"
-                    name="apellidos"
-                    required
-                    formControlName="apellidos"
-                  />
-                  <div
-                    *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['required']"
-                    class="alert alert-danger"
-                  >
-                    El apellido no puede estar vacío
-                  </div>
-                  <div
-                    *ngIf="registroForm.get('apellidos')?.touched && registroForm.get('apellidos')?.errors?.['minlength']"
-                    class="alert alert-danger"
-                  >
-                    Introduzca un apellido de más de tres caracteres
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                  <label for="telefono">Telefono</label>
-                  <input
-                    type="text"
-                    id="telefono"
-                    name="telefono"
-                    required
-                    formControlName="telefono"
-                  />
-                  <div
-                    *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['required']"
-                    class="alert alert-danger"
-                  >
-                    El teléfono no puede estar vacío
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label for="telefono">Telefono</label>
+                    <input
+                      type="text"
+                      id="telefono"
+                      name="telefono"
+                      required
+                      formControlName="telefono"
+                    />
+                    <div
+                      *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      El teléfono no puede estar vacío
+                    </div>
+                    <div
+                      *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['minlength']"
+                      class="alert alert-danger"
+                    >
+                      Introduzca un teléfono de 9 dígitos
+                    </div>
+                    <div
+                      *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['maxlength']"
+                      class="alert alert-danger"
+                    >
+                      Introduzca un teléfono de 9 dígitos
+                    </div>
                   </div>
-                  <div
-                    *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['minlength']"
-                    class="alert alert-danger"
-                  >
-                    Introduzca un teléfono de 9 dígitos
-                  </div>
-                  <div
-                    *ngIf="registroForm.get('telefono')?.touched && registroForm.get('telefono')?.errors?.['maxlength']"
-                    class="alert alert-danger"
-                  >
-                    Introduzca un teléfono de 9 dígitos
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label for="email">Email</label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      required
+                      formControlName="email"
+                    />
+                    <div
+                      *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['required']"
+                      class="alert alert-danger"
+                    >
+                      El email no puede estar vacío
+                    </div>
+                    <div
+                      *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['email']"
+                      class="alert alert-danger"
+                    >
+                      Introduzca un email válido
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                  <label for="email">Email</label>
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    required
-                    formControlName="email"
-                  />
-                  <div
-                    *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['required']"
-                    class="alert alert-danger"
-                  >
-                    El email no puede estar vacío
-                  </div>
-                  <div
-                    *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.errors?.['email']"
-                    class="alert alert-danger"
-                  >
-                    Introduzca un email válido
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-outline form-white mb-4">
-              <label for="direccion">Direccion</label>
-              <input
-                type="text"
-                id="direccion"
-                name="direccion"
-                required
-                formControlName="direccion"
-              />
-              <div
-                *ngIf="registroForm.get('direccion')?.touched && registroForm.get('direccion')?.errors?.['required']"
-                class="alert alert-danger"
+              <div class="form-outline form-white mb-4">
+                <label for="direccion">Direccion</label>
+                <input
+                  type="text"
+                  id="direccion"
+                  name="direccion"
+                  required
+                  formControlName="direccion"
+                />
+                <div
+                  *ngIf="registroForm.get('direccion')?.touched && registroForm.get('direccion')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  La dirección no puede estar vacía
+                </div>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  formControlName="password"
+                />
+                <div
+                  *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.errors?.['required']"
+                  class="alert alert-danger"
+                >
+                  La contraseña no puede estar vacía
+                </div>
+              </div>
+              <button
+                class="nav-link active button fit primary"
+                type="submit"
+                [disabled]="registroForm.invalid"
               >
-                La dirección no puede estar vacía
-              </div>
+                Crear Cuenta
+              </button>
             </div>
-
-            <div class="form-outline form-white mb-4">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                formControlName="password"
-              />
-              <div
-                *ngIf="registroForm.get('password')?.touched && registroForm.get('password')?.errors?.['required']"
-                class="alert alert-danger"
-              >
-                La contraseña no puede estar vacía
-              </div>
-            </div>
-            <button
-              class="nav-link active button fit primary"
-              type="submit"
-              [disabled]="registroForm.invalid"
-            >
-              Crear Cuenta
-            </button>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
-
 </div>

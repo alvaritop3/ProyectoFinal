@@ -1,31 +1,50 @@
-h2, h3, h4, h5, h6,p{
-    color: black;
-    text-align: center;
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: black;
+  text-align: center;
 }
 
-p{
-    font-size: small;
+p {
+  font-size: small;
 }
 
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0px auto;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px auto;
 }
 
-.card{
-width: 200px;
-margin: 0px auto 5px auto;
+.card {
+  width: 200px;
+  margin: 0px auto 5px auto;
 }
 
-
-button{
-    margin: 0px auto 15px auto;
-    font-size: 10px;
+#gestionarBtn {
+  margin: 0px auto 15px auto;
+  font-size: 10px;
 }
-
-.gestionadas{
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0px auto;
+#mostrarBtn {
+  margin: 15px auto 15px auto;
+}
+.but {
+  width: 100%;
+  text-align: center;
+}
+.gestionadas {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px auto;
+}
+.aceptada {
+  background-color: rgb(162, 237, 162);
+}
+.rechazada {
+  background-color: rgb(236, 161, 161);
+}
+.pendiente {
+  background-color: rgb(230, 198, 138);
 }

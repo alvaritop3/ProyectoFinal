@@ -17,10 +17,12 @@ export class VerMatriculasComponent implements OnInit {
   id_admin: number = 0;
   mostrarMatGestionadas: boolean = false;
 
-  constructor(private adminService: AdminService, private datosUsuario: DatosUsuarioService) {}
+  constructor(
+    private adminService: AdminService,
+    private datosUsuario: DatosUsuarioService
+  ) {}
 
   ngOnInit(): void {
-
     this.id_admin = this.datosUsuario.id;
 
     this.adminService.listaMatriculas().subscribe({
@@ -46,27 +48,24 @@ export class VerMatriculasComponent implements OnInit {
         console.log(err);
       },
     });
-
-
-    this.adminService.listaMatriculasGestionadas(this.id_admin).subscribe({
-      next: (matriculas) => {
-        this.arrayMatriculasGestionadas = matriculas;
-        console.log(matriculas)
-        this.mostrarMatGestionadas = true;
-      },
-      error: (err) => {
-        console.log(err);
-        this.mostrarMatGestionadas = false;
-      },
-    });
+    // this.adminService.listaMatriculasGestionadas(this.id_admin).subscribe({
+    //   next: (matriculas) => {
+    //     this.arrayMatriculasGestionadas = matriculas;
+    //     console.log(matriculas)
+    //     this.mostrarMatGestionadas = true;
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //     this.mostrarMatGestionadas = false;
+    //   },
+    // });
   }
 
   mostrarGestionadas() {
-    
     this.adminService.listaMatriculasGestionadas(this.id_admin).subscribe({
       next: (matriculas) => {
         this.arrayMatriculasGestionadas = matriculas;
-        console.log(matriculas)
+        console.log(matriculas);
         this.mostrarMatGestionadas = true;
       },
       error: (err) => {

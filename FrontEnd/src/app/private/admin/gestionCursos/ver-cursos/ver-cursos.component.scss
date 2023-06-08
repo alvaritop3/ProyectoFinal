@@ -1,22 +1,22 @@
 label {
-    color: black;
+  color: black;
 }
-input{
-    color:black;
-}
-
-#precio{
-    width: 90%;
+input {
+  color: black;
 }
 
-#boton{
-margin-top: 20px;
+#precio {
+  width: 90%;
+}
+
+#boton {
+  margin-top: 20px;
 }
 
 //Ocultamos algunos campos de la tabla en dispositivos más pequeños
 @media screen and (max-width: 767px) {
-    .table td:nth-of-type(2),
-    .table th:nth-of-type(3) {
-      display: none;
-    }
+  .table td:nth-of-type(2),
+  .table th:nth-of-type(3) {
+    display: none;
   }
+}

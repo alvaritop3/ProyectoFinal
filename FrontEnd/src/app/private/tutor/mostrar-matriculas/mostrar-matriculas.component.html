@@ -2,10 +2,10 @@
 <h1>Listado de Matriculas</h1>
 <hr />
 
-<div class="filtros" *ngIf="arrayMatriculasOrdenadas.length>0">
-    <button class="nav-link active button primary" (click)="estado()">
-        Estado
-      </button>
+<div class="filtros" *ngIf="arrayMatriculasOrdenadas.length > 0">
+  <button class="nav-link active button primary" (click)="estado()">
+    Estado
+  </button>
   <button class="nav-link active button primary" (click)="recientes()">
     Recientes
   </button>
@@ -13,9 +13,12 @@
     Antiguas
   </button>
 </div>
-<div *ngIf="arrayMatriculasOrdenadas.length==0">
+<div *ngIf="arrayMatriculasOrdenadas.length == 0">
   <h6>No ha realizado ninguna matricula aún</h6>
-  <button [routerLink]="['/tutor/cursos', idAlumno]" class="nav-link active button fit primary" >
+  <button
+    [routerLink]="['/tutor/cursos', idAlumno]"
+    class="nav-link active button fit primary"
+  >
     Ir a los Cursos Disponibles
   </button>
 </div>
@@ -23,7 +26,7 @@
 <div class="container">
   <div class="card" *ngFor="let matricula of arrayMatriculasOrdenadas">
     <div class="card-content">
-      <div class="card-body" id="{{matricula.estado.toLocaleLowerCase()}}">
+      <div class="card-body" class="{{ matricula.estado.toLocaleLowerCase() }}">
         <h6>{{ matricula.nombre_curso }}</h6>
         <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
         <p>Estado: {{ matricula.estado }}</p>

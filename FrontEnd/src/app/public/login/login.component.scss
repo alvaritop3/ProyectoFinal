@@ -1,20 +1,32 @@
 // .agua{
 //     background-image: url('../../../assets/images/act_adul.jpg');
 // }
-h1{
-    color: white
+h1 {
+  color: white;
 }
 
-.login{
-    width: 50%;
-    margin: 0px auto;
+.login {
+  width: 50%;
+  margin: 0px auto;
 }
 
-button{
-    margin: 0px auto;
-    width: 50%;
+button {
+  margin: 0px auto;
+  width: 50%;
 }
 
-.formularios{
-    margin-top: 15px;
+.formularios {
+  margin-top: 15px;
+}
+#cent {
+  width: 100%;
+}
+@media screen and (max-width: 767px) {
+  h5,
+  p {
+    display: none;
+  }
+  .form-outline input {
+    width: 90%;
+  }
 }

@@ -1,29 +1,46 @@
 <h1>Listado de Matriculas</h1>
 <hr />
 <div class="container">
-  <div class="card" *ngFor="let matricula of arrayMatriculasPendientes">
+  <div
+    class="card"
+    *ngFor="let matricula of arrayMatriculasPendientes"
+    class="{{ matricula.estado.toLocaleLowerCase() }}"
+  >
     <div class="card-content">
       <div class="card-body">
         <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
         <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
-          ><button class="button primary fit">Gestionar</button></a>
+          ><button class="button primary fit" id="gestionarBtn">
+            Gestionar
+          </button></a
+        >
         <p>Estado: {{ matricula.estado }}</p>
       </div>
     </div>
   </div>
 </div>
-
-<hr />
-<h4>Matriculas Gestionadas</h4>
-<hr />
+<div class="but">
+  <button id="mostrarBtn" class="button primary" (click)="mostrarGestionadas()">
+    Mostrar Gestionadas
+  </button>
+</div>
+<div *ngIf="mostrarMatGestionadas">
+  <hr />
+  <h4>Matriculas Gestionadas</h4>
+  <hr />
 
   <div *ngIf="arrayMatriculasGestionadas.length > 0" class="container">
-    <div class="card" *ngFor="let matricula of arrayMatriculasGestionadas">
+    <div
+      class="card"
+      *ngFor="let matricula of arrayMatriculasGestionadas"
+      class="{{ matricula.estado.toLocaleLowerCase() }}"
+    >
       <div class="card-content">
         <div class="card-body">
           <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
           <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
-          ><button class="button primary fit">Detalles</button></a>
+            ><button class="button primary fit">Detalles</button></a
+          >
           <p>Estado: {{ matricula.estado }}</p>
         </div>
       </div>
@@ -32,3 +49,4 @@
   <div *ngIf="arrayMatriculasGestionadas.length == 0">
     <h5>Aún no ha gestionado ninguna matrícula</h5>
   </div>
+</div>
