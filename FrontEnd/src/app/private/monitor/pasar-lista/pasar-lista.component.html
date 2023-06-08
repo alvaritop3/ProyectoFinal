@@ -1,9 +1,6 @@
 <h1>Control de asistencia</h1>
 <hr />
-<div
-  *ngIf="arrayAsistencias.length > 0"
-  class="container-fluid d-flex justify-content-center"
->
+<div *ngIf="arrayAsistencias.length > 0" class="grupoCartas">
   <app-lista-detalle
     *ngFor="let asistencia of arrayAsistencias"
     [asistencia]="asistencia"

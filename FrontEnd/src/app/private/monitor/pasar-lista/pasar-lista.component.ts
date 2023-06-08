@@ -20,10 +20,14 @@ export class PasarListaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private monitorService: MonitorService,
-    private router: Router
+    private router: Router,
+    private datosUsuario: DatosUsuarioService
   ) {
-    this.id_monitor = localStorage.getItem('id');
-    console.log(this.id_monitor);
+    if (this.route.snapshot.paramMap.get('idMonitor')) {
+      this.id_monitor = this.route.snapshot.paramMap.get('idMonitor');
+    } else {
+      this.id_monitor = this.datosUsuario.id;
+    }
   }
 
   ngOnInit(): void {

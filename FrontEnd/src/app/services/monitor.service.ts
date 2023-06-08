@@ -5,6 +5,7 @@ import { CursoInterface } from '../interfaces/curso-interface';
 import { SesionInterface } from '../interfaces/sesion-interface';
 import { AsistenciaInterface } from '../interfaces/asistencia-interface';
 import { AlumnoInterface } from '../interfaces/alumno-interface';
+import { UsuarioInterface } from '../interfaces/usuario-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +58,20 @@ export class MonitorService {
   alumnoPorId(idAlumno: number): Observable<AlumnoInterface> {
     return this.http.get<AlumnoInterface>(
       `${this.baseUrl}/monitor/alumno/${idAlumno}`
+    );
+  }
+  //Obtener los datos de un monitor por id
+  mostrarMisDatos(id: number): Observable<UsuarioInterface> {
+    return this.http.get<UsuarioInterface>(
+      `${this.baseUrl}/monitor/misDatos/${id}`
+    );
+  }
+
+  //Editar mis Datos
+  editarMisDatos(id: number, monitor: UsuarioInterface) {
+    return this.http.put(
+      `${this.baseUrl}/monitor/editarMonitor/${id}`,
+      monitor
     );
   }
 }

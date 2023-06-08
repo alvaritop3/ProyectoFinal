@@ -232,4 +232,78 @@ class MonitorController extends AbstractController
 
         return $this->json('Estado de la asistencia ' . $id_asistencia . ' cambiado correctamente', 200);
     }
+
+    //Para mostrar los datos del monitor
+    #[Route("/monitor/misDatos/{id}", name: "monitor_mis_datos", methods: ["GET"])]
+    public function showMonitor(ManagerRegistry $doctrine, int $id): Response
+    {
+        $usuario = $doctrine->getRepository(Usuario::class)->find($id);
+
+        if (!$usuario) {
+
+            return $this->json('Ningun Monitor encontrado con id ' . $id, 404);
+        }
+
+        $data =  [
+            'id' => $usuario->getId(),
+            'nombre' => $usuario->getNombre(),
+            'apellidos' => $usuario->getApellidos(),
+            'email' => $usuario->getEmail(),
+            'telefono' => $usuario->getTelefono(),
+            'fecha_incorp' => $usuario->getFechaIncorp()->format('d/m/Y'),
+            'direccion' => $usuario->getDireccion(),
+            'foto' => $usuario->getFoto()
+        ];
+
+        return $this->json($data);
+    }
+
+    //Editar Monitor
+    #[Route("/monitor/editarMonitor/{id}", name: "monitor_edit", methods: ["PUT"])]
+    public function editMonitor(ManagerRegistry $doctrine, Request $request, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $monitor = $entityManager->getRepository(Usuario::class)->find($id);
+
+        if (!$monitor) {
+            return $this->json('Ningun monitor encontrado por el id ' . $id, 404);
+        }
+
+        //Recogemos los datos que vienen en la Request
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+
+        $nombre = $data->nombre;
+        $apellidos = $data->apellidos;
+        $email = $data->email;
+        $telefono = $data->telefono;
+        $direccion = $data->direccion;
+
+        //Comprobamos que la fecha no venga vacia
+        if (isset($data->fecha_incorp)) {
+            //Transformamos la fecha de incorporacion
+            $fechaString = $data->fecha_incorp;
+            $timestamp = strtotime($fechaString);
+            $fecha_incorp = new DateTime();
+            $fecha_incorp->setTimestamp($timestamp);
+
+            $monitor->setFechaIncorp($fecha_incorp);
+        }
+
+        $monitor->setNombre($nombre);
+        $monitor->setApellidos($apellidos);
+        $monitor->setEmail($email);
+        $monitor->setTelefono($telefono);
+        $monitor->setDireccion($direccion);
+
+        try {
+            //Hacemos cambios
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $data = 'Ha ocurrido un error: ' . $e->getMessage();
+            return $this->json($data, 404);
+        }
+
+        return $this->json("Monitor editado correctamente", 200);
+    }
 }

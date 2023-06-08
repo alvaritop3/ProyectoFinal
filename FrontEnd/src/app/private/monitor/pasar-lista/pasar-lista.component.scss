@@ -2,3 +2,10 @@ h5 {
   color: black;
   text-align: center;
 }
+.grupoCartas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}

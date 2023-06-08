@@ -52,10 +52,13 @@ export class ListaDetalleComponent implements OnInit {
   }
 
   guardar() {
-    let textMotivo = document.getElementById('motivo') as HTMLTextAreaElement;
+    let textMotivo = document.getElementById(
+      `motivo${this.alumno.id}`
+    ) as HTMLTextAreaElement;
     this.motivo = textMotivo.value;
     this.asistencia.motivo = this.motivo;
     this.asistencia.asiste = this.asiste;
+    console.log(this.asistencia.motivo);
     //Deshabilitamos los inputs
     this.formDes = true;
     //Llamamos al servicio para modificar la asistencia

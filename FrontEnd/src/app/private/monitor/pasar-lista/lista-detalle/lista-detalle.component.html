@@ -10,29 +10,29 @@
       <p>Asiste</p>
       <input
         type="radio"
-        id="asisteSi"
-        name="asisteSi"
+        id="asisteSi{{ alumno.id }}"
+        name="asisteSi{{ alumno.id }}"
         [(ngModel)]="asiste"
         value="si"
         [disabled]="formDes"
       />
-      <label for="asisteSi" class="descr">Si</label>
+      <label for="asisteSi{{ alumno.id }}" class="descr">Si</label>
       <input
         type="radio"
-        id="asisteNo"
-        name="asisteNo"
+        id="asisteNo{{ alumno.id }}"
+        name="asisteNo{{ alumno.id }}"
         [(ngModel)]="asiste"
         value="no"
         [disabled]="formDes"
       />
-      <label for="asisteNo" class="descr">No</label>
+      <label for="asisteNo{{ alumno.id }}" class="descr">No</label>
       <br />
-      <label for="motivo" class="form-label">Motivo</label>
+      <label for="motivo{{ alumno.id }}" class="form-label">Motivo</label>
       <textarea
         [(ngModel)]="motivo"
         class="form-control"
-        id="motivo"
-        rows="3"
+        id="motivo{{ alumno.id }}"
+        rows="5"
         [disabled]="formDes"
       ></textarea>
       <button [disabled]="formDes" class="button primary" (click)="guardar()">
