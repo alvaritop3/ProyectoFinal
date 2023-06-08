@@ -21,8 +21,6 @@ class RegistroController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         //Recogemos los datos que vienen en la Request
-        // $jsonData = $request->getContent();
-        // $data = json_decode($jsonData);
         $nombre = $request->request->get('nombre');
         $apellidos = $request->request->get('apellidos');
         $email = $request->request->get('email');

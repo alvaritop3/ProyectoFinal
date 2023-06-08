@@ -13,8 +13,6 @@ use App\Entity\Curso;
 use App\Entity\Matricula;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 
 
 class TutorController extends AbstractController
@@ -157,23 +155,23 @@ class TutorController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $alumno = $entityManager->getRepository(Alumno::class)->find($id_alumno);
-    
+
         if (!$alumno) {
             return $this->json('Ningún alumno encontrado por el id ' . $id_alumno, 404);
         }
-        
+
         $fechaActual = new \DateTime();
-    
+
         // Obtenemos todos los cursos
         $cursos = $doctrine
             ->getRepository(Curso::class)
             ->findAll();
-    
+
         $data = [];
-    
+
         foreach ($cursos as $curso) {
             $matriculado = false;
-    
+
             //comprobamos que el alumno no haya solicitado este curso
             foreach ($curso->getMatriculas() as $matricula) {
                 if ($matricula->getSolicitadaPor()->getId() == $id_alumno) {
@@ -181,7 +179,7 @@ class TutorController extends AbstractController
                     break;
                 }
             }
-    
+
             //Comprobamos que el curso no ha comenzado
             if (!$matriculado && $curso->getFechaInicio() > $fechaActual) {
                 $data[] = [
@@ -191,12 +189,12 @@ class TutorController extends AbstractController
                     'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
                     'precio' => $curso->getPrecio(),
                     'estado' => $curso->getEstado(),
-                    'hora'=> $curso->getSesiones()[0]->getHoraInicio(),
-                    'monitor' =>$curso->getSesiones()[0]->getMonitor()->getNombre()
+                    'hora' => $curso->getSesiones()[0]->getHoraInicio(),
+                    'monitor' => $curso->getSesiones()[0]->getMonitor()->getNombre()
                 ];
             }
         }
-    
+
         return $this->json($data);
     }
 
@@ -225,8 +223,8 @@ class TutorController extends AbstractController
                 'fecha_inicio' => $curso->getFechaInicio()->format('Y-m-d'),
                 'fecha_fin' => $curso->getFechaFin()->format('Y-m-d'),
                 'precio' => $curso->getPrecio(),
-                'estado' => $curso->getEstado(), 'hora'=> $curso->getSesiones()[0]->getHoraInicio(),
-                'monitor' =>$curso->getSesiones()[0]->getMonitor()->getNombre()
+                'estado' => $curso->getEstado(), 'hora' => $curso->getSesiones()[0]->getHoraInicio(),
+                'monitor' => $curso->getSesiones()[0]->getMonitor()->getNombre()
             ];
         }
 

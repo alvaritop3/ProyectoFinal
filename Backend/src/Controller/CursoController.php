@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,8 +29,8 @@ class CursoController extends AbstractController
                 'nombre' => $curso->getNombre(),
                 'fecha_inicio' => $curso->getFechaInicio()->format('d-m-Y'),
                 'fecha_fin' => $curso->getFechaFin()->format('d-m-Y'),
-                'precio'=> $curso->getPrecio(),
-                'estado'=> $curso->getEstado()
+                'precio' => $curso->getPrecio(),
+                'estado' => $curso->getEstado()
             ];
         }
 
@@ -47,7 +46,7 @@ class CursoController extends AbstractController
         $nombre = $data->nombre;
         $precio = $data->precio;
         $estado = $data->estado;
-        
+
 
         //Transformamos la fecha de inicio
         $fechaString = $data->fecha_inicio;
@@ -60,11 +59,11 @@ class CursoController extends AbstractController
         $timestamp = strtotime($fechaString);
         $fecha_fin = new DateTime();
         $fecha_fin->setTimestamp($timestamp);
-        
-        
+
+
         //Creamos el entityManager
         $entityManager = $doctrine->getManager();
-        
+
         //Creamos curso y guardamos los datos
         $curso = new Curso();
         $curso->setNombre($nombre);
@@ -72,11 +71,11 @@ class CursoController extends AbstractController
         $curso->setFechaFin($fecha_fin);
         $curso->setPrecio($precio);
         $curso->setEstado($estado);
-        
+
         $entityManager->persist($curso);
         $entityManager->flush();
-        
-        return $this->json('Curso '. $curso->getNombre().' creado con id ' . $curso->getId());
+
+        return $this->json('Curso ' . $curso->getNombre() . ' creado con id ' . $curso->getId());
     }
 
     #[Route("/curso/{id}", name: "curso_show", methods: ["GET"])]
@@ -94,8 +93,8 @@ class CursoController extends AbstractController
             'nombre' => $curso->getNombre(),
             'fecha_inicio' => $curso->getFechaInicio()->format('d-m-Y'),
             'fecha_fin' => $curso->getFechaFin()->format('d-m-Y'),
-            'precio'=> $curso->getPrecio(),
-            'estado'=> $curso->getEstado()
+            'precio' => $curso->getPrecio(),
+            'estado' => $curso->getEstado()
         ];
 
         return $this->json($data);
@@ -118,7 +117,7 @@ class CursoController extends AbstractController
         $nombre = $data->nombre;
         $precio = $data->precio;
         $estado = $data->estado;
-        
+
 
         //Transformamos la fecha de inicio
         $fechaString = $data->fecha_inicio;
@@ -147,8 +146,8 @@ class CursoController extends AbstractController
             'nombre' => $curso->getNombre(),
             'fecha_inicio' => $curso->getFechaInicio()->format('d-m-Y'),
             'fecha_fin' => $curso->getFechaFin()->format('d-m-Y'),
-            'precio'=> $curso->getPrecio(),
-            'estado'=> $curso->getEstado()
+            'precio' => $curso->getPrecio(),
+            'estado' => $curso->getEstado()
         ];
 
         return $this->json($respuesta);
@@ -169,5 +168,4 @@ class CursoController extends AbstractController
 
         return $this->json('Curso eliminado con el id ' . $id);
     }
-
 }

@@ -17,7 +17,6 @@ class UsuarioController extends AbstractController
     #[Route("/usuarios", name: "usuarios_lista", methods: ["GET"])]
     public function listUsuarios(ManagerRegistry $doctrine): JsonResponse
     {
-
         $usuarios = $doctrine
             ->getRepository(Usuario::class)
             ->findAll();
