@@ -11,7 +11,7 @@ export class DatosUsuarioService {
   telefono!: string;
 
   constructor() {
-    this.id = Number(localStorage.getItem('id'));
-    this.email = String(localStorage.getItem('email'));
+    this.id = Number(sessionStorage.getItem('id'));
+    this.email = String(sessionStorage.getItem('email'));
   }
 }

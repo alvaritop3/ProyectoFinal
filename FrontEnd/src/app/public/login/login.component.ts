@@ -86,8 +86,8 @@ export class LoginComponent implements OnInit {
           this.datosUsuario.apellidos = datos.apellidos;
           this.datosUsuario.email = datos.email;
           this.datosUsuario.telefono = datos.telefono;
-          //Almaceno el id en el localStorage
-          localStorage.setItem('id', datos.id);
+          //Almaceno el id en el sessionStorage
+          sessionStorage.setItem('id', datos.id);
 
           //Dependiendo del rol que tenga le hago un navigate diferente
           if (this.roles.includes('ROLE_TUTOR')) {

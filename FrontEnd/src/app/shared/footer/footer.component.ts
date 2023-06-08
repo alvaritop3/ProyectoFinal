@@ -16,7 +16,7 @@ export class FooterComponent {
   ) {}
   //Borramos los datos del usuario
   logout(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     this.datosUsuario.id = 0;
     this.datosUsuario.nombre = '';
     this.datosUsuario.apellidos = '';

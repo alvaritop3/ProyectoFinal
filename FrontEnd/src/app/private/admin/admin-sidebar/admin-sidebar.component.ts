@@ -12,9 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class AdminSidebarComponent {
   id_admin!: number;
   constructor(
-    private loginService: LoginService,
     private datosUsuario: DatosUsuarioService,
-    private datosAlumno: DatosAlumnoService,
     private router: Router
   ) {
     //Recuperamos el id del usuario
@@ -22,7 +20,7 @@ export class AdminSidebarComponent {
   }
   //Borramos los datos del usuario
   logout(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     this.datosUsuario.id = 0;
     this.datosUsuario.nombre = '';
     this.datosUsuario.apellidos = '';

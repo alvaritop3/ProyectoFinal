@@ -32,8 +32,8 @@ export class MostrarCursosComponent implements OnInit {
     this.id_alumno = this.route.snapshot.paramMap.get('idAlumno');
     this.datosAlumno.id = this.id_alumno;
 
-    //Lo guardo en localStorage
-    localStorage.setItem('id_alumno', this.id_alumno);
+    //Lo guardo en sessionStorage
+    sessionStorage.setItem('id_alumno', this.id_alumno);
   }
 
   ngOnInit(): void {

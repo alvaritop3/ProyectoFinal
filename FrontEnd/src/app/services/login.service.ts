@@ -26,13 +26,13 @@ export class LoginService {
           const body = response.body;
           const token = body['token'];
 
-          localStorage.setItem('token', token);
+          sessionStorage.setItem('token', token);
 
           //Decodificacion del token
           const tokenDecoded: JsonInterface =
             this.jwtService.DecodeToken(token);
 
-          localStorage.setItem('email', tokenDecoded.username);
+          sessionStorage.setItem('email', tokenDecoded.username);
 
           return tokenDecoded;
         })
@@ -40,10 +40,10 @@ export class LoginService {
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
-  //Para obtener la información del usuario y almacenarla en el localStorage
+  //Para obtener la información del usuario y almacenarla en el sessionStorage
   getDatosByEmail(email: string): any {
     return this.http.get(`${this.baseUrl}/usuario/${email}`);
   }

@@ -8,7 +8,7 @@ export class AuthMonitorService {
   constructor(private jwtDecode: JwtDecodeService) {}
 
   isAuthenticated$(): boolean {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     let decodeToken = this.jwtDecode.DecodeToken(String(token));
 
     if (decodeToken.roles.includes('ROLE_MONITOR')) {

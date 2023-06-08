@@ -10,6 +10,6 @@ export class DatosAlumnoService {
   fecha_nac: string = '';
 
   constructor() {
-    this.id = Number(localStorage.getItem('id_alumno'));
+    this.id = Number(sessionStorage.getItem('id_alumno'));
   }
 }

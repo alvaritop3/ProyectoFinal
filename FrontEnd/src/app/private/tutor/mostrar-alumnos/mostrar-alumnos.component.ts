@@ -26,9 +26,9 @@ export class MostrarAlumnosComponent implements OnInit {
     //Recupero el id del tutor del servicio
     this.id_tutor = this.datosUsuario.id;
 
-    //Me aseguro de que tengo el id con el localStorage
-    if (localStorage.getItem('id')) {
-      this.id_tutor = localStorage.getItem('id');
+    //Me aseguro de que tengo el id con el sessionStorage
+    if (sessionStorage.getItem('id')) {
+      this.id_tutor = sessionStorage.getItem('id');
     }
 
     this.tutorService.listaDeAlumnos(this.id_tutor).subscribe({

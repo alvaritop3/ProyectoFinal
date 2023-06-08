@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    //Recuperamos el token del localStorage y en el caso de que haya, lo incluimos en la cabecera
+    //Recuperamos el token del sessionStorage y en el caso de que haya, lo incluimos en la cabecera
     const token = this.loginService.getToken();
 
     if (token) {
@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(clonado);
     }
 
-    //En caso de que no exista JWT en localStorage, mandará la solicitud tal cual
+    //En caso de que no exista JWT en sessionStorage, mandará la solicitud tal cual
     return next.handle(request);
   }
 }
