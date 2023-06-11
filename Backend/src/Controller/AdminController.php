@@ -217,7 +217,7 @@ class AdminController extends AbstractController
             return $this->json($data, 404);
         }
 
-        return $this->json('Curso creado correctamente', 404);
+        return $this->json('Curso creado correctamente', 200);
     }
 
     //Cambiar estado de un curso
@@ -533,9 +533,9 @@ class AdminController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $matricula = $entityManager->getRepository(Matricula::class)->find($id_matricula);
-
+        $admin = $entityManager->getRepository(Usuario::class)->find($id_matricula);
         if (!$matricula) {
-            return $this->json('Ninguna matricula encontrado por el id ' . $matricula, 404);
+            return $this->json('Ninguna matricula encontrado por el id ' . $id_matricula, 404);
         }
 
         //Recogemos los datos que vienen en la Request
@@ -595,7 +595,7 @@ class AdminController extends AbstractController
             ->findAll();
 
         $entityManager = $doctrine->getManager();
-        $admin = $entityManager->getRepository(Curso::class)->find($id_admin);
+        $admin = $entityManager->getRepository(Usuario::class)->find($id_admin);
         $data = [];
 
         foreach ($matriculas as $matricula) {
@@ -607,7 +607,6 @@ class AdminController extends AbstractController
                     'fecha' => $matricula->getFecha()->format('Y-m-d'),
                     'alumno_id' => $matricula->getSolicitadaPor()->getId(),
                     'curso_id' => $matricula->getCurso()->getId(),
-                    // 'atendida_por' => $matricula->getAtendidaPor()->getNombre()
                 ];
             }
         }
@@ -689,6 +688,7 @@ class AdminController extends AbstractController
         return $this->json($data);
     }
 
+    //Datos del admin
     #[Route("/admin/misDatos/{id}", name: "admin_mis_datos", methods: ["GET"])]
     public function show(ManagerRegistry $doctrine, int $id): Response
     {

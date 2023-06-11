@@ -64,7 +64,6 @@ export class VerMatriculasComponent implements OnInit {
     this.adminService.listaMatriculasGestionadas(this.id_admin).subscribe({
       next: (matriculas) => {
         this.arrayMatriculasGestionadas = matriculas;
-        console.log(matriculas);
         this.mostrarMatGestionadas = true;
       },
       error: (err) => {
