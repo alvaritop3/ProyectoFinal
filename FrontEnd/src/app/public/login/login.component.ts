@@ -14,6 +14,11 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
+
   //Contenido del botón
   botonName: string = 'Ir a Registro';
 
@@ -58,8 +63,24 @@ export class LoginComponent implements OnInit {
     const usuario = this.registroForm.value;
     this.registroForm.value.roles = 'ROLE_TUTOR';
 
-    this.registroService.registro(usuario).subscribe((resp) => {
-      console.log(resp);
+    this.registroService.registro(usuario).subscribe({
+      next: (resp) => {
+        this.successMessage = 'Cuenta creada correctamente';
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.botonName = 'Ir a Registro';
+          this.showSuccess = false;
+        }, 4000);
+      },
+      error: (err) => {
+        this.errorMessage =
+          'No se ha podido crear la cuenta, intentelo de nuevo más tarde';
+        this.showError = true;
+        setTimeout(() => {
+          this.botonName = 'Ir a Registro';
+          this.showError = false;
+        }, 4000);
+      },
     });
   }
 

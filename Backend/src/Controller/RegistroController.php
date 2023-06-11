@@ -21,15 +21,20 @@ class RegistroController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         //Recogemos los datos que vienen en la Request
-        $nombre = $request->request->get('nombre');
-        $apellidos = $request->request->get('apellidos');
-        $email = $request->request->get('email');
-        $telefono = $request->request->get('telefono');
-        $direccion = $request->request->get('direccion');
-        $password = $request->request->get('password');
-        $file = $request->files->get('file');
-        $roles = [$request->request->get('roles')];
-
+        $jsonData = $request->getContent();
+        $data = json_decode($jsonData);
+        $nombre = $data->nombre;
+        $apellidos = $data->apellidos;
+        $email = $data->email;
+        $telefono = $data->telefono;
+        $direccion = $data->direccion;
+        $password = $data->password;
+        $roles = [$data->roles];
+        if ($request->files->get('file')) {
+            $file = $request->files->get('file');
+        } else {
+            $file = null;
+        }
 
         //Creamos usuario
         $usuario = new Usuario();
