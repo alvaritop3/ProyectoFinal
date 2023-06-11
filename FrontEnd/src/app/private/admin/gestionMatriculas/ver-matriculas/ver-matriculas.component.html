@@ -50,3 +50,6 @@
     <h5>Aún no ha gestionado ninguna matrícula</h5>
   </div>
 </div>
+<div class="alert alert-danger custom-alert" *ngIf="showError">
+  {{ errorMessage }}
+</div>

@@ -41,7 +41,6 @@ export class EditarMisDatosComponent implements OnInit {
     this.adminService.mostrarMonitor(this.id_admin).subscribe({
       next: (admin) => {
         this.admin = admin;
-        console.log(admin);
       },
       error: (err) => {
         this.errorMessage = 'Ha ocurrido un error obteniendo los datos';

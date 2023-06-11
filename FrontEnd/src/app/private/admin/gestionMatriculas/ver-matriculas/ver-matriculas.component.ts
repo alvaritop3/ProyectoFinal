@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatriculaInterface } from 'src/app/interfaces/matricula-interface';
 import { AdminService } from 'src/app/services/admin.service';
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
@@ -9,6 +10,9 @@ import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
   styleUrls: ['./ver-matriculas.component.scss'],
 })
 export class VerMatriculasComponent implements OnInit {
+  errorMessage: string = '';
+  showError: boolean = false;
+
   //Array donde almacenamos las matriculas
   arrayMatriculas: Array<MatriculaInterface> = [];
   arrayMatriculasPendientes: Array<MatriculaInterface> = [];
@@ -19,7 +23,8 @@ export class VerMatriculasComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private datosUsuario: DatosUsuarioService
+    private datosUsuario: DatosUsuarioService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -45,20 +50,14 @@ export class VerMatriculasComponent implements OnInit {
         );
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = 'Ha ocurrido un error obteniendo las matriculas';
+        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+          this.showError = false;
+        }, 4000);
       },
     });
-    // this.adminService.listaMatriculasGestionadas(this.id_admin).subscribe({
-    //   next: (matriculas) => {
-    //     this.arrayMatriculasGestionadas = matriculas;
-    //     console.log(matriculas)
-    //     this.mostrarMatGestionadas = true;
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //     this.mostrarMatGestionadas = false;
-    //   },
-    // });
   }
 
   mostrarGestionadas() {
@@ -69,7 +68,13 @@ export class VerMatriculasComponent implements OnInit {
         this.mostrarMatGestionadas = true;
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage =
+          'Ha ocurrido un error obteniendo las matriculas gestionadas';
+        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+          this.showError = false;
+        }, 4000);
         this.mostrarMatGestionadas = false;
       },
     });

@@ -10,6 +10,11 @@ import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
   styleUrls: ['./detalle-matricula.component.scss'],
 })
 export class DetalleMatriculaComponent implements OnInit {
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
+
   id_matricula!: any;
   id_admin!: number;
 
@@ -43,7 +48,12 @@ export class DetalleMatriculaComponent implements OnInit {
         this.estado = matricula.estado;
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage =
+          'No se ha podido obtener los detalles de la matricula';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
       },
     });
   }
@@ -62,10 +72,22 @@ export class DetalleMatriculaComponent implements OnInit {
       .cambiarEstadoMatricula(this.id_matricula, datos)
       .subscribe({
         next: (response) => {
-          //console.log(response);
-          this.router.navigate(['/admin/matriculas']);
+          this.successMessage =
+            'Estado de la matricula modificado correctamente';
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.router.navigate(['/admin/matriculas']);
+            this.showSuccess = false;
+          }, 4000);
         },
         error: (err) => {
+          this.errorMessage =
+            'No se ha podido cambiar el estado de la matricula';
+          this.showError = true;
+          setTimeout(() => {
+            this.router.navigate(['/admin/matriculas']);
+            this.showError = false;
+          }, 4000);
           console.log(err);
         },
       });

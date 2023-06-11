@@ -10,6 +10,10 @@ import { AdminService } from 'src/app/services/admin.service';
   styleUrls: ['./ver-cursos.component.scss'],
 })
 export class VerCursosComponent implements OnInit {
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
   //Array de todos los cursos
   arrayCursos: Array<CursoInterface> = [];
   //Fecha actual
@@ -61,7 +65,11 @@ export class VerCursosComponent implements OnInit {
           });
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage = 'Ha ocurrido un error mostrando los cursos';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 4000);
       },
     });
   }
