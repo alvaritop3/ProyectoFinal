@@ -15,6 +15,11 @@ import { AdminService } from 'src/app/services/admin.service';
   styleUrls: ['./crear-curso.component.scss'],
 })
 export class CrearCursoComponent implements OnInit {
+  successMessage: string = '';
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  showError: boolean = false;
+
   //Formularios
   cursoNuevoForm!: FormGroup;
   //Array donde se almacenan los monitores
@@ -58,11 +63,21 @@ export class CrearCursoComponent implements OnInit {
 
     this.adminService.crearCurso(nuevoCurso).subscribe({
       next: (resp) => {
-        console.log(resp);
-        this.router.navigate(['/admin']);
+        this.successMessage = 'Curso creado correctamente';
+        this.showSuccess = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+          this.showSuccess = false;
+        }, 4000);
       },
       error: (err) => {
-        console.log(err);
+        this.errorMessage =
+          'No se ha podido crear el curso, intentelo más tarde';
+        this.showError = true;
+        setTimeout(() => {
+          this.router.navigate(['/admin']);
+          this.showError = false;
+        }, 4000);
       },
     });
   }
