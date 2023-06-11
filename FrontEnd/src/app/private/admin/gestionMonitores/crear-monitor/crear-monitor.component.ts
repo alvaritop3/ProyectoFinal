@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegistroService } from 'src/app/services/registro.service';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-crear-monitor',
@@ -20,7 +20,7 @@ export class CrearMonitorComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private registroService: RegistroService,
+    private adminService: AdminService,
     private router: Router
   ) {}
 
@@ -42,7 +42,7 @@ export class CrearMonitorComponent implements OnInit {
     formData.append('roles', 'ROLE_MONITOR');
 
     //Llamamos al servicio para registrar al nuevo usuario monitor
-    this.registroService.registro(formData).subscribe({
+    this.adminService.registro(formData).subscribe({
       next: (resp) => {
         this.successMessage = 'Monitor creado correctamente';
         this.showSuccess = true;

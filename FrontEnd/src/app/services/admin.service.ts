@@ -50,6 +50,10 @@ export class AdminService {
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/admin/monitores`);
   }
 
+  //Dar de alta a monitor
+  registro(usuario: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/crearMonitor`, usuario);
+  }
   //Obtener un monitor por id
   mostrarMonitor(id: number): Observable<UsuarioInterface> {
     return this.http.get<UsuarioInterface>(

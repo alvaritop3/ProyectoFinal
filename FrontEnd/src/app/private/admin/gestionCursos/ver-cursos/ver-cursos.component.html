@@ -1,6 +1,9 @@
 <h1>Listado de cursos</h1>
 <hr />
-<div class="table-responsive">
+<div *ngIf="arrayCursosActivos.length == 0">
+  <h5>No hay cursos Activos</h5>
+</div>
+<div class="table-responsive" *ngIf="arrayCursosActivos.length > 0">
   <table class="table">
     <thead>
       <tr class="table-dark">
@@ -33,7 +36,11 @@
 <hr />
 <h1>Historial de cursos</h1>
 <hr />
-<div class="table-responsive">
+<div *ngIf="arrayCursosFinalizados.length == 0">
+  <h5>No hay cursos en el Historial</h5>
+</div>
+
+<div class="table-responsive" *ngIf="arrayCursosFinalizados.length > 0">
   <table class="table">
     <thead>
       <tr class="table-dark">

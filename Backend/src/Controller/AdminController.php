@@ -14,6 +14,8 @@ use App\Entity\Matricula;
 use App\Entity\Asistencia;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 
 class AdminController extends AbstractController
@@ -249,6 +251,75 @@ class AdminController extends AbstractController
         return $this->json('Estado del curso ' . $id_curso . ' cambiado correctamente', 200);
     }
 
+    //Crear Monitor
+    #[Route('/admin/crearMonitor', name: 'admin_registro_monitor', methods: ["POST"])]
+    public function registrar(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine, Request $request): Response
+    {
+        //Creamos el entityManager
+        $entityManager = $doctrine->getManager();
+
+        //Recogemos los datos que vienen en la Request
+        // $jsonData = $request->getContent();
+        // $data = json_decode($jsonData);
+        $nombre = $request->request->get('nombre');
+        $apellidos = $request->request->get('apellidos');
+        $email = $request->request->get('email');
+        $telefono = $request->request->get('telefono');
+        $direccion = $request->request->get('direccion');
+        $password = $request->request->get('password');
+        $roles = [$request->request->get('roles')];
+
+        if ($request->files->get('file')) {
+            $file = $request->files->get('file');
+        } else {
+            $file = null;
+        }
+
+        //Creamos usuario
+        $usuario = new Usuario();
+
+        //Comprobamos que la fecha no venga vacia
+        if ($request->request->get('fecha_incorp') !== null) {
+            //Transformamos la fecha de nacimiento
+            $fechaString = $request->request->get('fecha_incorp');
+            $timestamp = strtotime($fechaString);
+            $fecha_incorp = new DateTime();
+            $fecha_incorp->setTimestamp($timestamp);
+
+            $usuario->setFechaIncorp($fecha_incorp);
+        } else {
+            $usuario->setFechaIncorp(null);
+        }
+
+        // Hasheamos la contraseña
+        $hashedPassword = $passwordHasher->hashPassword(
+            $usuario,
+            $password
+        );
+        //Comprobamos si hay una imágen en el campo foto
+        if ($file) {
+            $fileName = uniqid() . '.' . $file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir') . '/public/fotos/', $fileName);
+            $usuario->setFoto($fileName);
+        } else {
+            $usuario->setFoto('fotoDefecto.png');
+        }
+
+        $usuario->setNombre($nombre);
+        $usuario->setApellidos($apellidos);
+        $usuario->setEmail($email);
+        $usuario->setTelefono($telefono);
+        $usuario->setDireccion($direccion);
+        $usuario->setPassword($hashedPassword);
+        $usuario->setRoles($roles);
+
+        $entityManager->persist($usuario);
+        $entityManager->flush();
+
+
+
+        return $this->json('Usuario ' . $usuario->getNombre() . ' creado con id ' . $usuario->getId());
+    }
     //Mostrar los monitores 
     #[Route("/admin/monitores", name: "admin_lista_monitores", methods: ["GET"])]
     public function mostrarMonitores(ManagerRegistry $doctrine): Response

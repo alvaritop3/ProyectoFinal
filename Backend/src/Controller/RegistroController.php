@@ -13,7 +13,7 @@ use DateTime;
 
 class RegistroController extends AbstractController
 {
-
+    //Registro de administradores y tutores
     #[Route('/registro', name: 'app_registro', methods: ["POST"])]
     public function registrar(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine, Request $request): Response
     {

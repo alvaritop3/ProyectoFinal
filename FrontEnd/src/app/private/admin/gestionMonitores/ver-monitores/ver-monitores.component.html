@@ -1,6 +1,9 @@
 <h1>Listado de Monitores</h1>
 <hr />
-<table class="table">
+<div *ngIf="arrayMonitores.length == 0">
+  <h5>No hay monitores en la BBDD</h5>
+</div>
+<table class="table" *ngIf="arrayMonitores.length > 0">
   <thead>
     <tr class="table-dark">
       <th scope="col">Nombre</th>
