@@ -24,9 +24,13 @@
 </div>
 <hr />
 <div class="container">
-  <div class="card" *ngFor="let matricula of arrayMatriculasOrdenadas">
+  <div
+    class="card"
+    *ngFor="let matricula of arrayMatriculasOrdenadas"
+    class="{{ matricula.estado.toLocaleLowerCase() }}"
+  >
     <div class="card-content">
-      <div class="card-body" class="{{ matricula.estado.toLocaleLowerCase() }}">
+      <div class="card-body">
         <h6>{{ matricula.nombre_curso }}</h6>
         <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
         <p>Estado: {{ matricula.estado }}</p>

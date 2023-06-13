@@ -1,20 +1,25 @@
 <h1>Listado de Matriculas</h1>
 <hr />
 <div class="container">
-  <div
-    class="card"
-    *ngFor="let matricula of arrayMatriculasPendientes"
-    class="{{ matricula.estado.toLocaleLowerCase() }}"
-  >
-    <div class="card-content">
-      <div class="card-body">
-        <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
-        <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
-          ><button class="button primary fit" id="gestionarBtn">
-            Gestionar
-          </button></a
-        >
-        <p>Estado: {{ matricula.estado }}</p>
+  <div *ngIf="arrayMatriculasPendientes.length == 0" class="sinMat">
+    <h5>No hay matrículas que gestionar</h5>
+  </div>
+  <div *ngIf="arrayMatriculasPendientes.length > 0">
+    <div
+      class="card"
+      *ngFor="let matricula of arrayMatriculasPendientes"
+      class="{{ matricula.estado.toLocaleLowerCase() }}"
+    >
+      <div class="card-content">
+        <div class="card-body">
+          <p>{{ matricula.fecha | date : "d/M/yy" }}</p>
+          <a [routerLink]="['/admin/detalleMatricula', matricula.id]"
+            ><button class="button primary fit" id="gestionarBtn">
+              Gestionar
+            </button></a
+          >
+          <p>Estado: {{ matricula.estado }}</p>
+        </div>
       </div>
     </div>
   </div>

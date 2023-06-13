@@ -64,6 +64,7 @@ export class MisDatosComponent implements OnInit {
   registro(): void {
     //Creamos el monitor que se enviará en la petición
     const admin = this.registroForm.value;
+
     //Asignamos el rol
     this.registroForm.value.roles = 'ROLE_ADMIN';
     //Llamamos al servicio para registrar al nuevo usuario monitor

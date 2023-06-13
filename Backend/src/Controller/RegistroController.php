@@ -30,6 +30,7 @@ class RegistroController extends AbstractController
         $direccion = $data->direccion;
         $password = $data->password;
         $roles = [$data->roles];
+
         if ($request->files->get('file')) {
             $file = $request->files->get('file');
         } else {
@@ -40,9 +41,9 @@ class RegistroController extends AbstractController
         $usuario = new Usuario();
 
         //Comprobamos que la fecha no venga vacia
-        if ($request->request->get('fecha_incorp') !== null) {
+        if (isset($data->fecha_incorp)) {
             //Transformamos la fecha de nacimiento
-            $fechaString = $request->request->get('fecha_incorp');
+            $fechaString = $data->fecha_incorp;
             $timestamp = strtotime($fechaString);
             $fecha_incorp = new DateTime();
             $fecha_incorp->setTimestamp($timestamp);
